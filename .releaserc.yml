@@ -108,7 +108,6 @@ publish:
       - path: "CHANGELOG.md"
         label: "Changelog"
       - path: "release/**"
-        label: "Distributed Communication Visualizer"
 
 success:
 
