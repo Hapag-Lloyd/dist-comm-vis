@@ -1,9 +1,12 @@
 package com.hlag.tools.commvis;
 
 import lombok.extern.slf4j.Slf4j;
+import org.reflections.Reflections;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
+
+import static org.reflections.scanners.Scanners.SubTypes;
 
 @Slf4j
 @CommandLine.Command(name = "DistCommVis", mixinStandardHelpOptions = true, description = "Analyzes the classpath and extracts endpoints and event sender/receiver.")
@@ -20,6 +23,8 @@ public class Main implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         log.info("The main method");
+
+        new Reflections(packageName);
 
         return 0;
     }
