@@ -13,6 +13,7 @@ plugins:
   - "@semantic-release/changelog"
   - "@semantic-release/git"
   - "@semantic-release/github"
+  - "@semantic-release/exec"
 
 verifyConditions:
   - '@semantic-release/git'
@@ -98,12 +99,16 @@ prepare:
   - path: "@semantic-release/git"
   - path: "@semantic-release/changelog"
     changelogFile: "CHANGELOG.md"
+  - path: "@semantic-release/exec"
+    prepareCmd: ".release/prepare-release.sh ${nextRelease.version}"
 
 publish:
   - path: "@semantic-release/github"
     assets:
       - path: "CHANGELOG.md"
         label: "Changelog"
+      - path: "release/**"
+        label: "Distributed Communication Visualizer"
 
 success:
 
