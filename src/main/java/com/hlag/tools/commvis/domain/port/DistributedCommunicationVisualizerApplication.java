@@ -1,22 +1,22 @@
-package com.hlag.tools.commvis;
+package com.hlag.tools.commvis.domain.port;
 
+import com.hlag.tools.commvis.domain.command.ScannerCommand;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import picocli.CommandLine;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.hlag.tools.commvis")
 public class DistributedCommunicationVisualizerApplication implements CommandLineRunner, ExitCodeGenerator {
     private CommandLine.IFactory factory;
     private ScannerCommand scannerCommand;
+    private int exitCode;
 
     public DistributedCommunicationVisualizerApplication(CommandLine.IFactory factory, ScannerCommand scannerCommand) {
         this.factory = factory;
         this.scannerCommand = scannerCommand;
     }
-
-    private int exitCode;
 
     public static void main(String... args) {
         // let Spring instantiate and inject dependencies

@@ -1,5 +1,6 @@
-package com.hlag.tools.commvis;
+package com.hlag.tools.commvis.service;
 
+import com.hlag.tools.commvis.service.IScannerService;
 import org.reflections.Reflections;
 import org.springframework.stereotype.Service;
 
