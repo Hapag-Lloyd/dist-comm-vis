@@ -1,6 +1,6 @@
 package com.hlag.tools.commvis.domain.command;
 
-import com.hlag.tools.commvis.service.IScannerService;
+import com.hlag.tools.commvis.service.IEndpointScannerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ScannerCommandUnitTest {
     @Mock
-    private IScannerService scannerService;
+    private IEndpointScannerService scannerService;
 
     @BeforeEach
     public void init() {
@@ -20,14 +20,14 @@ class ScannerCommandUnitTest {
 
     @Test
     public void shouldAcceptThePackageName_whenCalledFromCommandLine() throws Exception {
-        int actualExitCode = new CommandLine(new ScannerCommand(scannerService)).execute("com.hlag");
+        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[] {scannerService})).execute("com.hlag");
 
         assertThat(actualExitCode).isEqualTo(0);
     }
 
     @Test
     public void shouldExitWithStatusCode2_whenCalledFromCommandLine_givenNoPackageName() throws Exception {
-        int actualExitCode = new CommandLine(new ScannerCommand(scannerService)).execute();
+        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[] {scannerService})).execute();
 
         assertThat(actualExitCode).isEqualTo(2);
     }
