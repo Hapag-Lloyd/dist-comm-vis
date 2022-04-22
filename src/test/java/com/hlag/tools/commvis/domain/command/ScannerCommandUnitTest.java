@@ -1,6 +1,6 @@
-package com.hlag.tools.commvis;
+package com.hlag.tools.commvis.domain.command;
 
-import com.github.stefanbirkner.systemlambda.SystemLambda;
+import com.hlag.tools.commvis.service.IScannerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -8,7 +8,6 @@ import org.mockito.MockitoAnnotations;
 import picocli.CommandLine;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ScannerCommandUnitTest {
     @Mock

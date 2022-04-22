@@ -1,5 +1,6 @@
-package com.hlag.tools.commvis;
+package com.hlag.tools.commvis.domain.command;
 
+import com.hlag.tools.commvis.service.IScannerService;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
