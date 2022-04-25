@@ -19,14 +19,14 @@ class JaxRsEndpointScannerImplTest {
     }
 
     @Test
-    public void shouldFindEndpointsForAllHttpMethods_whenScanClasspath() {
+    void shouldFindEndpointsForAllHttpMethods_whenScanClasspath() {
         Set<IEndpoint> actualEndpoints = clazz.scanClasspath("test.jaxrs");
 
         assertThat(actualEndpoints).extracting(IEndpoint::getType).containsExactlyInAnyOrder(HttpMethod.GET, HttpMethod.HEAD, HttpMethod.POST, HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.OPTIONS, HttpMethod.PATCH);
     }
 
     @Test
-    public void shouldExtractAllEndpointInformation_whenScanClasspath() {
+    void shouldExtractAllEndpointInformation_whenScanClasspath() {
         IEndpoint expectedEndpoint = new HttpEndpoint("test.jaxrs.Endpoints", "receivesAPostRequest", "POST");
 
         Set<IEndpoint> actualEndpoints = clazz.scanClasspath("test.jaxrs");
