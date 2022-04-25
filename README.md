@@ -12,9 +12,10 @@ Especially useful to visualize the communication between several services. This 
 up-to-date as it is generated automatically based on the current version of the software.
 
 ## Features
-- none so far. Early alpha stage.
+- extract JAX RS endpoints
+- writing a `model.json` file
 
 ## Planned Features
-- extract JAX RS endpoints
 - extract endpoints from Swagger YAML
 - create DOT file for visualization via [GraphViz](https://gitlab.com/graphviz/graphviz)
+- support user defined scanners for endpoints

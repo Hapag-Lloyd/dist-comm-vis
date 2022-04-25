@@ -1,5 +1,6 @@
 package com.hlag.tools.commvis.domain.command;
 
+import com.hlag.tools.commvis.service.ExportModelService;
 import com.hlag.tools.commvis.service.IEndpointScannerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,9 +10,12 @@ import picocli.CommandLine;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ScannerCommandUnitTest {
+class ScannerCommandTest {
     @Mock
     private IEndpointScannerService scannerService;
+
+    @Mock
+    ExportModelService exportModelService;
 
     @BeforeEach
     public void init() {
@@ -19,15 +23,15 @@ class ScannerCommandUnitTest {
     }
 
     @Test
-    public void shouldAcceptThePackageName_whenCalledFromCommandLine() throws Exception {
-        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[] {scannerService})).execute("com.hlag");
+    void shouldAcceptThePackageName_whenCalledFromCommandLine() throws Exception {
+        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[] {scannerService}, exportModelService)).execute("com.hlag");
 
         assertThat(actualExitCode).isEqualTo(0);
     }
 
     @Test
-    public void shouldExitWithStatusCode2_whenCalledFromCommandLine_givenNoPackageName() throws Exception {
-        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[] {scannerService})).execute();
+    void shouldExitWithStatusCode2_whenCalledFromCommandLine_givenNoPackageName() throws Exception {
+        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[] {scannerService}, exportModelService)).execute();
 
         assertThat(actualExitCode).isEqualTo(2);
     }
