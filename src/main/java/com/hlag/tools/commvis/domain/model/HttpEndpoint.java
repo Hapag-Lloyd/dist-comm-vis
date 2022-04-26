@@ -5,15 +5,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import javax.ws.rs.HttpMethod;
-
 @AllArgsConstructor
 @Getter
 @ToString
 @EqualsAndHashCode
 public class HttpEndpoint implements IEndpoint {
-    private String classname;
+    private String className;
     private String methodName;
 
     private String type;
+
 }

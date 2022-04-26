@@ -1,0 +1,10 @@
+{
+  "version": "###version###",
+  "endpoints": [
+    {
+      "class_name": "integration.Endpoints",
+      "method_name": "receivesAPostRequest",
+      "type": "POST"
+    }
+  ]
+}
