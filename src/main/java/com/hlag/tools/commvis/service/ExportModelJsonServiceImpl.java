@@ -13,21 +13,21 @@ import java.util.Collection;
 
 @Service
 @Slf4j
-public class ExportModelService {
+public class ExportModelJsonServiceImpl implements IExportModelService {
 
     private final ObjectMapper objectMapper;
     private final ExportModel model = new ExportModel();
 
-    public ExportModelService(ObjectMapper objectMapper, @Value("${git.tags}") String gitTag) {
+    public ExportModelJsonServiceImpl(ObjectMapper objectMapper, @Value("${git.tags}") String gitTag) {
         this.objectMapper = objectMapper;
         this.model.version = gitTag;
     }
 
-    public void writeJson(Collection<IEndpoint> endpoints, String filename) {
+    public void export(Collection<IEndpoint> endpoints, String filename) {
         model.endpoints = endpoints;
 
         try {
-            objectMapper.writerFor(ExportModel.class).writeValue(new File(filename), model);
+            objectMapper.writerFor(ExportModel.class).writeValue(new File(filename + ".json"), model);
         } catch (IOException e) {
             log.error("Failed to write model file.", e);
             ExceptionUtils.rethrow(e);

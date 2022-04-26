@@ -1,7 +1,8 @@
 package com.hlag.tools.commvis.domain.command;
 
-import com.hlag.tools.commvis.service.ExportModelService;
+import com.hlag.tools.commvis.service.ExportModelJsonServiceImpl;
 import com.hlag.tools.commvis.service.IEndpointScannerService;
+import com.hlag.tools.commvis.service.IExportModelService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -15,7 +16,7 @@ class ScannerCommandTest {
     private IEndpointScannerService scannerService;
 
     @Mock
-    ExportModelService exportModelService;
+    IExportModelService exportModelServices;
 
     @BeforeEach
     public void init() {
@@ -24,14 +25,14 @@ class ScannerCommandTest {
 
     @Test
     void shouldAcceptThePackageName_whenCalledFromCommandLine() throws Exception {
-        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[] {scannerService}, exportModelService)).execute("com.hlag");
+        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[] {scannerService}, new IExportModelService[] {exportModelServices})).execute("com.hlag");
 
         assertThat(actualExitCode).isEqualTo(0);
     }
 
     @Test
     void shouldExitWithStatusCode2_whenCalledFromCommandLine_givenNoPackageName() throws Exception {
-        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[] {scannerService}, exportModelService)).execute();
+        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[] {scannerService}, new IExportModelService[] {exportModelServices})).execute();
 
         assertThat(actualExitCode).isEqualTo(2);
     }
