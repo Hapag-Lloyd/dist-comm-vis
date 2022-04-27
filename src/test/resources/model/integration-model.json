@@ -1,6 +1,6 @@
 {
   "version": "###version###",
-  "endpoints": [
+  "http_endpoints": [
     {
       "class_name": "integration.Endpoints",
       "method_name": "receivesAPostRequest",

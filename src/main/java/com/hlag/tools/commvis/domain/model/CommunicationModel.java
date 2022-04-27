@@ -2,21 +2,20 @@ package com.hlag.tools.commvis.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.ToString;
 
+import java.util.Collection;
+
+/**
+ * Root level object holding the complete model of incoming and outgoing communication points.
+ */
 @AllArgsConstructor
-@Getter
 @ToString
 @EqualsAndHashCode
-public class HttpEndpoint implements IEndpoint {
-    private String className;
-    private String methodName;
+public class CommunicationModel {
+    private Collection<IEndpoint> endpoints;
 
-    private String type;
-
-    @Override
     public void visit(AbstractCommunicationModelVisitor visitor) {
-        visitor.visit(this);
+        endpoints.forEach(e -> e.visit(visitor));
     }
 }

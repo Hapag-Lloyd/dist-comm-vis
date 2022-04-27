@@ -1,41 +1,39 @@
 package com.hlag.tools.commvis.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hlag.tools.commvis.domain.model.IEndpoint;
+import com.hlag.tools.commvis.domain.model.CommunicationModel;
+import com.hlag.tools.commvis.domain.port.out.JsonCommunicationModelVisitor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collection;
 
+/**
+ * Convert the internal model into a JSON representation and save it to a file.
+ */
 @Service
 @Slf4j
 public class ExportModelJsonServiceImpl implements IExportModelService {
 
-    private final ObjectMapper objectMapper;
-    private final ExportModel model = new ExportModel();
+    private final JsonCommunicationModelVisitor visitor;
 
-    public ExportModelJsonServiceImpl(ObjectMapper objectMapper, @Value("${git.tags}") String gitTag) {
-        this.objectMapper = objectMapper;
-        this.model.version = gitTag;
+    public ExportModelJsonServiceImpl(JsonCommunicationModelVisitor jsonCommunicationModelVisitor) {
+        this.visitor = jsonCommunicationModelVisitor;
     }
 
-    public void export(Collection<IEndpoint> endpoints, String filename) {
-        model.endpoints = endpoints;
+    public void export(CommunicationModel model, String filename) {
+        model.visit(visitor);
 
-        try {
-            objectMapper.writerFor(ExportModel.class).writeValue(new File(filename + ".json"), model);
+        String jsonContent = visitor.getJson();
+
+        try (FileWriter fw = new FileWriter(new File(filename + ".json"))) {
+            fw.write(jsonContent);
         } catch (IOException e) {
             log.error("Failed to write model file.", e);
             ExceptionUtils.rethrow(e);
         }
     }
 
-    static class ExportModel {
-        String version;
-        Collection<IEndpoint> endpoints;
-    }
 }
