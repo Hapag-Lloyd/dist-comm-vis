@@ -1,5 +1,6 @@
 package com.hlag.tools.commvis.domain.command;
 
+import com.hlag.tools.commvis.domain.model.CommunicationModel;
 import com.hlag.tools.commvis.domain.model.IEndpoint;
 import com.hlag.tools.commvis.service.ExportModelJsonServiceImpl;
 import com.hlag.tools.commvis.service.IEndpointScannerService;
@@ -31,9 +32,10 @@ public class ScannerCommand implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         Set<IEndpoint> endpoints = new HashSet<>();
-
         Arrays.asList(scannerServices).forEach(s -> endpoints.addAll(s.scanClasspath(rootPackageName)));
-        Arrays.asList(exportModelServices).forEach(s -> s.export(endpoints, "model"));
+
+        CommunicationModel model = new CommunicationModel(endpoints);
+        Arrays.asList(exportModelServices).forEach(s -> s.export(model, "model"));
 
         log.info(String.valueOf(endpoints));
 

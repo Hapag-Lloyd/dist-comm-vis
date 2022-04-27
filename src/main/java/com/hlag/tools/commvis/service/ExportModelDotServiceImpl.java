@@ -1,41 +1,35 @@
 package com.hlag.tools.commvis.service;
 
-import com.hlag.tools.commvis.domain.model.IEndpoint;
+import com.hlag.tools.commvis.domain.model.CommunicationModel;
+import com.hlag.tools.commvis.domain.port.out.DotCommunicationModelVisitor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collection;
 
+/**
+ * Convert the internal model into a DOT (GraphViz) representation and save it to a file.
+ */
 @Service
 @Slf4j
 public class ExportModelDotServiceImpl implements IExportModelService {
-    public void export(Collection<IEndpoint> endpoints, String filename) {
-        StringBuilder sb = new StringBuilder();
+    private final DotCommunicationModelVisitor visitor;
 
-        sb.append("digraph G {\n");
+    public ExportModelDotServiceImpl(DotCommunicationModelVisitor visitor) {
+        this.visitor = visitor;
+    }
 
-        int nodeNumber = 0;
-        for (IEndpoint endpoint : endpoints) {
-            String label = endpoint.getClassName() + "." + endpoint.getMethodName() + "\\n" + endpoint.getType();
-            sb.append(String.format("  \"%d\" [label=\"%s\"]\n", nodeNumber, label));
-            ++nodeNumber;
-        }
+    public void export(CommunicationModel model, String filename) {
+        model.visit(visitor);
+        String dotContent = visitor.getDotContent();
 
-        sb.append("\n");
-
-        for (int i = 0; i < endpoints.size(); i++) {
-            sb.append(String.format("  \"%d\" -> \"application\"\n", i));
-        }
-
-        sb.append("}");
-
-        try (FileWriter fw = new FileWriter((filename + ".dot"))) {
-            fw.write(sb.toString());
+        try (FileWriter fw = new FileWriter(new File(filename + ".dot"))) {
+            fw.write(dotContent);
         } catch (IOException e) {
-            log.error("Failed to write dot file.", e);
+            log.error("Failed to write dot model file.", e);
             ExceptionUtils.rethrow(e);
         }
     }

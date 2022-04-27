@@ -1,9 +1,13 @@
 package com.hlag.tools.commvis.service;
 
-import com.hlag.tools.commvis.domain.model.IEndpoint;
+import com.hlag.tools.commvis.domain.model.CommunicationModel;
 
-import java.util.Collection;
-
+/**
+ * Exports the internal model.
+ */
 public interface IExportModelService {
-    void export(Collection<IEndpoint> endpoints, String filename);
+    /**
+     * Converts the internal model and stores it as file.
+     */
+    void export(CommunicationModel model, String filename);
 }

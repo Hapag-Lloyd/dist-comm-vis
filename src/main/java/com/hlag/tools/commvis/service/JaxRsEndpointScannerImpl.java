@@ -2,7 +2,6 @@ package com.hlag.tools.commvis.service;
 
 import com.hlag.tools.commvis.domain.model.HttpEndpoint;
 import com.hlag.tools.commvis.domain.model.IEndpoint;
-import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ import java.util.Set;
 import static org.reflections.scanners.Scanners.MethodsAnnotated;
 
 @Service
-@Slf4j
 public class JaxRsEndpointScannerImpl implements IEndpointScannerService {
     @Override
     public Set<IEndpoint> scanClasspath(String rootPackageName) {
@@ -30,9 +28,7 @@ public class JaxRsEndpointScannerImpl implements IEndpointScannerService {
         for (Class<? extends Annotation> httpMethod : httpMethodsToScan) {
             Set<Method> methods = reflections.get(MethodsAnnotated.with(httpMethod).as(Method.class));
 
-            methods.forEach(m -> {
-                endpoints.add(new HttpEndpoint(m.getDeclaringClass().getCanonicalName(), m.getName(), httpMethod.getSimpleName()));
-            });
+            methods.forEach(m -> endpoints.add(new HttpEndpoint(m.getDeclaringClass().getCanonicalName(), m.getName(), httpMethod.getSimpleName())));
         }
 
         return endpoints;
