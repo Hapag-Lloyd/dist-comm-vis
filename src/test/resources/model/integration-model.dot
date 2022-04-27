@@ -1,5 +1,5 @@
 digraph G {
-  "0" [label="integration.Endpoints.receivesAPostRequest\nPOST"]
+  "0" [label="integration.endpoint.CustomerEndpoint.receivesAPostRequest\nPOST"]
 
   "0" -> "application"
 }
