@@ -18,7 +18,7 @@ java -jar dist-comm-vis.jar -cp jar-to-analyze.jar root.package.name.to.analyze
 
 dot -Tpng model.dot > model.png
 ```
-![Communication](image/communication.svg)
+![Communication](image/communication.png)
 
 ## Features
 - extract JAX RS endpoints
