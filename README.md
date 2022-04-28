@@ -14,7 +14,7 @@ up-to-date as it is generated automatically based on the current version of the 
 
 # Example
 ```shell
-java -jar dist-comm-vis.jar -cp jar-to-analyze.jar root.package.name.to.analyze
+java -cp jar-to-analyze.jar -jar dist-comm-vis.jar root.package.name.to.analyze
 
 dot -Tpng model.dot > model.png
 ```
