@@ -18,7 +18,7 @@ java -jar dist-comm-vis.jar -cp jar-to-analyze.jar root.package.name.to.analyze
 
 dot -Tpng model.dot > model.png
 ```
-![Communication](image/communication.png)
+![Communication](image/communication.svg)
 
 ## Features
 - extract JAX RS endpoints
@@ -28,4 +28,7 @@ dot -Tpng model.dot > model.png
 ## Planned Features
 - extract endpoints from Swagger YAML
 - extract Kafka consumers and producers
+- extract JMS consumers and producers
+- extract SNS producers
+- extract SQS consumers and producers
 - support user defined scanners

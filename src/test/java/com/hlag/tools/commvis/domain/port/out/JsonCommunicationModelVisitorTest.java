@@ -23,8 +23,8 @@ class JsonCommunicationModelVisitorTest {
     @Test
     void shouldCreateValidJson_whenGetJson_givenMultipleHttpEndpoints() {
         Collection<IEndpoint> givenHttpEndpoints = new HashSet<>();
-        givenHttpEndpoints.add(new HttpEndpoint("classname", "methodname", "type"));
-        givenHttpEndpoints.add(new HttpEndpoint("classname1", "methodname1", "type1"));
+        givenHttpEndpoints.add(new HttpEndpoint("classname", "methodname", "type", "path"));
+        givenHttpEndpoints.add(new HttpEndpoint("classname1", "methodname1", "type1", "path1"));
 
         CommunicationModel givenModel = new CommunicationModel(givenHttpEndpoints);
 

@@ -45,6 +45,7 @@ public class JsonCommunicationModelVisitor extends AbstractCommunicationModelVis
             generator.writeStringField("class_name", httpEndpoint.getClassName());
             generator.writeStringField("method_name", httpEndpoint.getMethodName());
             generator.writeStringField("type", httpEndpoint.getType());
+            generator.writeStringField("path", httpEndpoint.getPath());
             generator.writeEndObject();
         } catch (IOException e) {
             log.error("Failed to convert HttpEndpoint to JSON.", e);

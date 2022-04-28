@@ -14,6 +14,7 @@ public class HttpEndpoint implements IEndpoint {
     private String methodName;
 
     private String type;
+    private String path;
 
     @Override
     public void visit(AbstractCommunicationModelVisitor visitor) {

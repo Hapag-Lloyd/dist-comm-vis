@@ -7,14 +7,15 @@ import org.reflections.scanners.Scanners;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Application;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.reflections.scanners.Scanners.MethodsAnnotated;
+import static org.reflections.scanners.Scanners.SubTypes;
 
 @Service
 public class JaxRsEndpointScannerImpl implements IEndpointScannerService {
@@ -28,7 +29,14 @@ public class JaxRsEndpointScannerImpl implements IEndpointScannerService {
         for (Class<? extends Annotation> httpMethod : httpMethodsToScan) {
             Set<Method> methods = reflections.get(MethodsAnnotated.with(httpMethod).as(Method.class));
 
-            methods.forEach(m -> endpoints.add(new HttpEndpoint(m.getDeclaringClass().getCanonicalName(), m.getName(), httpMethod.getSimpleName())));
+            methods.forEach(m -> {
+                Path pathOnMethod = m.getAnnotation(Path.class);
+                Path pathOnClass = m.getDeclaringClass().getAnnotation(Path.class);
+
+                String path = Stream.of(pathOnClass, pathOnMethod).filter(Objects::nonNull).map(p -> p.value()).collect(Collectors.joining("/"));
+
+                endpoints.add(new HttpEndpoint(m.getDeclaringClass().getCanonicalName(), m.getName(), httpMethod.getSimpleName(), path));
+            });
         }
 
         return endpoints;

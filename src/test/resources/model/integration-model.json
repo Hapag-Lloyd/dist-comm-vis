@@ -2,9 +2,28 @@
   "version": "###version###",
   "http_endpoints": [
     {
-      "class_name": "integration.Endpoints",
-      "method_name": "receivesAPostRequest",
-      "type": "POST"
+      "class_name": "integration.endpoint.CustomerEndpoint",
+      "method_name": "deleteCustomer",
+      "type": "DELETE",
+      "path": "sales/customers/{customerId}"
+    },
+    {
+      "class_name": "integration.endpoint.CustomerEndpoint",
+      "method_name": "createCustomer",
+      "type": "POST",
+      "path": "sales/customers"
+    },
+    {
+      "class_name": "integration.endpoint.CustomerEndpoint",
+      "method_name": "readCustomer",
+      "type": "GET",
+      "path": "sales/customers/{customerId}"
+    },
+    {
+      "class_name": "integration.endpoint.CustomerEndpoint",
+      "method_name": "updateCustomer",
+      "type": "PUT",
+      "path": "sales/customers/{customerId}"
     }
   ]
 }

@@ -1,5 +1,11 @@
 digraph G {
-  "0" [label="integration.endpoint.CustomerEndpoint.receivesAPostRequest\nPOST"]
+  "0" [label="integration.endpoint.CustomerEndpoint.deleteCustomer\nsales/customers/{customerId}\nDELETE"]
+  "1" [label="integration.endpoint.CustomerEndpoint.createCustomer\nsales/customers\nPOST"]
+  "2" [label="integration.endpoint.CustomerEndpoint.readCustomer\nsales/customers/{customerId}\nGET"]
+  "3" [label="integration.endpoint.CustomerEndpoint.updateCustomer\nsales/customers/{customerId}\nPUT"]
 
   "0" -> "application"
+  "1" -> "application"
+  "2" -> "application"
+  "3" -> "application"
 }
