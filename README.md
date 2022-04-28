@@ -28,4 +28,7 @@ dot -Tpng model.dot > model.png
 ## Planned Features
 - extract endpoints from Swagger YAML
 - extract Kafka consumers and producers
+- extract JMS consumers and producers
+- extract SNS producers
+- extract SQS consumers and producers
 - support user defined scanners

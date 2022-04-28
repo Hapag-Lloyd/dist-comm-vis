@@ -27,7 +27,7 @@ class JaxRsEndpointScannerImplTest {
 
     @Test
     void shouldExtractAllEndpointInformation_whenScanClasspath() {
-        IEndpoint expectedEndpoint = new HttpEndpoint("test.jaxrs.Endpoints", "receivesAPostRequest", "POST");
+        IEndpoint expectedEndpoint = new HttpEndpoint("test.jaxrs.Endpoints", "receivesAPostRequest", "POST", "endpoint/a");
 
         Set<IEndpoint> actualEndpoints = clazz.scanClasspath("test.jaxrs");
 

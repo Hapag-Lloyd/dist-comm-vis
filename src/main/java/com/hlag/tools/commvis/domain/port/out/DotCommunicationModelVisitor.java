@@ -21,7 +21,7 @@ public class DotCommunicationModelVisitor extends AbstractCommunicationModelVisi
 
     @Override
     public void visit(HttpEndpoint httpEndpoint) {
-        String label = httpEndpoint.getClassName() + "." + httpEndpoint.getMethodName() + "\\n" + httpEndpoint.getType();
+        String label = httpEndpoint.getClassName() + "." + httpEndpoint.getMethodName() + "\\n" + httpEndpoint.getPath() + "\\n" + httpEndpoint.getType();
         nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\"]\n", nodes, label));
 
         graphDefinitions.append(String.format("  \"%d\" -> \"application\"\n", nodes));
