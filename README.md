@@ -14,8 +14,13 @@ up-to-date as it is generated automatically based on the current version of the 
 
 # Example
 ```shell
-java -jar dist-comm-vis.jar -cp jar-to-analyze.jar root.package.name.to.analyze
+git clone git@github.com:Hapag-Lloyd/dist-comm-vis.git
+cd dist-comm-vis
 
+mvn package
+java -cp "target/dist-comm-vis-0.0.1-SNAPSHOT.jar;target/test-classes" org.springframework.boot.loader.JarLauncher integration
+
+yum install graphviz
 dot -Tpng model.dot > model.png
 ```
 ![Communication](image/communication.png)

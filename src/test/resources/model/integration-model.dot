@@ -3,6 +3,7 @@ digraph G {
   "1" [label="integration.endpoint.CustomerEndpoint.createCustomer\nsales/customers\nPOST"]
   "2" [label="integration.endpoint.CustomerEndpoint.readCustomer\nsales/customers/{customerId}\nGET"]
   "3" [label="integration.endpoint.CustomerEndpoint.updateCustomer\nsales/customers/{customerId}\nPUT"]
+  "application" [shape=box]
 
   "0" -> "application"
   "1" -> "application"
