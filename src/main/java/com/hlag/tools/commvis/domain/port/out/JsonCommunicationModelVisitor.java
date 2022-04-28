@@ -51,6 +51,10 @@ public class JsonCommunicationModelVisitor extends AbstractCommunicationModelVis
             ExceptionUtils.rethrow(e);
         }
 
-        this.httpEndpointsJson.append(jsonObjectWriter.toString());
+        if (httpEndpointsJson.length() > 0) {
+            httpEndpointsJson.append(',');
+        }
+
+        httpEndpointsJson.append(jsonObjectWriter.toString());
     }
 }
