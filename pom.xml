@@ -14,7 +14,28 @@
     <artifactId>dist-comm-vis</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Distributed Communication Visualizer</name>
-    <description>Extracts endpoints and message handlers from Java application for visualization</description>
+    <description>Extracts endpoints and message handlers from Java application for visualization as graph.</description>
+    <url>https://github.com/Hapag-Lloyd/dist-comm-vis</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://github.com/Hapag-Lloyd/dist-comm-vis/blob/main/LICENSE</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <organization>Hapag-Lloyd AG</organization>
+            <organizationUrl>https://www.hapag-lloyd.com/</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/Hapag-Lloyd/dist-comm-vis.git</connection>
+        <developerConnection>scm:git:ssh://github.com:Hapag-Lloyd/dist-comm-vis.git</developerConnection>
+        <url>https://github.com/Hapag-Lloyd/dist-comm-vis/tree/main</url>
+    </scm>
 
     <properties>
         <java.version>1.8</java.version>
@@ -148,6 +169,32 @@
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
