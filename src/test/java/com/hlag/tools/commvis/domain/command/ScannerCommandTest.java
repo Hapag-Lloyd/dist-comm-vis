@@ -1,6 +1,5 @@
 package com.hlag.tools.commvis.domain.command;
 
-import com.hlag.tools.commvis.service.ExportModelJsonServiceImpl;
 import com.hlag.tools.commvis.service.IEndpointScannerService;
 import com.hlag.tools.commvis.service.IExportModelService;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,10 +12,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ScannerCommandTest {
     @Mock
-    private IEndpointScannerService scannerService;
-
-    @Mock
     IExportModelService exportModelServices;
+    @Mock
+    private IEndpointScannerService scannerService;
 
     @BeforeEach
     public void init() {
@@ -24,15 +22,22 @@ class ScannerCommandTest {
     }
 
     @Test
-    void shouldAcceptThePackageName_whenCalledFromCommandLine() throws Exception {
-        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[] {scannerService}, new IExportModelService[] {exportModelServices})).execute("com.hlag");
+    void shouldAcceptProjectIdAndPackageName_whenCalledFromCommandLine() {
+        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[]{scannerService}, new IExportModelService[]{exportModelServices})).execute("4711", "com.hlag");
 
-        assertThat(actualExitCode).isEqualTo(0);
+        assertThat(actualExitCode).isZero();
     }
 
     @Test
-    void shouldExitWithStatusCode2_whenCalledFromCommandLine_givenNoPackageName() throws Exception {
-        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[] {scannerService}, new IExportModelService[] {exportModelServices})).execute();
+    void shouldExitWithStatusCode2_whenCalledFromCommandLine_givenNoParameters() {
+        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[]{scannerService}, new IExportModelService[]{exportModelServices})).execute();
+
+        assertThat(actualExitCode).isEqualTo(2);
+    }
+
+    @Test
+    void shouldExitWithStatusCode2_whenCalledFromCommandLine_givenProjectIdOnly() {
+        int actualExitCode = new CommandLine(new ScannerCommand(new IEndpointScannerService[]{scannerService}, new IExportModelService[]{exportModelServices})).execute("4711");
 
         assertThat(actualExitCode).isEqualTo(2);
     }

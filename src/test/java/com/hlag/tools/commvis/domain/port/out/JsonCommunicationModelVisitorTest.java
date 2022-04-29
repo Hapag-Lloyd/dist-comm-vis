@@ -26,7 +26,7 @@ class JsonCommunicationModelVisitorTest {
         givenHttpEndpoints.add(new HttpEndpoint("classname", "methodname", "type", "path"));
         givenHttpEndpoints.add(new HttpEndpoint("classname1", "methodname1", "type1", "path1"));
 
-        CommunicationModel givenModel = new CommunicationModel(givenHttpEndpoints);
+        CommunicationModel givenModel = new CommunicationModel("4711", "my-project", givenHttpEndpoints);
 
         Assertions.assertThatNoException().isThrownBy(() -> {
             givenModel.visit(jsonCommunicationModelVisitor);

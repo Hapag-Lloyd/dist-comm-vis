@@ -21,9 +21,14 @@ public class DotCommunicationModelVisitor extends AbstractCommunicationModelVisi
     }
 
     @Override
+    public void visit(CommunicationModel model) {
+        nodeDefinitions.append(String.format("  \"application\" [label=\"%s\" shape=\"rectangle\"]\n", model.getProjectName()));
+    }
+
+    @Override
     public void visit(HttpEndpoint endpoint) {
         String label = endpoint.getClassName() + "." + endpoint.getMethodName() + "\\n" + endpoint.getPath() + "\\n" + endpoint.getType();
-        nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\";shape=\"ellipse\"]\n", nodes, label));
+        nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\" shape=\"ellipse\"]\n", nodes, label));
 
         graphDefinitions.append(String.format("  \"%d\" -> \"application\"\n", nodes));
 
@@ -33,7 +38,7 @@ public class DotCommunicationModelVisitor extends AbstractCommunicationModelVisi
     @Override
     public void visit(JmsEndpoint endpoint) {
         String label = endpoint.getClassName() + "\\n" + endpoint.getDestination() + "\\n" + endpoint.getDestinationType();
-        nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\";shape=\"diamond\"]\n", nodes, label));
+        nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\" shape=\"diamond\"]\n", nodes, label));
 
         graphDefinitions.append(String.format("  \"%d\" -> \"application\"\n", nodes));
 
