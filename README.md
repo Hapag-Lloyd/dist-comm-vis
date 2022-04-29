@@ -14,11 +14,10 @@ up-to-date as it is generated automatically based on the current version of the 
 
 # Example
 ```shell
-git clone git@github.com:Hapag-Lloyd/dist-comm-vis.git
-cd dist-comm-vis
-
-mvn package
-java -cp "target/dist-comm-vis-0.0.1-SNAPSHOT.jar;target/test-classes" org.springframework.boot.loader.JarLauncher integration
+release="1.11.1"
+curl -o analyzer.jar https://github.com/Hapag-Lloyd/dist-comm-vis/releases/download/${RELEASE}/analyzer-${RELEASE}.jar
+ 
+java -cp "analyzer.jar;target/test-classes" org.springframework.boot.loader.JarLauncher --name=my-service-1 1234 integration
 
 yum install graphviz
 dot -Tpng model.dot > model.png
