@@ -2,6 +2,7 @@
 target/
 node_modules/
 
+*.iml
 model.json
 model.dot
 my-file.dot
