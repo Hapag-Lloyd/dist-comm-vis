@@ -26,14 +26,15 @@ dot -Tpng model.dot > model.png
 ![Communication](image/communication.png)
 
 ## Features
-- extract JAX RS endpoints
+- extract JAX RS consumers
+- extract JMS consumers
 - write a `model.json` file
 - write a `model.dot` file for [GraphViz](https://gitlab.com/graphviz/graphviz)
 
 ## Planned Features
 - extract endpoints from Swagger YAML
 - extract Kafka consumers and producers
-- extract JMS consumers and producers
+- extract JMS producers
 - extract SNS producers
 - extract SQS consumers and producers
 - support user defined scanners
