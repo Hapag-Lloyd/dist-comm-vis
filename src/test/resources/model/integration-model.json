@@ -25,5 +25,12 @@
       "type": "PUT",
       "path": "sales/customers/{customerId}"
     }
+  ],
+  "jms_endpoints": [
+    {
+      "class_name": "integration.endpoint.CustomerCancelledOrderReceiver",
+      "destination": "jms/customer/orderCancelled",
+      "destination_type": "javax.jms.Queue"
+    }
   ]
 }

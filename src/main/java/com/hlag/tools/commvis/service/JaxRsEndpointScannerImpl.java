@@ -7,7 +7,6 @@ import org.reflections.scanners.Scanners;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Application;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -15,12 +14,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.reflections.scanners.Scanners.MethodsAnnotated;
-import static org.reflections.scanners.Scanners.SubTypes;
 
+/**
+ * Scans the classpath for JMS endpoints.
+ */
 @Service
 public class JaxRsEndpointScannerImpl implements IEndpointScannerService {
     @Override
-    public Set<IEndpoint> scanClasspath(String rootPackageName) {
+    public Collection<IEndpoint> scanClasspath(String rootPackageName) {
         Set<IEndpoint> endpoints = new HashSet<>();
         List<Class<? extends Annotation>> httpMethodsToScan = Arrays.asList(DELETE.class, GET.class, HEAD.class, OPTIONS.class, PATCH.class, POST.class, PUT.class);
 
