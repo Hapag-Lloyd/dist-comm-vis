@@ -1,5 +1,5 @@
 digraph G {
-  "application" [label="application" shape="rectangle"]
+  "application" [label="my-project" shape="rectangle"]
   "0" [label="integration.endpoint.CustomerEndpoint.deleteCustomer\nsales/customers/{customerId}\nDELETE" shape="ellipse"]
   "1" [label="integration.endpoint.CustomerCancelledOrderReceiver\njms/customer/orderCancelled\njavax.jms.Queue" shape="diamond"]
   "2" [label="integration.endpoint.CustomerEndpoint.createCustomer\nsales/customers\nPOST" shape="ellipse"]

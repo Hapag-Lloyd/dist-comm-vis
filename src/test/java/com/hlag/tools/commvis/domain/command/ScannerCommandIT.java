@@ -32,7 +32,7 @@ class ScannerCommandIT {
     void shouldMatchCurrentModel_whenWriteJson() throws Exception {
         String expectedJson = contentOf(new File("src/test/resources/model/integration-model.json"));
 
-        new CommandLine(new ScannerCommand(scannerServices, exportModelServices)).execute("-n=my-project", "4711", "integration");
+        new CommandLine(new ScannerCommand(scannerServices, exportModelServices)).execute("--name=my-project", "4711", "integration");
 
         File actualJsonFile = new File("model.json");
 
@@ -44,7 +44,7 @@ class ScannerCommandIT {
     void shouldMatchCurrentModel_whenWriteDot() {
         String expectedDot = contentOf(new File("src/test/resources/model/integration-model.dot"));
 
-        new CommandLine(new ScannerCommand(scannerServices, exportModelServices)).execute("-n my-project", "4711", "integration");
+        new CommandLine(new ScannerCommand(scannerServices, exportModelServices)).execute("-n", "my-project", "4711", "integration");
 
         File currentDotFile = new File("model.dot");
 
