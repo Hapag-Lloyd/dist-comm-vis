@@ -3,6 +3,7 @@ package com.hlag.tools.commvis.domain.port.out;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.hlag.tools.commvis.domain.model.AbstractCommunicationModelVisitor;
+import com.hlag.tools.commvis.domain.model.CommunicationModel;
 import com.hlag.tools.commvis.domain.model.HttpEndpoint;
 import com.hlag.tools.commvis.domain.model.JmsEndpoint;
 import lombok.extern.slf4j.Slf4j;
@@ -22,13 +23,19 @@ public class JsonCommunicationModelVisitor extends AbstractCommunicationModelVis
     private String version;
     private StringBuilder httpEndpointsJson = new StringBuilder();
     private StringBuilder jmsEndpointsJson = new StringBuilder();
+    private StringBuilder modelSettings = new StringBuilder();
 
     public JsonCommunicationModelVisitor(@Value("${git.tags}") String gitTag) {
         this.version = gitTag;
     }
 
     public String getJson() {
-        return String.format("{\"version\": \"%s\", \"http_endpoints\": [%s], \"jms_endpoints\": [%s]}", version, httpEndpointsJson, jmsEndpointsJson);
+        return String.format("{%s, \"http_endpoints\": [%s], \"jms_endpoints\": [%s]}", modelSettings, httpEndpointsJson, jmsEndpointsJson);
+    }
+
+    @Override
+    public void visit(CommunicationModel model) {
+        modelSettings.append(String.format("\"version\": \"%s\", \"id\": \"%s\", \"name\": \"%s\"", version, model.getProjectId(), model.getProjectName()));
     }
 
     @Override

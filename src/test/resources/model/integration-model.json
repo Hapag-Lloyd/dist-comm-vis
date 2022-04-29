@@ -1,5 +1,7 @@
 {
   "version": "###version###",
+  "id": "4711",
+  "name": "my-project",
   "http_endpoints": [
     {
       "class_name": "integration.endpoint.CustomerEndpoint",
