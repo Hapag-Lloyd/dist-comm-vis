@@ -13,4 +13,7 @@ mvn versions:set -DnewVersion=$JAR_VERSION
 # Package the new library version and copy it to release folder
 # These files will be upload to github by @semantic-release/github
 mvn package
-mkdir release && cp target/*.jar release
+
+# copy files to release folder which is published on Github
+mkdir release
+find . -maxdepth 3 -name "*.jar" -exec cp {} release/ \;

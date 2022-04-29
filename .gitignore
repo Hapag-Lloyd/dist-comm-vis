@@ -1,6 +1,7 @@
 .idea/
 target/
 node_modules/
+release/
 
 *.iml
 model.json
