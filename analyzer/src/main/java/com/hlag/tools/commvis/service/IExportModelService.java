@@ -1,6 +1,6 @@
 package com.hlag.tools.commvis.service;
 
-import com.hlag.tools.commvis.domain.model.CommunicationModel;
+import com.hlag.tools.commvis.analyzer.model.CommunicationModel;
 
 /**
  * Exports the internal model.

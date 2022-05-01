@@ -1,7 +1,8 @@
 package com.hlag.tools.commvis.service;
 
-import com.hlag.tools.commvis.domain.model.IEndpoint;
-import com.hlag.tools.commvis.domain.model.JmsEndpoint;
+import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
+import com.hlag.tools.commvis.analyzer.model.JmsReceiver;
+import com.hlag.tools.commvis.analyzer.service.IScannerService;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,10 @@ import java.util.Set;
 import static org.reflections.scanners.Scanners.TypesAnnotated;
 
 @Service
-public class JmsEndpointScannerImpl implements IEndpointScannerService {
+public class JmsEndpointScannerImpl implements IScannerService {
     @Override
-    public Collection<IEndpoint> scanClasspath(String rootPackageName) {
-        Set<IEndpoint> endpoints = new HashSet<>();
+    public Collection<ISenderReceiverCommunication> scanSenderAndReceiver(String rootPackageName) {
+        Set<ISenderReceiverCommunication> endpoints = new HashSet<>();
 
         Reflections reflections = new Reflections(rootPackageName, Scanners.values());
         Set<Class<?>> classes = reflections.get(TypesAnnotated.with(MessageDriven.class).asClass());
@@ -36,7 +37,7 @@ public class JmsEndpointScannerImpl implements IEndpointScannerService {
                 }
             }
 
-            endpoints.add(new JmsEndpoint(c.getCanonicalName(), destinationType, destination));
+            endpoints.add(new JmsReceiver(c.getCanonicalName(), destinationType, destination));
         });
 
         return endpoints;

@@ -1,9 +1,9 @@
 package com.hlag.tools.commvis.domain.port.out;
 
-import com.hlag.tools.commvis.domain.model.AbstractCommunicationModelVisitor;
-import com.hlag.tools.commvis.domain.model.CommunicationModel;
-import com.hlag.tools.commvis.domain.model.HttpEndpoint;
-import com.hlag.tools.commvis.domain.model.JmsEndpoint;
+import com.hlag.tools.commvis.analyzer.model.AbstractCommunicationModelVisitor;
+import com.hlag.tools.commvis.analyzer.model.CommunicationModel;
+import com.hlag.tools.commvis.analyzer.model.HttpReceiver;
+import com.hlag.tools.commvis.analyzer.model.JmsReceiver;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,7 +26,7 @@ public class DotCommunicationModelVisitor extends AbstractCommunicationModelVisi
     }
 
     @Override
-    public void visit(HttpEndpoint endpoint) {
+    public void visit(HttpReceiver endpoint) {
         String label = endpoint.getClassName() + "." + endpoint.getMethodName() + "\\n" + endpoint.getPath() + "\\n" + endpoint.getType();
         nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\" shape=\"ellipse\"]\n", nodes, label));
 
@@ -36,7 +36,7 @@ public class DotCommunicationModelVisitor extends AbstractCommunicationModelVisi
     }
 
     @Override
-    public void visit(JmsEndpoint endpoint) {
+    public void visit(JmsReceiver endpoint) {
         String label = endpoint.getClassName() + "\\n" + endpoint.getDestination() + "\\n" + endpoint.getDestinationType();
         nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\" shape=\"diamond\"]\n", nodes, label));
 

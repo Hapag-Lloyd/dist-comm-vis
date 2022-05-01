@@ -29,11 +29,11 @@ dot -Tpng model.dot > model.png
 - extract JMS consumers
 - write a `model.json` file
 - write a `model.dot` file for [GraphViz](https://gitlab.com/graphviz/graphviz)
-
+- support user defined scanners (see https://github.com/Hapag-Lloyd/dist-comm-vis-api)
+- 
 ## Planned Features
 - extract endpoints from Swagger YAML
 - extract Kafka consumers and producers
 - extract JMS producers
 - extract SNS producers
 - extract SQS consumers and producers
-- support user defined scanners

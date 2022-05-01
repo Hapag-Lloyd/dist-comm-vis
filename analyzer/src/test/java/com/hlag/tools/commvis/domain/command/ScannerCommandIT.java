@@ -1,5 +1,6 @@
 package com.hlag.tools.commvis.domain.command;
 
+import com.hlag.tools.commvis.analyzer.service.IScannerService;
 import com.hlag.tools.commvis.domain.adapter.PropertyFilesConfiguration;
 import com.hlag.tools.commvis.domain.port.out.DotCommunicationModelVisitor;
 import com.hlag.tools.commvis.domain.port.out.JsonCommunicationModelVisitor;
@@ -20,7 +21,7 @@ import static org.assertj.core.api.Assertions.contentOf;
 @SpringBootTest(classes = {JaxRsEndpointScannerImpl.class, ScannerCommand.class, ExportModelJsonServiceImpl.class, ExportModelDotServiceImpl.class, PropertyFilesConfiguration.class, JsonCommunicationModelVisitor.class, DotCommunicationModelVisitor.class, JmsEndpointScannerImpl.class})
 class ScannerCommandIT {
     @Autowired
-    private IEndpointScannerService[] scannerServices;
+    private IScannerService[] scannerServices;
 
     @Autowired
     private IExportModelService[] exportModelServices;
