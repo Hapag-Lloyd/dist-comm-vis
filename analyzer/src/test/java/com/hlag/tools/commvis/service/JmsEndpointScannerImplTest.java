@@ -1,6 +1,6 @@
 package com.hlag.tools.commvis.service;
 
-import com.hlag.tools.commvis.domain.model.JmsEndpoint;
+import com.hlag.tools.commvis.analyzer.model.JmsReceiver;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,16 +19,16 @@ class JmsEndpointScannerImplTest {
 
     @Test
     void shouldFindJmsReceivers_whenScanClasspath() {
-        Collection<JmsEndpoint> actualEndpoints = (Collection) clazz.scanClasspath("test.jms");
+        Collection<JmsReceiver> actualEndpoints = (Collection) clazz.scanSenderAndReceiver("test.jms");
 
         Assertions.assertThat(actualEndpoints).size().isEqualTo(1);
     }
 
     @Test
     void shouldExtractAllEndpointInformation_whenScanClasspath() {
-        JmsEndpoint expectedEndpoint = new JmsEndpoint("test.jms.CustomerCancelledOrderReceiver", "javax.jms.Queue", "jms/customer/orderCancelled");
+        JmsReceiver expectedEndpoint = new JmsReceiver("test.jms.CustomerCancelledOrderReceiver", "javax.jms.Queue", "jms/customer/orderCancelled");
 
-        Collection<JmsEndpoint> actualEndpoints = (Collection) clazz.scanClasspath("test.jms");
+        Collection<JmsReceiver> actualEndpoints = (Collection) clazz.scanSenderAndReceiver("test.jms");
 
         assertThat(actualEndpoints).contains(expectedEndpoint);
     }

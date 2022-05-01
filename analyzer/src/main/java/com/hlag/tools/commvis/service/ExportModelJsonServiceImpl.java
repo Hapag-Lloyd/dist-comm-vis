@@ -1,6 +1,6 @@
 package com.hlag.tools.commvis.service;
 
-import com.hlag.tools.commvis.domain.model.CommunicationModel;
+import com.hlag.tools.commvis.analyzer.model.CommunicationModel;
 import com.hlag.tools.commvis.domain.port.out.JsonCommunicationModelVisitor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;

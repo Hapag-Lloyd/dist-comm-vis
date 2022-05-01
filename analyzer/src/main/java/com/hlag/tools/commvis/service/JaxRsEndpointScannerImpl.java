@@ -1,7 +1,8 @@
 package com.hlag.tools.commvis.service;
 
-import com.hlag.tools.commvis.domain.model.HttpEndpoint;
-import com.hlag.tools.commvis.domain.model.IEndpoint;
+import com.hlag.tools.commvis.analyzer.model.HttpReceiver;
+import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
+import com.hlag.tools.commvis.analyzer.service.IScannerService;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,10 @@ import static org.reflections.scanners.Scanners.MethodsAnnotated;
  * Scans the classpath for JMS endpoints.
  */
 @Service
-public class JaxRsEndpointScannerImpl implements IEndpointScannerService {
+public class JaxRsEndpointScannerImpl implements IScannerService {
     @Override
-    public Collection<IEndpoint> scanClasspath(String rootPackageName) {
-        Set<IEndpoint> endpoints = new HashSet<>();
+    public Collection<ISenderReceiverCommunication> scanSenderAndReceiver(String rootPackageName) {
+        Set<ISenderReceiverCommunication> endpoints = new HashSet<>();
         List<Class<? extends Annotation>> httpMethodsToScan = Arrays.asList(DELETE.class, GET.class, HEAD.class, OPTIONS.class, PATCH.class, POST.class, PUT.class);
 
         Reflections reflections = new Reflections(rootPackageName, Scanners.values());
@@ -36,7 +37,7 @@ public class JaxRsEndpointScannerImpl implements IEndpointScannerService {
 
                 String path = Stream.of(pathOnClass, pathOnMethod).filter(Objects::nonNull).map(p -> p.value()).collect(Collectors.joining("/"));
 
-                endpoints.add(new HttpEndpoint(m.getDeclaringClass().getCanonicalName(), m.getName(), httpMethod.getSimpleName(), path));
+                endpoints.add(new HttpReceiver(m.getDeclaringClass().getCanonicalName(), m.getName(), httpMethod.getSimpleName(), path));
             });
         }
 

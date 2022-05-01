@@ -2,10 +2,10 @@ package com.hlag.tools.commvis.domain.port.out;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.hlag.tools.commvis.domain.model.AbstractCommunicationModelVisitor;
-import com.hlag.tools.commvis.domain.model.CommunicationModel;
-import com.hlag.tools.commvis.domain.model.HttpEndpoint;
-import com.hlag.tools.commvis.domain.model.JmsEndpoint;
+import com.hlag.tools.commvis.analyzer.model.AbstractCommunicationModelVisitor;
+import com.hlag.tools.commvis.analyzer.model.CommunicationModel;
+import com.hlag.tools.commvis.analyzer.model.HttpReceiver;
+import com.hlag.tools.commvis.analyzer.model.JmsReceiver;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +39,7 @@ public class JsonCommunicationModelVisitor extends AbstractCommunicationModelVis
     }
 
     @Override
-    public void visit(HttpEndpoint endpoint) {
+    public void visit(HttpReceiver endpoint) {
         JsonFactory factory = new JsonFactory();
         StringWriter jsonObjectWriter = new StringWriter();
 
@@ -65,7 +65,7 @@ public class JsonCommunicationModelVisitor extends AbstractCommunicationModelVis
     }
 
     @Override
-    public void visit(JmsEndpoint endpoint) {
+    public void visit(JmsReceiver endpoint) {
         JsonFactory factory = new JsonFactory();
         StringWriter jsonObjectWriter = new StringWriter();
 
