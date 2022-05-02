@@ -1,7 +1,7 @@
 package com.hlag.tools.commvis;
 
-import com.hlag.tools.commvis.adapter.in.ScanSenderReceiverCommandLine;
-import com.hlag.tools.commvis.application.port.in.ScannerCommand;
+import com.hlag.tools.commvis.adapter.in.CombineCommandLine;
+import com.hlag.tools.commvis.adapter.in.ScanCommandLine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
@@ -11,10 +11,9 @@ import picocli.CommandLine;
 
 @RequiredArgsConstructor
 @SpringBootApplication
+@CommandLine.Command(subcommands = {ScanCommandLine.class, CombineCommandLine.class}, mixinStandardHelpOptions = true)
 public class DistributedCommunicationVisualizerApplication implements CommandLineRunner, ExitCodeGenerator {
     private final CommandLine.IFactory factory;
-    private final ScanSenderReceiverCommandLine scannerCommand;
-
     private int exitCode;
 
     public static void main(String... args) {
@@ -25,7 +24,7 @@ public class DistributedCommunicationVisualizerApplication implements CommandLin
     @Override
     public void run(String... args) throws Exception {
         // let picocli parse command line args and run the business logic
-        exitCode = new CommandLine(scannerCommand, factory).execute(args);
+        exitCode = new CommandLine(this, factory).execute(args);
     }
 
     @Override

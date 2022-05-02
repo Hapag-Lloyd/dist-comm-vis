@@ -1,6 +1,6 @@
 package com.hlag.tools.commvis;
 
-import com.hlag.tools.commvis.adapter.in.ScanSenderReceiverCommandLine;
+import com.hlag.tools.commvis.adapter.in.ScanCommandLine;
 import com.hlag.tools.commvis.application.port.in.ScannerUseCase;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -14,7 +14,6 @@ import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class DistributedCommunicationVisualizerApplicationIT {
@@ -25,10 +24,10 @@ class DistributedCommunicationVisualizerApplicationIT {
     private String modelVersion;
 
     @Test
-    void shouldMatchCurrentModel_whenWriteJson() throws Exception {
+    void shouldMatchCurrentJsonModel_whenScan() throws Exception {
         String expectedJson = contentOf(new File("src/test/resources/model/integration-model.json"));
 
-        new CommandLine(new ScanSenderReceiverCommandLine(scannerUseCase)).execute("--name=my-project", "4711", "integration");
+        new CommandLine(new ScanCommandLine(scannerUseCase)).execute("--name=my-project", "4711", "integration");
 
         File actualJsonFile = new File("model.json");
 
@@ -37,10 +36,10 @@ class DistributedCommunicationVisualizerApplicationIT {
     }
 
     @Test
-    void shouldMatchCurrentModel_whenWriteDot() {
+    void shouldMatchCurrentDotModel_whenScan() {
         String expectedDot = contentOf(new File("src/test/resources/model/integration-model.dot"));
 
-        new CommandLine(new ScanSenderReceiverCommandLine(scannerUseCase)).execute("-n", "my-project", "4711", "integration");
+        new CommandLine(new ScanCommandLine(scannerUseCase)).execute("-n", "my-project", "4711", "integration");
 
         File currentDotFile = new File("model.dot");
 
