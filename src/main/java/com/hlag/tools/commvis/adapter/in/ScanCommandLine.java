@@ -3,6 +3,7 @@ package com.hlag.tools.commvis.adapter.in;
 import com.hlag.tools.commvis.application.port.in.ScannerCommand;
 import com.hlag.tools.commvis.application.port.in.ScannerUseCase;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
