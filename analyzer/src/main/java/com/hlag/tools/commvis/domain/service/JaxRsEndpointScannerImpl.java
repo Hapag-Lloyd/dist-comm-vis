@@ -1,4 +1,4 @@
-package com.hlag.tools.commvis.service;
+package com.hlag.tools.commvis.domain.service;
 
 import com.hlag.tools.commvis.analyzer.model.HttpReceiver;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;

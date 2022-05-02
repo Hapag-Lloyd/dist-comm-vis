@@ -1,4 +1,4 @@
-package com.hlag.tools.commvis.domain.port.out;
+package com.hlag.tools.commvis.application.port.out;
 
 import com.hlag.tools.commvis.analyzer.model.AbstractCommunicationModelVisitor;
 import com.hlag.tools.commvis.analyzer.model.CommunicationModel;

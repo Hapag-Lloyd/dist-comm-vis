@@ -1,7 +1,7 @@
-package com.hlag.tools.commvis.service;
+package com.hlag.tools.commvis.domain.service;
 
 import com.hlag.tools.commvis.analyzer.model.CommunicationModel;
-import com.hlag.tools.commvis.domain.port.out.DotCommunicationModelVisitor;
+import com.hlag.tools.commvis.application.port.out.DotCommunicationModelVisitor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Service;
