@@ -1,6 +1,7 @@
 package com.hlag.tools.commvis.service;
 
 import com.hlag.tools.commvis.analyzer.model.JmsReceiver;
+import com.hlag.tools.commvis.domain.service.JmsEndpointScannerImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

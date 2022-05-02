@@ -2,18 +2,11 @@ package com.hlag.tools.commvis.service;
 
 import com.hlag.tools.commvis.analyzer.scanner.user.UserDefinedScanner;
 import com.hlag.tools.commvis.analyzer.service.IScannerService;
-import com.hlag.tools.commvis.domain.adapter.PropertyFilesConfiguration;
-import com.hlag.tools.commvis.domain.command.ScannerCommand;
-import com.hlag.tools.commvis.domain.port.out.DotCommunicationModelVisitor;
-import com.hlag.tools.commvis.domain.port.out.JsonCommunicationModelVisitor;
+import com.hlag.tools.commvis.PropertyFilesConfiguration;
+import com.hlag.tools.commvis.application.port.in.ScannerCommand;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import picocli.CommandLine;
-
-import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;

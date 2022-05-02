@@ -1,6 +1,7 @@
 package com.hlag.tools.commvis.service;
 
 import com.hlag.tools.commvis.analyzer.model.HttpReceiver;
+import com.hlag.tools.commvis.domain.service.JaxRsEndpointScannerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

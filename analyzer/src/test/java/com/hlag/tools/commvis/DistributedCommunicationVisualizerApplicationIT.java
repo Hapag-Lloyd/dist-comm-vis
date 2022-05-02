@@ -1,10 +1,7 @@
-package com.hlag.tools.commvis.domain.command;
+package com.hlag.tools.commvis;
 
-import com.hlag.tools.commvis.analyzer.service.IScannerService;
-import com.hlag.tools.commvis.domain.adapter.PropertyFilesConfiguration;
-import com.hlag.tools.commvis.domain.port.out.DotCommunicationModelVisitor;
-import com.hlag.tools.commvis.domain.port.out.JsonCommunicationModelVisitor;
-import com.hlag.tools.commvis.service.*;
+import com.hlag.tools.commvis.adapter.in.ScanSenderReceiverCommandLine;
+import com.hlag.tools.commvis.application.port.in.ScannerUseCase;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -17,14 +14,12 @@ import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
+import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = {JaxRsEndpointScannerImpl.class, ScannerCommand.class, ExportModelJsonServiceImpl.class, ExportModelDotServiceImpl.class, PropertyFilesConfiguration.class, JsonCommunicationModelVisitor.class, DotCommunicationModelVisitor.class, JmsEndpointScannerImpl.class})
-class ScannerCommandIT {
+@SpringBootTest
+class DistributedCommunicationVisualizerApplicationIT {
     @Autowired
-    private IScannerService[] scannerServices;
-
-    @Autowired
-    private IExportModelService[] exportModelServices;
+    private ScannerUseCase scannerUseCase;
 
     @Value("${git.tags}")
     private String modelVersion;
@@ -33,7 +28,7 @@ class ScannerCommandIT {
     void shouldMatchCurrentModel_whenWriteJson() throws Exception {
         String expectedJson = contentOf(new File("src/test/resources/model/integration-model.json"));
 
-        new CommandLine(new ScannerCommand(scannerServices, exportModelServices)).execute("--name=my-project", "4711", "integration");
+        new CommandLine(new ScanSenderReceiverCommandLine(scannerUseCase)).execute("--name=my-project", "4711", "integration");
 
         File actualJsonFile = new File("model.json");
 
@@ -45,7 +40,7 @@ class ScannerCommandIT {
     void shouldMatchCurrentModel_whenWriteDot() {
         String expectedDot = contentOf(new File("src/test/resources/model/integration-model.dot"));
 
-        new CommandLine(new ScannerCommand(scannerServices, exportModelServices)).execute("-n", "my-project", "4711", "integration");
+        new CommandLine(new ScanSenderReceiverCommandLine(scannerUseCase)).execute("-n", "my-project", "4711", "integration");
 
         File currentDotFile = new File("model.dot");
 

@@ -1,8 +1,9 @@
-package com.hlag.tools.commvis.domain.port.out;
+package com.hlag.tools.commvis.application.port.out;
 
 import com.hlag.tools.commvis.analyzer.model.CommunicationModel;
 import com.hlag.tools.commvis.analyzer.model.HttpReceiver;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
+import com.hlag.tools.commvis.application.port.out.JsonCommunicationModelVisitor;
 import org.assertj.core.api.Assertions;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;

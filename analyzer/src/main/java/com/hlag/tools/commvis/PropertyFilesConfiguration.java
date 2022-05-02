@@ -1,4 +1,4 @@
-package com.hlag.tools.commvis.domain.adapter;
+package com.hlag.tools.commvis;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;

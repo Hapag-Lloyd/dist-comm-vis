@@ -98,7 +98,7 @@
                     <archive>
                         <manifest>
                             <mainClass>
-                                com.hlag.tools.commvis.domain.port.DistributedCommunicationVisualizerApplication
+                                com.hlag.tools.commvis.DistributedCommunicationVisualizerApplication
                             </mainClass>
                         </manifest>
                     </archive>

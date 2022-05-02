@@ -1,4 +1,4 @@
-package com.hlag.tools.commvis.domain.port.out;
+package com.hlag.tools.commvis.application.port.out;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
