@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.hlag.tools.commvis</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>distcommvis</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Distributed Communication Visualizer</name>
