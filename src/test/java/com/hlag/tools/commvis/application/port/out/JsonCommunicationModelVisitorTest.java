@@ -1,9 +1,8 @@
 package com.hlag.tools.commvis.application.port.out;
 
 import com.hlag.tools.commvis.analyzer.model.CommunicationModel;
-import com.hlag.tools.commvis.analyzer.model.HttpReceiver;
+import com.hlag.tools.commvis.analyzer.model.HttpConsumer;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
-import com.hlag.tools.commvis.application.port.out.JsonCommunicationModelVisitor;
 import org.assertj.core.api.Assertions;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,8 +22,8 @@ class JsonCommunicationModelVisitorTest {
     @Test
     void shouldCreateValidJson_whenGetJson_givenMultipleHttpEndpoints() {
         Collection<ISenderReceiverCommunication> givenHttpEndpoints = new HashSet<>();
-        givenHttpEndpoints.add(new HttpReceiver("classname", "methodname", "type", "path"));
-        givenHttpEndpoints.add(new HttpReceiver("classname1", "methodname1", "type1", "path1"));
+        givenHttpEndpoints.add(new HttpConsumer("classname", "methodname", "type", "path"));
+        givenHttpEndpoints.add(new HttpConsumer("classname1", "methodname1", "type1", "path1"));
 
         CommunicationModel givenModel = new CommunicationModel("4711", "my-project", givenHttpEndpoints);
 

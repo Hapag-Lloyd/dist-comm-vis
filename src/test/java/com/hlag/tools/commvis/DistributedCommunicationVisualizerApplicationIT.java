@@ -27,7 +27,7 @@ class DistributedCommunicationVisualizerApplicationIT {
     void shouldMatchCurrentJsonModel_whenScan() throws Exception {
         String expectedJson = contentOf(new File("src/test/resources/model/integration-model.json"));
 
-        new CommandLine(new ScanCommandLine(scannerUseCase)).execute("--name=my-project", "4711", "integration");
+        new CommandLine(new ScanCommandLine(scannerUseCase)).execute("--name=my-project", "integration", "4711");
 
         File actualJsonFile = new File("model.json");
 
@@ -39,11 +39,11 @@ class DistributedCommunicationVisualizerApplicationIT {
     void shouldMatchCurrentDotModel_whenScan() {
         String expectedDot = contentOf(new File("src/test/resources/model/integration-model.dot"));
 
-        new CommandLine(new ScanCommandLine(scannerUseCase)).execute("-n", "my-project", "4711", "integration");
+        new CommandLine(new ScanCommandLine(scannerUseCase)).execute("-n", "my-project", "integration", "4711");
 
         File currentDotFile = new File("model.dot");
 
         assertThat(currentDotFile).exists().isFile().canRead();
-        assertThat(contentOf(currentDotFile)).isEqualTo(expectedDot.replace("\r\n", "\n"));
+        assertThat(contentOf(currentDotFile)).isEqualTo(expectedDot);
     }
 }

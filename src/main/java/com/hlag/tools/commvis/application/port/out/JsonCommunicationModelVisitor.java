@@ -2,10 +2,8 @@ package com.hlag.tools.commvis.application.port.out;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.hlag.tools.commvis.analyzer.model.AbstractCommunicationModelVisitor;
-import com.hlag.tools.commvis.analyzer.model.CommunicationModel;
-import com.hlag.tools.commvis.analyzer.model.HttpReceiver;
-import com.hlag.tools.commvis.analyzer.model.JmsReceiver;
+import com.hlag.tools.commvis.analyzer.model.*;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,17 +18,18 @@ import java.io.StringWriter;
 @Slf4j
 @Component
 public class JsonCommunicationModelVisitor extends AbstractCommunicationModelVisitor {
-    private String version;
-    private StringBuilder httpEndpointsJson = new StringBuilder();
-    private StringBuilder jmsEndpointsJson = new StringBuilder();
-    private StringBuilder modelSettings = new StringBuilder();
+    private final String version;
+    private final StringBuilder httpConsumersJson = new StringBuilder();
+    private final StringBuilder httpProducersJson = new StringBuilder();
+    private final StringBuilder jmsEndpointsJson = new StringBuilder();
+    private final StringBuilder modelSettings = new StringBuilder();
 
     public JsonCommunicationModelVisitor(@Value("${git.tags}") String gitTag) {
         this.version = gitTag;
     }
 
     public String getJson() {
-        return String.format("{%s, \"http_endpoints\": [%s], \"jms_endpoints\": [%s]}", modelSettings, httpEndpointsJson, jmsEndpointsJson);
+        return String.format("{%s, \"http_consumers\": [%s], \"http_producers\": [%s], \"jms_endpoints\": [%s]}", modelSettings, httpConsumersJson, httpProducersJson, jmsEndpointsJson);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class JsonCommunicationModelVisitor extends AbstractCommunicationModelVis
     }
 
     @Override
-    public void visit(HttpReceiver endpoint) {
+    public void visit(HttpConsumer endpoint) {
         JsonFactory factory = new JsonFactory();
         StringWriter jsonObjectWriter = new StringWriter();
 
@@ -57,11 +56,38 @@ public class JsonCommunicationModelVisitor extends AbstractCommunicationModelVis
             ExceptionUtils.rethrow(e);
         }
 
-        if (httpEndpointsJson.length() > 0) {
-            httpEndpointsJson.append(',');
+        if (httpConsumersJson.length() > 0) {
+            httpConsumersJson.append(',');
         }
 
-        httpEndpointsJson.append(jsonObjectWriter);
+        httpConsumersJson.append(jsonObjectWriter);
+    }
+
+     @Override
+    public void visit(HttpProducer producer) {
+        JsonFactory factory = new JsonFactory();
+        StringWriter jsonObjectWriter = new StringWriter();
+
+        try (JsonGenerator generator = factory.createGenerator(jsonObjectWriter)) {
+            generator.useDefaultPrettyPrinter();
+
+            generator.writeStartObject();
+            generator.writeStringField("class_name", producer.getClassName());
+            generator.writeStringField("method_name", producer.getMethodName());
+            generator.writeStringField("type", producer.getType());
+            generator.writeStringField("path", producer.getPath());
+            generator.writeStringField("destination_project_id", producer.getDestinationProjectId());
+            generator.writeEndObject();
+        } catch (IOException e) {
+            log.error("Failed to convert http(s) producer to JSON.", e);
+            ExceptionUtils.rethrow(e);
+        }
+
+        if (httpProducersJson.length() > 0) {
+            httpProducersJson.append(',');
+        }
+
+        httpProducersJson.append(jsonObjectWriter);
     }
 
     @Override

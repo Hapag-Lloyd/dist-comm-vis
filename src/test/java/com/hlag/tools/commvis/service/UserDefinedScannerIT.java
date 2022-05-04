@@ -19,6 +19,6 @@ public class UserDefinedScannerIT {
     @Test
     //TODO this test is strange as we add the service above and check it it's there.
     void shouldFindUSerDefinedScannersInPackage()  {
-        assertThat(scannerServices).hasSize(1).extracting(Object::getClass).contains(UserDefinedScanner.class);
+        assertThat(scannerServices).hasSize(1);
     }
 }

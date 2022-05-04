@@ -1,9 +1,6 @@
 package com.hlag.tools.commvis.application.port.out;
 
-import com.hlag.tools.commvis.analyzer.model.AbstractCommunicationModelVisitor;
-import com.hlag.tools.commvis.analyzer.model.CommunicationModel;
-import com.hlag.tools.commvis.analyzer.model.HttpReceiver;
-import com.hlag.tools.commvis.analyzer.model.JmsReceiver;
+import com.hlag.tools.commvis.analyzer.model.*;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,11 +23,21 @@ public class DotCommunicationModelVisitor extends AbstractCommunicationModelVisi
     }
 
     @Override
-    public void visit(HttpReceiver endpoint) {
-        String label = endpoint.getClassName() + "." + endpoint.getMethodName() + "\\n" + endpoint.getPath() + "\\n" + endpoint.getType();
+    public void visit(HttpConsumer consumer) {
+        String label = consumer.getClassName() + "." + consumer.getMethodName() + "\\n" + consumer.getPath() + "\\n" + consumer.getType();
         nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\" shape=\"ellipse\"]\n", nodes, label));
 
         graphDefinitions.append(String.format("  \"%d\" -> \"application\"\n", nodes));
+
+        ++nodes;
+    }
+
+    @Override
+    public void visit(HttpProducer producer) {
+        String label = producer.getClassName() + "." + producer.getMethodName() + "\\n" + producer.getPath() + "\\n" + producer.getType();
+        nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\" shape=\"ellipse\"]\n", nodes, label));
+
+        graphDefinitions.append(String.format("  \"application\" -> \"%d\"\n", nodes));
 
         ++nodes;
     }

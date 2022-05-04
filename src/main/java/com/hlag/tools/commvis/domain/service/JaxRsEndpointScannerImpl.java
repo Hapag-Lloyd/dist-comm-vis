@@ -2,10 +2,10 @@ package com.hlag.tools.commvis.domain.service;
 
 import com.hlag.tools.commvis.analyzer.annotation.VisualizeHttpsCall;
 import com.hlag.tools.commvis.analyzer.annotation.VisualizeHttpsCalls;
-import com.hlag.tools.commvis.analyzer.model.HttpReceiver;
+import com.hlag.tools.commvis.analyzer.model.HttpConsumer;
+import com.hlag.tools.commvis.analyzer.model.HttpProducer;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
 import com.hlag.tools.commvis.analyzer.service.IScannerService;
-import com.hlag.tools.commvis.domain.HttpProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -45,7 +45,7 @@ public class JaxRsEndpointScannerImpl implements IScannerService {
         methods.forEach(m -> {
             VisualizeHttpsCall visualizeAnnotation = m.getDeclaredAnnotation(VisualizeHttpsCall.class);
 
-            endpoints.add(createHttpProducer(visualizeAnnotation));
+            endpoints.add(createHttpProducer(visualizeAnnotation, m));
         });
 
         methods = reflections.get(MethodsAnnotated.with(VisualizeHttpsCalls.class).as(Method.class));
@@ -53,7 +53,7 @@ public class JaxRsEndpointScannerImpl implements IScannerService {
             VisualizeHttpsCalls visualizeAnnotations = m.getDeclaredAnnotation(VisualizeHttpsCalls.class);
 
             for (VisualizeHttpsCall visualizeAnnotation : visualizeAnnotations.value()) {
-                endpoints.add(createHttpProducer(visualizeAnnotation));
+                endpoints.add(createHttpProducer(visualizeAnnotation, m));
             }
         });
 
@@ -62,8 +62,8 @@ public class JaxRsEndpointScannerImpl implements IScannerService {
         return endpoints;
     }
 
-    private HttpProducer createHttpProducer(VisualizeHttpsCall annotation) {
-        return new HttpProducer(annotation.method().value(), annotation.path(), annotation.projectId());
+    private HttpProducer createHttpProducer(VisualizeHttpsCall annotation, Method method) {
+        return new HttpProducer(method.getDeclaringClass().getCanonicalName(), method.getName(), annotation.type(), annotation.path(), annotation.projectId());
     }
 
     private Collection<ISenderReceiverCommunication> scanIncomingConnections(Reflections reflections) {
@@ -77,9 +77,9 @@ public class JaxRsEndpointScannerImpl implements IScannerService {
                 Path pathOnMethod = m.getAnnotation(Path.class);
                 Path pathOnClass = m.getDeclaringClass().getAnnotation(Path.class);
 
-                String path = Stream.of(pathOnClass, pathOnMethod).filter(Objects::nonNull).map(p -> p.value()).collect(Collectors.joining("/"));
+                String path = Stream.of(pathOnClass, pathOnMethod).filter(Objects::nonNull).map(Path::value).collect(Collectors.joining("/"));
 
-                endpoints.add(new HttpReceiver(m.getDeclaringClass().getCanonicalName(), m.getName(), httpMethod.getSimpleName(), path));
+                endpoints.add(new HttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), httpMethod.getSimpleName(), path));
             });
         }
 
