@@ -2,7 +2,7 @@
   "version": "###version###",
   "id": "4711",
   "name": "my-project",
-  "http_endpoints": [
+  "http_consumers": [
     {
       "class_name": "integration.endpoint.CustomerEndpoint",
       "method_name": "deleteCustomer",
@@ -26,6 +26,15 @@
       "method_name": "updateCustomer",
       "type": "PUT",
       "path": "sales/customers/{customerId}"
+    }
+  ],
+  "http_producers": [
+    {
+      "class_name": "integration.endpoint.CallHttpsEndpoints",
+      "method_name": "getCustomerInvoices",
+      "type": "GET",
+      "path": "customers/{customerId}/invoices",
+      "destination_project_id": "4711"
     }
   ],
   "jms_endpoints": [

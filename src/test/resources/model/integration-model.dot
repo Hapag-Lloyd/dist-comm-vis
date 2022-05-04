@@ -3,12 +3,14 @@ digraph G {
   "0" [label="integration.endpoint.CustomerEndpoint.deleteCustomer\nsales/customers/{customerId}\nDELETE" shape="ellipse"]
   "1" [label="integration.endpoint.CustomerCancelledOrderReceiver\njms/customer/orderCancelled\njavax.jms.Queue" shape="diamond"]
   "2" [label="integration.endpoint.CustomerEndpoint.createCustomer\nsales/customers\nPOST" shape="ellipse"]
-  "3" [label="integration.endpoint.CustomerEndpoint.readCustomer\nsales/customers/{customerId}\nGET" shape="ellipse"]
-  "4" [label="integration.endpoint.CustomerEndpoint.updateCustomer\nsales/customers/{customerId}\nPUT" shape="ellipse"]
+  "3" [label="integration.endpoint.CallHttpsEndpoints.getCustomerInvoices\n/customers/{customerId}/invoices\nGET" shape="ellipse"]
+  "4" [label="integration.endpoint.CustomerEndpoint.readCustomer\nsales/customers/{customerId}\nGET" shape="ellipse"]
+  "5" [label="integration.endpoint.CustomerEndpoint.updateCustomer\nsales/customers/{customerId}\nPUT" shape="ellipse"]
 
   "0" -> "application"
   "1" -> "application"
   "2" -> "application"
-  "3" -> "application"
+  "application" -> "3"
   "4" -> "application"
+  "5" -> "application"
 }
