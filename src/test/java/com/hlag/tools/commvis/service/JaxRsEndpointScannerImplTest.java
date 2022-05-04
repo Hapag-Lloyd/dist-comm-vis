@@ -22,9 +22,9 @@ class JaxRsEndpointScannerImplTest {
 
     @Test
     void shouldFindEndpointsForAllHttpMethods_whenScanClasspath() {
-        Collection<HttpConsumer> actualEndpoints = (Collection) clazz.scanSenderAndReceiver("test.jaxrs");
+        Collection<ISenderReceiverCommunication> actualEndpoints = clazz.scanSenderAndReceiver("test.jaxrs");
 
-        assertThat(actualEndpoints).extracting(HttpConsumer::getType).containsExactlyInAnyOrder(HttpMethod.GET, HttpMethod.HEAD, HttpMethod.POST, HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.OPTIONS, HttpMethod.PATCH);
+        assertThat(actualEndpoints).filteredOn(e -> HttpConsumer.class.isAssignableFrom(e.getClass())).extracting(c -> ((HttpConsumer) c).getType()).containsExactlyInAnyOrder(HttpMethod.GET, HttpMethod.HEAD, HttpMethod.POST, HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.OPTIONS, HttpMethod.PATCH);
     }
 
     @Test
