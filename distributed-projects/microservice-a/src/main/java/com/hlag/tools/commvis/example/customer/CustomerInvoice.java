@@ -1,4 +1,4 @@
-package com.hlag.tools.commvis.example.a;
+package com.hlag.tools.commvis.example.customer;
 
 import com.hlag.tools.commvis.analyzer.annotation.VisualizeHttpsCall;
 

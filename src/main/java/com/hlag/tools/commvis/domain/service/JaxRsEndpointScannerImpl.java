@@ -44,7 +44,8 @@ public class JaxRsEndpointScannerImpl implements IScannerService {
 
         methods.forEach(m -> {
             VisualizeHttpsCall visualizeAnnotation = m.getDeclaredAnnotation(VisualizeHttpsCall.class);
-
+log.info(String.valueOf(m.getAnnotations().length));
+log.info(String.valueOf(m.getDeclaredAnnotations().length));
             endpoints.add(createHttpProducer(visualizeAnnotation, m));
         });
 
@@ -63,6 +64,9 @@ public class JaxRsEndpointScannerImpl implements IScannerService {
     }
 
     private HttpProducer createHttpProducer(VisualizeHttpsCall annotation, Method method) {
+        log.info(String.valueOf(annotation));
+        log.info(String.valueOf(method));
+        log.info(String.valueOf(method.getDeclaringClass()));
         return new HttpProducer(method.getDeclaringClass().getCanonicalName(), method.getName(), annotation.type(), annotation.path(), annotation.projectId());
     }
 

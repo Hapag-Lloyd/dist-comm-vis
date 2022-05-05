@@ -1,4 +1,4 @@
-package com.hlag.tools.commvis.example.a;
+package com.hlag.tools.commvis.example.order;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;

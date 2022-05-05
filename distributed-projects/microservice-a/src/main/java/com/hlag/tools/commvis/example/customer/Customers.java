@@ -1,4 +1,4 @@
-package com.hlag.tools.commvis.example.a;
+package com.hlag.tools.commvis.example.customer;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;

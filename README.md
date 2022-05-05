@@ -16,7 +16,7 @@ up-to-date as it is generated automatically based on the current version of the 
 release="1.11.1"
 curl -o analyzer.jar https://github.com/Hapag-Lloyd/dist-comm-vis/releases/download/${RELEASE}/analyzer-${RELEASE}.jar
  
-java -cp "analyzer.jar;target/test-classes" org.springframework.boot.loader.JarLauncher scan --name=my-service-1 integration 1234
+java -cp "analyzer.jar;distributed-projects/microservice-a/target/test-classes" org.springframework.boot.loader.JarLauncher scan com.hlag.tools.commvis.example 1 --name=Customer
 
 yum install graphviz
 dot -Tpng model.dot > model.png

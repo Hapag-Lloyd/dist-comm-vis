@@ -11,10 +11,10 @@
     </parent>
 
     <groupId>com.hlag.tools.commvis.example</groupId>
-    <artifactId>microservice-a</artifactId>
+    <artifactId>microservice-b</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Microservice A</name>
+    <name>Microservice B</name>
     <url>https://github.com/Hapag-Lloyd/dist-comm-vis</url>
 
     <licenses>

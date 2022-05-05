@@ -12,7 +12,7 @@
 
     <groupId>com.hlag.tools.commvis</groupId>
     <artifactId>distcommvis</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Distributed Communication Visualizer</name>
     <url>https://github.com/Hapag-Lloyd/dist-comm-vis</url>
