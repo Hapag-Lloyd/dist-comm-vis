@@ -3,6 +3,7 @@ package com.hlag.tools.commvis.domain.service;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
 import com.hlag.tools.commvis.analyzer.model.JmsReceiver;
 import com.hlag.tools.commvis.analyzer.service.IScannerService;
+import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.Set;
 import static org.reflections.scanners.Scanners.TypesAnnotated;
 
 @Service
+@Slf4j
 public class JmsEndpointScannerImpl implements IScannerService {
     @Override
     public Collection<ISenderReceiverCommunication> scanSenderAndReceiver(String rootPackageName) {
@@ -26,6 +28,13 @@ public class JmsEndpointScannerImpl implements IScannerService {
 
         classes.forEach(c -> {
             MessageDriven[] annotation = c.getDeclaredAnnotationsByType(MessageDriven.class);
+
+            //as we found classes with the Annotation we must get a result here
+            if (annotation.length == 0) {
+                log.error("Unable to find the annotation, but we found a class with the annotation. Make sure that the classpath contains all relevant libraries for your application.");
+                throw new IllegalStateException("MessageDriven annotation could not be read!");
+            }
+
             String destinationType = null;
             String destination = null;
 
