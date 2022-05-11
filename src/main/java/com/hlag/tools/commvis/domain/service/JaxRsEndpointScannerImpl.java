@@ -45,12 +45,24 @@ public class JaxRsEndpointScannerImpl implements IScannerService {
         methods.forEach(m -> {
             VisualizeHttpsCall visualizeAnnotation = m.getDeclaredAnnotation(VisualizeHttpsCall.class);
 
+            //as we found methods with the Annotation we must get a result here
+            if (visualizeAnnotation == null) {
+                log.error("Unable to find the annotation, but we found a method with the annotation. Make sure that the classpath contains all relevant libraries for your application.");
+                throw new IllegalStateException("VisualizeHttpCall annotation could not be read!");
+            }
+
             endpoints.add(createHttpProducer(visualizeAnnotation, m));
         });
 
         methods = reflections.get(MethodsAnnotated.with(VisualizeHttpsCalls.class).as(Method.class));
         methods.forEach(m -> {
             VisualizeHttpsCalls visualizeAnnotations = m.getDeclaredAnnotation(VisualizeHttpsCalls.class);
+
+            //as we found methods with the Annotation we must get a result here
+            if (visualizeAnnotations == null) {
+                log.error("Unable to find the annotation, but we found a method with the annotation. Make sure that the classpath contains all relevant libraries for your application.");
+                throw new IllegalStateException("VisualizeHttpCalls annotation could not be read!");
+            }
 
             for (VisualizeHttpsCall visualizeAnnotation : visualizeAnnotations.value()) {
                 endpoints.add(createHttpProducer(visualizeAnnotation, m));
