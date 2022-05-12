@@ -20,7 +20,7 @@ class ScannerServiceTest {
     private IExportModelService exportModelService2;
 
     private ScannerService scannerService;
-    private ScannerCommand command = new ScannerCommand("com.hlag", "4711", "my-project-name");
+    private final ScannerCommand command = new ScannerCommand("com.hlag", "4711", "my-project-name");
 
     @BeforeEach
     void init() {
@@ -43,5 +43,21 @@ class ScannerServiceTest {
 
         Mockito.verify(exportModelService1).export(Mockito.any(), Mockito.any());
         Mockito.verify(exportModelService2).export(Mockito.any(), Mockito.any());
+    }
+
+    @Test
+    void shouldUseTheProjectNameAsSuffixForExportedFile_whenScanSenderReceiverAndExport() {
+        scannerService.scanSenderReceiverAndExport(command);
+
+        Mockito.verify(exportModelService1).export(Mockito.any(), Mockito.eq("model-my-project-name"));
+    }
+
+    @Test
+    void shouldNameTheModelFileModel_whenScanSenderReceiverAndExport_givenNoProjectName() {
+        ScannerCommand givenCommand = new ScannerCommand("com.hlag", "4711", null);
+
+        scannerService.scanSenderReceiverAndExport(givenCommand);
+
+        Mockito.verify(exportModelService1).export(Mockito.any(), Mockito.eq("model"));
     }
 }
