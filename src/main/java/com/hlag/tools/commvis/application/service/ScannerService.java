@@ -5,6 +5,7 @@ import com.hlag.tools.commvis.analyzer.service.IScannerService;
 import com.hlag.tools.commvis.application.port.in.ScannerCommand;
 import com.hlag.tools.commvis.application.port.in.ScannerUseCase;
 import com.hlag.tools.commvis.domain.service.IExportModelService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 @Component
+@Slf4j
 public class ScannerService implements ScannerUseCase {
     private final IScannerService[] scannerServices;
     private final IExportModelService[] exportModelServices;
@@ -25,6 +27,8 @@ public class ScannerService implements ScannerUseCase {
 
     @Override
     public void scanSenderReceiverAndExport(ScannerCommand command) {
+log.error("Scanner: {}",scannerServices.length);
+Thread.dumpStack();
         CommunicationModel model = new CommunicationModel(command.getProjectId(), command.getProjectName(), version);
 
         Arrays.asList(scannerServices).forEach(s -> {
