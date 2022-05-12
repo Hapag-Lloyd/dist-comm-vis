@@ -1,5 +1,6 @@
 package com.hlag.tools.commvis.domain.service;
 
+import com.hlag.tools.commvis.analyzer.model.EndpointFactory;
 import com.hlag.tools.commvis.analyzer.model.HttpConsumer;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
 import com.hlag.tools.commvis.analyzer.service.IScannerService;
@@ -39,7 +40,7 @@ public class JaxRsHttpEndpointConsumerScannerImpl implements IScannerService {
 
                 String path = Stream.of(pathOnClass, pathOnMethod).filter(Objects::nonNull).map(Path::value).collect(Collectors.joining("/"));
 
-                endpoints.add(new HttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), httpMethod.getSimpleName(), path));
+                endpoints.add(EndpointFactory.get().createHttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), httpMethod.getSimpleName(), path));
             });
         }
 
