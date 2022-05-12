@@ -32,7 +32,7 @@ class DistributedCommunicationVisualizerApplicationIT {
 
         new CommandLine(new ScanCommandLine(scannerUseCase), factory).execute("integration", "4711", "--name=my-project-1");
 
-        File actualJsonFile = new File("model-my-project1.json");
+        File actualJsonFile = new File("model-my-project-1.json");
 
         assertThat(actualJsonFile).exists().isFile().canRead();
         JSONAssert.assertEquals(expectedJson.replace("###version###", modelVersion), contentOf(actualJsonFile), JSONCompareMode.STRICT);
