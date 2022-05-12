@@ -26,7 +26,7 @@ class ScannerServiceTest {
     void init() {
         MockitoAnnotations.openMocks(this);
 
-        scannerService = new ScannerService(new IScannerService[]{scanner1, scanner2}, new IExportModelService[]{exportModelService1, exportModelService2});
+        scannerService = new ScannerService(new IScannerService[]{scanner1, scanner2}, new IExportModelService[]{exportModelService1, exportModelService2}, "1.2.3");
     }
 
     @Test

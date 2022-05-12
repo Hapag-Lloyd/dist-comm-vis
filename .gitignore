@@ -4,7 +4,7 @@ node_modules/
 release/
 
 *.iml
-model.json
-model.dot
+model*.json
+model*.dot
 my-file.dot
 my-file.json

@@ -15,10 +15,13 @@ import java.io.File;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class DistributedCommunicationVisualizerApplicationIT {
     @Autowired
     private ScannerUseCase scannerUseCase;
+
+    @Autowired
+    CommandLine.IFactory factory;
 
     @Value("${git.tags}")
     private String modelVersion;
@@ -27,9 +30,9 @@ class DistributedCommunicationVisualizerApplicationIT {
     void shouldMatchCurrentJsonModel_whenScan() throws Exception {
         String expectedJson = contentOf(new File("src/test/resources/model/integration-model.json"));
 
-        new CommandLine(new ScanCommandLine(scannerUseCase)).execute("--name=my-project", "integration", "4711");
+        new CommandLine(new ScanCommandLine(scannerUseCase), factory).execute("integration", "4711", "--name=my-project1");
 
-        File actualJsonFile = new File("model.json");
+        File actualJsonFile = new File("model-my-project1.json");
 
         assertThat(actualJsonFile).exists().isFile().canRead();
         JSONAssert.assertEquals(expectedJson.replace("###version###", modelVersion), contentOf(actualJsonFile), JSONCompareMode.STRICT);
@@ -39,9 +42,9 @@ class DistributedCommunicationVisualizerApplicationIT {
     void shouldMatchCurrentDotModel_whenScan() {
         String expectedDot = contentOf(new File("src/test/resources/model/integration-model.dot"));
 
-        new CommandLine(new ScanCommandLine(scannerUseCase)).execute("-n", "my-project", "integration", "4711");
+        new CommandLine(new ScanCommandLine(scannerUseCase), factory).execute("-n", "my-project2", "integration", "4711");
 
-        File currentDotFile = new File("model.dot");
+        File currentDotFile = new File("model-my-project2.dot");
 
         assertThat(currentDotFile).exists().isFile().canRead();
         assertThat(contentOf(currentDotFile)).isEqualTo(expectedDot);

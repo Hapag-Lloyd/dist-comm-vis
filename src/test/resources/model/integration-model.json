@@ -33,7 +33,7 @@
       "class_name": "integration.endpoint.CallHttpsEndpoints",
       "method_name": "getCustomerInvoices",
       "type": "GET",
-      "path": "customers/{customerId}/invoices",
+      "path": "/customers/{customerId}/invoices",
       "destination_project_id": "4711"
     }
   ],
