@@ -22,9 +22,16 @@ java -cp "analyzer.jar:distributed-projects/microservice-a/target/test-classes" 
 yum install graphviz
 dot -Tpng model.dot > model.png
 ```
+
+For a more sophisticated example check the [scan.sh](scripts/scan.sh)
+```shell
+scripts/scan.sh distributed-projects/microservice-a/target 1234 service-a
+scripts/scan.sh distributed-projects/microservice-b/target 2345 service-b
+```
+
 ![Communication](image/communication.png)
 
-For a more sophisticated example checkout the [scan.sh](scripts/scan.sh)
+
 ## Features
 - extract HTTP(S) consumers: JAX RS
 - extract JMS consumers
