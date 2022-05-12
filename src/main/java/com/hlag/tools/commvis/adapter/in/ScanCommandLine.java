@@ -3,7 +3,6 @@ package com.hlag.tools.commvis.adapter.in;
 import com.hlag.tools.commvis.application.port.in.ScannerCommand;
 import com.hlag.tools.commvis.application.port.in.ScannerUseCase;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -19,7 +18,7 @@ public class ScanCommandLine implements Callable<Integer> {
     @CommandLine.Parameters(index = "1", description = "ID of the project to be analyzed. Used to link projects.")
     private String projectId;
 
-    @CommandLine.Option(names = {"-n", "--name"}, defaultValue = "application", description = "Name of the project to be analyzed.")
+    @CommandLine.Option(names = {"-n", "--name"}, defaultValue = "application", description = "Name of the project to be analyzed. This name is appended to the resulting model file.")
     private String projectName;
 
     @Override

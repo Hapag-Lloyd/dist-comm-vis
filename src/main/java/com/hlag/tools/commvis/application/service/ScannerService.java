@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -25,6 +26,8 @@ public class ScannerService implements ScannerUseCase {
         Arrays.asList(scannerServices).forEach(s -> endpoints.addAll(s.scanSenderAndReceiver(command.getRootPackage())));
 
         CommunicationModel model = new CommunicationModel(command.getProjectId(), command.getProjectName(), endpoints);
-        Arrays.asList(exportModelServices).forEach(s -> s.export(model, "model"));
+
+        String fileName = Optional.ofNullable(command.getProjectName()).map(pn -> String.format("model-%s", pn)).orElse("model");
+        Arrays.asList(exportModelServices).forEach(s -> s.export(model, fileName));
     }
 }
