@@ -1,9 +1,9 @@
-package test.jaxrs;
+package test.http.jaxrs;
 
 import javax.ws.rs.*;
 
 @Path("endpoint")
-public class Endpoints {
+public class ConsumerEndpoints {
     @POST
     @Path("a")
     public void receivesAPostRequest() {
