@@ -2,6 +2,7 @@ package com.hlag.tools.commvis.domain.service;
 
 import com.hlag.tools.commvis.analyzer.model.HttpConsumer;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,10 +28,8 @@ class SpringHttpEndpointScannerImplTest {
 
     @Test
     void shouldExtractAllEndpointInformation_whenScanClasspath() {
-        HttpConsumer expectedEndpoint = new HttpConsumer("test.http.spring.ConsumerEndpoints", "receivesAPostRequest", "POST", "a");
+        Collection<HttpConsumer> actualEndpoints = (Collection) clazz.scanSenderAndReceiver("test.http.spring");
 
-        Collection<ISenderReceiverCommunication> actualEndpoints = clazz.scanSenderAndReceiver("test.http.spring");
-
-        assertThat(actualEndpoints).contains(expectedEndpoint);
+        assertThat(actualEndpoints).extracting(HttpConsumer::getClassName, HttpConsumer::getMethodName, HttpConsumer::getType, HttpConsumer::getPath).contains(new Tuple("test.http.spring.ConsumerEndpoints", "receivesAPostRequest", "POST", "a"));
     }
 }

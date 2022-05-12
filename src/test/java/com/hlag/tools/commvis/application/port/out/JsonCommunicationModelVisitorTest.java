@@ -1,6 +1,7 @@
 package com.hlag.tools.commvis.application.port.out;
 
 import com.hlag.tools.commvis.analyzer.model.CommunicationModel;
+import com.hlag.tools.commvis.analyzer.model.EndpointFactory;
 import com.hlag.tools.commvis.analyzer.model.HttpConsumer;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
 import org.assertj.core.api.Assertions;
@@ -21,11 +22,10 @@ class JsonCommunicationModelVisitorTest {
 
     @Test
     void shouldCreateValidJson_whenGetJson_givenMultipleHttpEndpoints() {
-        Collection<ISenderReceiverCommunication> givenHttpEndpoints = new HashSet<>();
-        givenHttpEndpoints.add(new HttpConsumer("classname", "methodname", "type", "path"));
-        givenHttpEndpoints.add(new HttpConsumer("classname1", "methodname1", "type1", "path1"));
+        CommunicationModel givenModel = new CommunicationModel("4711", "my-project", "1.2.3");
 
-        CommunicationModel givenModel = new CommunicationModel("4711", "my-project", givenHttpEndpoints);
+        givenModel.addSenderReceiver(EndpointFactory.get().createHttpConsumer("classname", "methodname", "type", "path"));
+        givenModel.addSenderReceiver(EndpointFactory.get().createHttpConsumer("classname1", "methodname1", "type1", "path1"));
 
         Assertions.assertThatNoException().isThrownBy(() -> {
             givenModel.visit(jsonCommunicationModelVisitor);

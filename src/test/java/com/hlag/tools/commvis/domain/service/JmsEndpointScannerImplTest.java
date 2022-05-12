@@ -3,6 +3,7 @@ package com.hlag.tools.commvis.domain.service;
 import com.hlag.tools.commvis.analyzer.model.JmsReceiver;
 import com.hlag.tools.commvis.domain.service.JmsEndpointScannerImpl;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,10 +28,8 @@ class JmsEndpointScannerImplTest {
 
     @Test
     void shouldExtractAllEndpointInformation_whenScanClasspath() {
-        JmsReceiver expectedEndpoint = new JmsReceiver("test.jms.CustomerCancelledOrderReceiver", "javax.jms.Queue", "jms/customer/orderCancelled");
-
         Collection<JmsReceiver> actualEndpoints = (Collection) clazz.scanSenderAndReceiver("test.jms");
 
-        assertThat(actualEndpoints).contains(expectedEndpoint);
+        assertThat(actualEndpoints).extracting(JmsReceiver::getClassName, JmsReceiver::getDestinationType, JmsReceiver::getDestination).contains(new Tuple("test.jms.CustomerCancelledOrderReceiver", "javax.jms.Queue", "jms/customer/orderCancelled"));
     }
 }
