@@ -1,4 +1,4 @@
-package test.jaxrs;
+package test.http;
 
 import com.hlag.tools.commvis.analyzer.annotation.VisualizeHttpsCall;
 

@@ -33,7 +33,7 @@ scripts/scan.sh distributed-projects/microservice-b/target 2345 service-b
 
 
 ## Features
-- extract HTTP(S) consumers: JAX RS
+- extract HTTP(S) consumers: JAX RS, Spring
 - extract JMS consumers
 - extract producers via special annotation: HTTP(S)
 - write a `model.json` file
