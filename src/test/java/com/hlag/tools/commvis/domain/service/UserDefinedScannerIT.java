@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
 
-@SpringBootTest(classes = {ScannerCommand.class, PropertyFilesConfiguration.class, UserDefinedScanner.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class UserDefinedScannerIT {
     @Autowired
     private IScannerService[] scannerServices;
@@ -19,6 +19,6 @@ public class UserDefinedScannerIT {
     @Test
     //TODO this test is strange as we add the service above and check it it's there.
     void shouldFindUSerDefinedScannersInPackage()  {
-        assertThat(scannerServices).hasSize(1);
+        assertThat(scannerServices).hasSize(5);
     }
 }
