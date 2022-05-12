@@ -134,11 +134,12 @@
     </build>
 
     <dependencies>
+        <!--
         <dependency>
             <groupId>com.hlag.tools.commvis</groupId>
             <artifactId>api</artifactId>
-            <version>1.3.0</version>
-        </dependency>
+            <version>2.1.2</version>
+        </dependency> -->
         <dependency>
             <groupId>javax.ejb</groupId>
             <artifactId>javax.ejb-api</artifactId>
