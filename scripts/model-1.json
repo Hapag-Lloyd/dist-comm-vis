@@ -1,0 +1,26 @@
+{"version": "1.3.0", "id": "com.hlag.tools", "name": "1", "http_consumers": [{
+  "class_name" : "com.hlag.tools.commvis.example.customer.Customers",
+  "method_name" : "deleteCustomer",
+  "type" : "DELETE",
+  "path" : "customers/{customerId}"
+},{
+  "class_name" : "com.hlag.tools.commvis.example.customer.Customers",
+  "method_name" : "createCustomer",
+  "type" : "POST",
+  "path" : "customers"
+},{
+  "class_name" : "com.hlag.tools.commvis.example.customer.Customers",
+  "method_name" : "readCustomer",
+  "type" : "GET",
+  "path" : "customers/{customerId}"
+}], "http_producers": [{
+  "class_name" : "com.hlag.tools.commvis.example.customer.CustomerInvoice",
+  "method_name" : "getInvoice",
+  "type" : "GET",
+  "path" : "invoices/{invoiceId}",
+  "destination_project_id" : "12"
+}], "jms_endpoints": [{
+  "class_name" : "com.hlag.tools.commvis.example.customer.AccountSync",
+  "destination_type" : "javax.jms.Queue",
+  "destination" : "jms/account/accountSync"
+}]}

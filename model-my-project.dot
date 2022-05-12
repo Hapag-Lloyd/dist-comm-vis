@@ -1,0 +1,29 @@
+digraph G {
+  "application" [label="my-project" shape="rectangle"]
+  "0" [label="integration.endpoint.CustomerEndpoint.deleteCustomer\nsales/customers/{customerId}\nDELETE" shape="ellipse"]
+  "1" [label="integration.endpoint.CustomerCancelledOrderReceiver\njms/customer/orderCancelled\njavax.jms.Queue" shape="diamond"]
+  "2" [label="integration.endpoint.CustomerEndpoint.createCustomer\nsales/customers\nPOST" shape="ellipse"]
+  "3" [label="integration.endpoint.CallHttpsEndpoints.getCustomerInvoices\ncustomers/{customerId}/invoices\nGET" shape="ellipse"]
+  "4" [label="integration.endpoint.CustomerEndpoint.readCustomer\nsales/customers/{customerId}\nGET" shape="ellipse"]
+  "5" [label="integration.endpoint.CustomerEndpoint.updateCustomer\nsales/customers/{customerId}\nPUT" shape="ellipse"]
+  "application" [label="my-project" shape="rectangle"]
+  "6" [label="integration.endpoint.CustomerEndpoint.deleteCustomer\nsales/customers/{customerId}\nDELETE" shape="ellipse"]
+  "7" [label="integration.endpoint.CustomerCancelledOrderReceiver\njms/customer/orderCancelled\njavax.jms.Queue" shape="diamond"]
+  "8" [label="integration.endpoint.CustomerEndpoint.createCustomer\nsales/customers\nPOST" shape="ellipse"]
+  "9" [label="integration.endpoint.CallHttpsEndpoints.getCustomerInvoices\ncustomers/{customerId}/invoices\nGET" shape="ellipse"]
+  "10" [label="integration.endpoint.CustomerEndpoint.readCustomer\nsales/customers/{customerId}\nGET" shape="ellipse"]
+  "11" [label="integration.endpoint.CustomerEndpoint.updateCustomer\nsales/customers/{customerId}\nPUT" shape="ellipse"]
+
+  "0" -> "application"
+  "1" -> "application"
+  "2" -> "application"
+  "application" -> "3"
+  "4" -> "application"
+  "5" -> "application"
+  "6" -> "application"
+  "7" -> "application"
+  "8" -> "application"
+  "application" -> "9"
+  "10" -> "application"
+  "11" -> "application"
+}

@@ -1,0 +1,61 @@
+{"version": "", "id": "4711", "name": "my-project""version": "", "id": "4711", "name": "my-project", "http_consumers": [{
+  "class_name" : "integration.endpoint.CustomerEndpoint",
+  "method_name" : "deleteCustomer",
+  "type" : "DELETE",
+  "path" : "sales/customers/{customerId}"
+},{
+  "class_name" : "integration.endpoint.CustomerEndpoint",
+  "method_name" : "createCustomer",
+  "type" : "POST",
+  "path" : "sales/customers"
+},{
+  "class_name" : "integration.endpoint.CustomerEndpoint",
+  "method_name" : "readCustomer",
+  "type" : "GET",
+  "path" : "sales/customers/{customerId}"
+},{
+  "class_name" : "integration.endpoint.CustomerEndpoint",
+  "method_name" : "updateCustomer",
+  "type" : "PUT",
+  "path" : "sales/customers/{customerId}"
+},{
+  "class_name" : "integration.endpoint.CustomerEndpoint",
+  "method_name" : "deleteCustomer",
+  "type" : "DELETE",
+  "path" : "sales/customers/{customerId}"
+},{
+  "class_name" : "integration.endpoint.CustomerEndpoint",
+  "method_name" : "createCustomer",
+  "type" : "POST",
+  "path" : "sales/customers"
+},{
+  "class_name" : "integration.endpoint.CustomerEndpoint",
+  "method_name" : "readCustomer",
+  "type" : "GET",
+  "path" : "sales/customers/{customerId}"
+},{
+  "class_name" : "integration.endpoint.CustomerEndpoint",
+  "method_name" : "updateCustomer",
+  "type" : "PUT",
+  "path" : "sales/customers/{customerId}"
+}], "http_producers": [{
+  "class_name" : "integration.endpoint.CallHttpsEndpoints",
+  "method_name" : "getCustomerInvoices",
+  "type" : "GET",
+  "path" : "customers/{customerId}/invoices",
+  "destination_project_id" : "4711"
+},{
+  "class_name" : "integration.endpoint.CallHttpsEndpoints",
+  "method_name" : "getCustomerInvoices",
+  "type" : "GET",
+  "path" : "customers/{customerId}/invoices",
+  "destination_project_id" : "4711"
+}], "jms_endpoints": [{
+  "class_name" : "integration.endpoint.CustomerCancelledOrderReceiver",
+  "destination_type" : "javax.jms.Queue",
+  "destination" : "jms/customer/orderCancelled"
+},{
+  "class_name" : "integration.endpoint.CustomerCancelledOrderReceiver",
+  "destination_type" : "javax.jms.Queue",
+  "destination" : "jms/customer/orderCancelled"
+}]}

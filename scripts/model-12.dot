@@ -1,0 +1,24 @@
+digraph G {
+  "application" [label="12" shape="rectangle"]
+  "0" [label="com.hlag.tools.commvis.example.order.CustomerDetail.getCustomerData\ncustomers/{customerId}\nGET" shape="ellipse"]
+  "1" [label="com.hlag.tools.commvis.example.a.Customers.createCustomer\ncustomers\nPOST" shape="ellipse"]
+  "2" [label="com.hlag.tools.commvis.example.order.AccountSync\njms/account/accountSync\njavax.jms.Queue" shape="diamond"]
+  "3" [label="com.hlag.tools.commvis.example.a.Customers.readCustomer\ncustomers/{customerId}\nGET" shape="ellipse"]
+  "4" [label="com.hlag.tools.commvis.example.a.AccountSync\njms/account/accountSync\njavax.jms.Queue" shape="diamond"]
+  "5" [label="com.hlag.tools.commvis.example.a.CustomerInvoice.getInvoice\ninvoices/{invoiceId}\nGET" shape="ellipse"]
+  "6" [label="com.hlag.tools.commvis.example.a.Customers.deleteCustomer\ncustomers/{customerId}\nDELETE" shape="ellipse"]
+  "7" [label="com.hlag.tools.commvis.example.order.Order.createOrder\norders\nPOST" shape="ellipse"]
+  "8" [label="com.hlag.tools.commvis.example.order.Order.deleteOrder\norders/{orderId}\nDELETE" shape="ellipse"]
+  "9" [label="com.hlag.tools.commvis.example.order.Order.readOrder\norders/{orderId}\nGET" shape="ellipse"]
+
+  "application" -> "0"
+  "1" -> "application"
+  "2" -> "application"
+  "3" -> "application"
+  "4" -> "application"
+  "application" -> "5"
+  "6" -> "application"
+  "7" -> "application"
+  "8" -> "application"
+  "9" -> "application"
+}
