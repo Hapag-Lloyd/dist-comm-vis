@@ -18,15 +18,16 @@ import java.io.IOException;
 @Slf4j
 public class ExportModelJsonServiceImpl implements IExportModelService {
 
-    private final JsonCommunicationModelVisitor visitor;
+    private final String version;
 
     public ExportModelJsonServiceImpl(@Value("${git.tags}") String version) {
-        this.visitor = new JsonCommunicationModelVisitor(version);
+        this.version = version;
     }
 
     public void export(CommunicationModel model, String filename) {
-        model.visit(visitor);
+        JsonCommunicationModelVisitor visitor = new JsonCommunicationModelVisitor(version);
 
+        model.visit(visitor);
         String jsonContent = visitor.getJson();
 
         try (FileWriter fw = new FileWriter(new File(filename + ".json"))) {
