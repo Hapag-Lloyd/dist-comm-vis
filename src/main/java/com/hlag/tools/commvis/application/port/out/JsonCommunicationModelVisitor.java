@@ -3,7 +3,6 @@ package com.hlag.tools.commvis.application.port.out;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.hlag.tools.commvis.analyzer.model.*;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +15,6 @@ import java.io.StringWriter;
  * Transforms the internal model into a JSON representation.
  */
 @Slf4j
-@Component
 public class JsonCommunicationModelVisitor extends AbstractCommunicationModelVisitor {
     private final String version;
     private final StringBuilder httpConsumersJson = new StringBuilder();
@@ -24,7 +22,7 @@ public class JsonCommunicationModelVisitor extends AbstractCommunicationModelVis
     private final StringBuilder jmsEndpointsJson = new StringBuilder();
     private final StringBuilder modelSettings = new StringBuilder();
 
-    public JsonCommunicationModelVisitor(@Value("${git.tags}") String gitTag) {
+    public JsonCommunicationModelVisitor(String gitTag) {
         this.version = gitTag;
     }
 
@@ -63,7 +61,7 @@ public class JsonCommunicationModelVisitor extends AbstractCommunicationModelVis
         httpConsumersJson.append(jsonObjectWriter);
     }
 
-     @Override
+    @Override
     public void visit(HttpProducer producer) {
         JsonFactory factory = new JsonFactory();
         StringWriter jsonObjectWriter = new StringWriter();

@@ -4,6 +4,7 @@ import com.hlag.tools.commvis.analyzer.model.CommunicationModel;
 import com.hlag.tools.commvis.application.port.out.JsonCommunicationModelVisitor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -17,15 +18,16 @@ import java.io.IOException;
 @Slf4j
 public class ExportModelJsonServiceImpl implements IExportModelService {
 
-    private final JsonCommunicationModelVisitor visitor;
+    private final String version;
 
-    public ExportModelJsonServiceImpl(JsonCommunicationModelVisitor jsonCommunicationModelVisitor) {
-        this.visitor = jsonCommunicationModelVisitor;
+    public ExportModelJsonServiceImpl(@Value("${git.tags}") String version) {
+        this.version = version;
     }
 
     public void export(CommunicationModel model, String filename) {
-        model.visit(visitor);
+        JsonCommunicationModelVisitor visitor = new JsonCommunicationModelVisitor(version);
 
+        model.visit(visitor);
         String jsonContent = visitor.getJson();
 
         try (FileWriter fw = new FileWriter(new File(filename + ".json"))) {
