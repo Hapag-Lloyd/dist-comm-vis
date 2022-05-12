@@ -15,13 +15,22 @@ up-to-date as it is generated automatically based on the current version of the 
 ```shell
 release="1.11.1"
 curl -o analyzer.jar https://github.com/Hapag-Lloyd/dist-comm-vis/releases/download/${RELEASE}/analyzer-${RELEASE}.jar
- 
-java -cp "analyzer.jar;distributed-projects/microservice-a/target/test-classes" org.springframework.boot.loader.JarLauncher scan com.hlag.tools.commvis.example 1 --name=Customer
+
+# make sure that all dependencies are added to the classpath! 
+java -cp "analyzer.jar:distributed-projects/microservice-a/target/test-classes" org.springframework.boot.loader.JarLauncher scan com.hlag.tools.commvis.example 1 --name=Customer
 
 yum install graphviz
 dot -Tpng model.dot > model.png
 ```
+
+For a more sophisticated example check the [scan.sh](scripts/scan.sh)
+```shell
+scripts/scan.sh distributed-projects/microservice-a/target 1234 service-a
+scripts/scan.sh distributed-projects/microservice-b/target 2345 service-b
+```
+
 ![Communication](image/communication.png)
+
 
 ## Features
 - extract HTTP(S) consumers: JAX RS
