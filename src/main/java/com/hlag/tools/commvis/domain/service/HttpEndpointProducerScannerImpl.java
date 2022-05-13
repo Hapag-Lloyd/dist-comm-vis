@@ -2,6 +2,7 @@ package com.hlag.tools.commvis.domain.service;
 
 import com.hlag.tools.commvis.analyzer.annotation.VisualizeHttpsCall;
 import com.hlag.tools.commvis.analyzer.annotation.VisualizeHttpsCalls;
+import com.hlag.tools.commvis.analyzer.model.EndpointFactory;
 import com.hlag.tools.commvis.analyzer.model.HttpProducer;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
 import com.hlag.tools.commvis.analyzer.service.IScannerService;
@@ -64,6 +65,6 @@ public class HttpEndpointProducerScannerImpl implements IScannerService {
     }
 
     private HttpProducer createHttpProducer(VisualizeHttpsCall annotation, Method method) {
-        return new HttpProducer(method.getDeclaringClass().getCanonicalName(), method.getName(), annotation.type(), annotation.path(), annotation.projectId());
+        return EndpointFactory.get().createHttpProducer(method.getDeclaringClass().getCanonicalName(), method.getName(), annotation.type(), annotation.path(), annotation.projectId());
     }
 }

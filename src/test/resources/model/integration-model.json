@@ -1,7 +1,7 @@
 {
-  "version": "###version###",
-  "id": "4711",
-  "name": "my-project",
+  "model_version": "###version###",
+  "project_id": "4711",
+  "project_name": "my-project-1",
   "http_consumers": [
     {
       "class_name": "integration.endpoint.CustomerEndpoint",
@@ -11,15 +11,15 @@
     },
     {
       "class_name": "integration.endpoint.CustomerEndpoint",
-      "method_name": "createCustomer",
-      "type": "POST",
-      "path": "sales/customers"
-    },
-    {
-      "class_name": "integration.endpoint.CustomerEndpoint",
       "method_name": "readCustomer",
       "type": "GET",
       "path": "sales/customers/{customerId}"
+    },
+    {
+      "class_name": "integration.endpoint.CustomerEndpoint",
+      "method_name": "createCustomer",
+      "type": "POST",
+      "path": "sales/customers"
     },
     {
       "class_name": "integration.endpoint.CustomerEndpoint",
@@ -37,7 +37,7 @@
       "destination_project_id": "4711"
     }
   ],
-  "jms_endpoints": [
+  "jms_consumers": [
     {
       "class_name": "integration.endpoint.CustomerCancelledOrderReceiver",
       "destination": "jms/customer/orderCancelled",
