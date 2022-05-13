@@ -1,5 +1,6 @@
 package com.hlag.tools.commvis.domain.service;
 
+import com.hlag.tools.commvis.analyzer.model.EndpointFactory;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
 import com.hlag.tools.commvis.analyzer.model.JmsReceiver;
 import com.hlag.tools.commvis.analyzer.service.IScannerService;
@@ -46,7 +47,7 @@ public class JmsEndpointScannerImpl implements IScannerService {
                 }
             }
 
-            endpoints.add(new JmsReceiver(c.getCanonicalName(), destinationType, destination));
+            endpoints.add(EndpointFactory.get().createJmsReceiver(c.getCanonicalName(), destinationType, destination));
         });
 
         return endpoints;

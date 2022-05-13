@@ -1,5 +1,6 @@
 package com.hlag.tools.commvis.domain.service;
 
+import com.hlag.tools.commvis.analyzer.model.EndpointFactory;
 import com.hlag.tools.commvis.analyzer.model.HttpConsumer;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
 import com.hlag.tools.commvis.analyzer.service.IScannerService;
@@ -35,7 +36,7 @@ public class SpringHttpEndpointScannerImpl implements IScannerService {
             String path = mapping.path().length == 0 ? mapping.value()[0] : mapping.path()[0];
 
             //TODO HttpConsumer should allow multiple HTTP methods and multiple paths
-            endpoints.add(new HttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), "GET", path));
+            endpoints.add(EndpointFactory.get().createHttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), "GET", path));
         });
 
         methods = reflections.get(MethodsAnnotated.with(PutMapping.class).as(Method.class));
@@ -46,7 +47,7 @@ public class SpringHttpEndpointScannerImpl implements IScannerService {
             String path = mapping.path().length == 0 ? mapping.value()[0] : mapping.path()[0];
 
             //TODO HttpConsumer should allow multiple HTTP methods and multiple paths
-            endpoints.add(new HttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), "PUT", path));
+            endpoints.add(EndpointFactory.get().createHttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), "PUT", path));
         });
 
         methods = reflections.get(MethodsAnnotated.with(PostMapping.class).as(Method.class));
@@ -57,7 +58,7 @@ public class SpringHttpEndpointScannerImpl implements IScannerService {
             String path = mapping.path().length == 0 ? mapping.value()[0] : mapping.path()[0];
 
             //TODO HttpConsumer should allow multiple HTTP methods and multiple paths
-            endpoints.add(new HttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), "POST", path));
+            endpoints.add(EndpointFactory.get().createHttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), "POST", path));
         });
 
         methods = reflections.get(MethodsAnnotated.with(PatchMapping.class).as(Method.class));
@@ -68,7 +69,7 @@ public class SpringHttpEndpointScannerImpl implements IScannerService {
             String path = mapping.path().length == 0 ? mapping.value()[0] : mapping.path()[0];
 
             //TODO HttpConsumer should allow multiple HTTP methods and multiple paths
-            endpoints.add(new HttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), "PATCH", path));
+            endpoints.add(EndpointFactory.get().createHttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), "PATCH", path));
         });
 
         methods = reflections.get(MethodsAnnotated.with(DeleteMapping.class).as(Method.class));
@@ -79,7 +80,7 @@ public class SpringHttpEndpointScannerImpl implements IScannerService {
             String path = mapping.path().length == 0 ? mapping.value()[0] : mapping.path()[0];
 
             //TODO HttpConsumer should allow multiple HTTP methods and multiple paths
-            endpoints.add(new HttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), "DELETE", path));
+            endpoints.add(EndpointFactory.get().createHttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), "DELETE", path));
         });
 
         methods = reflections.get(MethodsAnnotated.with(RequestMapping.class).as(Method.class));
@@ -90,7 +91,7 @@ public class SpringHttpEndpointScannerImpl implements IScannerService {
             String path = mapping.path().length == 0 ? mapping.value()[0] : mapping.path()[0];
 
             //TODO HttpConsumer should allow multiple HTTP methods and multiple paths
-            endpoints.add(new HttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), mapping.method()[0].name(), path));
+            endpoints.add(EndpointFactory.get().createHttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), mapping.method()[0].name(), path));
         });
 
         log.info("Incoming Spring HTTP endpoints found: {}", endpoints.size());
