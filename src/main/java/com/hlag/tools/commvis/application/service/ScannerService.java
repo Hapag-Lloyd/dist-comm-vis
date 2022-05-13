@@ -27,8 +27,6 @@ public class ScannerService implements ScannerUseCase {
 
     @Override
     public void scanSenderReceiverAndExport(ScannerCommand command) {
-log.error("Scanner: {}",scannerServices.length);
-Thread.dumpStack();
         CommunicationModel model = new CommunicationModel(command.getProjectId(), command.getProjectName(), version);
 
         Arrays.asList(scannerServices).forEach(s -> {

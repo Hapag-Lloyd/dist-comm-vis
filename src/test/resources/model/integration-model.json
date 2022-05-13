@@ -7,29 +7,25 @@
       "class_name": "integration.endpoint.CustomerEndpoint",
       "method_name": "deleteCustomer",
       "type": "DELETE",
-      "path": "sales/customers/{customerId}",
-      "id": 2
+      "path": "sales/customers/{customerId}"
     },
     {
       "class_name": "integration.endpoint.CustomerEndpoint",
       "method_name": "readCustomer",
       "type": "GET",
-      "path": "sales/customers/{customerId}",
-      "id": 3
+      "path": "sales/customers/{customerId}"
     },
     {
       "class_name": "integration.endpoint.CustomerEndpoint",
       "method_name": "createCustomer",
       "type": "POST",
-      "path": "sales/customers",
-      "id": 4
+      "path": "sales/customers"
     },
     {
       "class_name": "integration.endpoint.CustomerEndpoint",
       "method_name": "updateCustomer",
       "type": "PUT",
-      "path": "sales/customers/{customerId}",
-      "id": 5
+      "path": "sales/customers/{customerId}"
     }
   ],
   "http_producers": [
@@ -38,16 +34,14 @@
       "method_name": "getCustomerInvoices",
       "type": "GET",
       "path": "/customers/{customerId}/invoices",
-      "destination_project_id": "4711",
-      "id": 1
+      "destination_project_id": "4711"
     }
   ],
   "jms_consumers": [
     {
       "class_name": "integration.endpoint.CustomerCancelledOrderReceiver",
       "destination": "jms/customer/orderCancelled",
-      "destination_type": "javax.jms.Queue",
-      "id": 6
+      "destination_type": "javax.jms.Queue"
     }
   ]
 }
