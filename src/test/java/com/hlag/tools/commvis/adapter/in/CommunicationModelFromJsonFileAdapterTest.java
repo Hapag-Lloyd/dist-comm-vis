@@ -21,12 +21,6 @@ class CommunicationModelFromJsonFileAdapterTest {
 
         Collection<Path> actualModelFiles = adapter.getModelFiles(givenBaseDirectory);
 
-        Assertions.assertThat(actualModelFiles).hasSize(6).extracting(Path::toString).containsExactlyInAnyOrder(
-                "src\\test\\resources\\json-file-adapter\\model-newer-name.json",
-                "src\\test\\resources\\json-file-adapter\\model.json",
-                "src\\test\\resources\\json-file-adapter\\subdir1\\model-old-name.json",
-                "src\\test\\resources\\json-file-adapter\\subdir1\\model.json",
-                "src\\test\\resources\\json-file-adapter\\subdir2\\model-new-name.json",
-                "src\\test\\resources\\json-file-adapter\\subdir2\\model.json");
+        Assertions.assertThat(actualModelFiles).hasSize(6);
     }
 }
