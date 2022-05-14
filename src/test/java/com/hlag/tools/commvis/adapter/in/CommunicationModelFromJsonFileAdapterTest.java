@@ -1,5 +1,6 @@
 package com.hlag.tools.commvis.adapter.in;
 
+import com.hlag.tools.commvis.analyzer.model.CommunicationModel;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,5 +26,12 @@ class CommunicationModelFromJsonFileAdapterTest {
         Collection<Path> actualModelFiles = adapter.getModelFiles(givenBaseDirectory);
 
         Assertions.assertThat(actualModelFiles).hasSize(6);
+    }
+
+    @Test
+    void shouldReadModelFromFile_whenGetModelFromFile() {
+        CommunicationModel actualModel = adapter.getModelFromFile(Paths.get("src/test/resources/json-file-adapter/model.json"));
+
+        Assertions.assertThat(actualModel).isNotNull();
     }
 }

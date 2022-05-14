@@ -2,8 +2,6 @@ package com.hlag.tools.commvis.adapter.in;
 
 import com.hlag.tools.commvis.application.port.in.CombineCommand;
 import com.hlag.tools.commvis.application.port.in.CombineUseCase;
-import com.hlag.tools.commvis.application.port.in.ScannerCommand;
-import com.hlag.tools.commvis.application.port.in.ScannerUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import picocli.CommandLine;
@@ -26,7 +24,7 @@ public class CombineCommandLine implements Callable<Integer> {
     public Integer call() {
         CombineCommand command = new CombineCommand(topLevelDirectory, projectName);
 
-        combineUseCase.combineModels(command);
+        combineUseCase.combineModelsAsDot(command);
 
         return 0;
     }
