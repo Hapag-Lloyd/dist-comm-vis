@@ -59,7 +59,6 @@ class DistributedCommunicationVisualizerApplicationIT {
     }
 
     @Test
-    @Disabled("we have to remove the ids from the expected/actual result as they always differ")
     void shouldMatchCurrentDotModel_whenScan() {
         String expectedDot = contentOf(new File("src/test/resources/model/integration-model.dot"));
 

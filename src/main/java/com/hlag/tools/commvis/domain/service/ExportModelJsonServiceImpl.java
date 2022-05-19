@@ -16,6 +16,7 @@ public class ExportModelJsonServiceImpl implements IExportModelService {
 
     public void export(CommunicationModel model, String filename) {
         String jsonContent = new GsonBuilder().setPrettyPrinting().create().toJson(model);
+
         fileWriter.writeToFile(filename + ".json", jsonContent);
     }
 }
