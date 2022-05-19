@@ -21,7 +21,6 @@ import java.util.stream.Stream;
 public class CommunicationModelFromJsonFileAdapter {
     @SneakyThrows(IOException.class)
     public Collection<Path> getModelFiles(String baseDir) {
-        log.info(baseDir);
         try (Stream<Path> files = Files.walk(Paths.get(baseDir))) {
             return files
                     .filter(f -> f.getFileName().toString().startsWith("model"))

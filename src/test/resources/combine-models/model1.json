@@ -1,0 +1,14 @@
+{
+  "model_version": "###version###",
+  "project_id": "1",
+  "project_name": "Customer",
+  "http_consumers": [
+    {
+      "id": "6e184a1a-b56b-4765-86db-f7ecc8173e78",
+      "class_name": "integration.endpoint.CustomerEndpoint",
+      "method_name": "getCustomer",
+      "type": "GET",
+      "path": "/customers/{customerId}"
+    }
+  ]
+}
