@@ -2,35 +2,24 @@ package com.hlag.tools.commvis.domain.service;
 
 import com.hlag.tools.commvis.analyzer.model.CommunicationModel;
 import com.hlag.tools.commvis.application.port.out.DotCommunicationModelVisitor;
+import com.hlag.tools.commvis.application.port.out.FileWriterPort;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Service;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * Convert the internal model into a DOT (GraphViz) representation and save it to a file.
  */
 @Service
-@Slf4j
+@RequiredArgsConstructor
 public class ExportModelDotServiceImpl implements IExportModelService {
     private final DotCommunicationModelVisitor visitor;
-
-    public ExportModelDotServiceImpl(DotCommunicationModelVisitor visitor) {
-        this.visitor = visitor;
-    }
+    private final FileWriterPort fileWriter;
 
     public void export(CommunicationModel model, String filename) {
         model.visit(visitor);
-        String dotContent = visitor.getDotContent();
 
-        try (FileWriter fw = new FileWriter(new File(filename + ".dot"))) {
-            fw.write(dotContent);
-        } catch (IOException e) {
-            log.error("Failed to write dot model file.", e);
-            ExceptionUtils.rethrow(e);
-        }
+        String dotContent = visitor.getDotContent();
+        fileWriter.writeToFile(filename + ".dot", dotContent);
     }
 }

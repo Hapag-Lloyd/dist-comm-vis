@@ -6,6 +6,7 @@ import com.hlag.tools.commvis.analyzer.model.EndpointFactory;
 import com.hlag.tools.commvis.analyzer.model.HttpProducer;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
 import com.hlag.tools.commvis.analyzer.service.IScannerService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -24,7 +25,10 @@ import static org.reflections.scanners.Scanners.MethodsAnnotated;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class HttpEndpointProducerScannerImpl implements IScannerService {
+    private final EndpointFactory endpointFactory;
+
     @Override
     public Collection<ISenderReceiverCommunication> scanSenderAndReceiver(String rootPackageName) {
         Set<ISenderReceiverCommunication> endpoints = new HashSet<>();
@@ -65,6 +69,6 @@ public class HttpEndpointProducerScannerImpl implements IScannerService {
     }
 
     private HttpProducer createHttpProducer(VisualizeHttpsCall annotation, Method method) {
-        return EndpointFactory.get().createHttpProducer(method.getDeclaringClass().getCanonicalName(), method.getName(), annotation.type(), annotation.path(), annotation.projectId());
+        return endpointFactory.createHttpProducer(method.getDeclaringClass().getCanonicalName(), method.getName(), annotation.type(), annotation.path(), annotation.projectId());
     }
 }

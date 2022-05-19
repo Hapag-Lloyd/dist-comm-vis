@@ -123,7 +123,7 @@ public class CombineService implements CombineUseCase {
             if (producer instanceof HttpProducer) {
                 HttpProducer producer = (HttpProducer) this.producer;
 
-                if (httpConsumer.getType().equals(producer.getType()) && httpConsumer.getPath().equals(producer.getPath())) {
+                if (httpConsumer.isProducedBy(producer)) {
                     consumer = httpConsumer;
                 }
             }

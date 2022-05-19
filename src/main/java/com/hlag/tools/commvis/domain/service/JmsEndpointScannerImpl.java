@@ -4,6 +4,7 @@ import com.hlag.tools.commvis.analyzer.model.EndpointFactory;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
 import com.hlag.tools.commvis.analyzer.model.JmsReceiver;
 import com.hlag.tools.commvis.analyzer.service.IScannerService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -19,7 +20,10 @@ import static org.reflections.scanners.Scanners.TypesAnnotated;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class JmsEndpointScannerImpl implements IScannerService {
+    private final EndpointFactory endpointFactory;
+
     @Override
     public Collection<ISenderReceiverCommunication> scanSenderAndReceiver(String rootPackageName) {
         Set<ISenderReceiverCommunication> endpoints = new HashSet<>();
@@ -47,7 +51,7 @@ public class JmsEndpointScannerImpl implements IScannerService {
                 }
             }
 
-            endpoints.add(EndpointFactory.get().createJmsReceiver(c.getCanonicalName(), destinationType, destination));
+            endpoints.add(endpointFactory.createJmsReceiver(c.getCanonicalName(), destinationType, destination));
         });
 
         return endpoints;
