@@ -45,8 +45,8 @@ public class CombineService implements CombineUseCase {
             graphDefinitions.append(visitor.getGraphDefinitions().toString());
         });
 
-        dotModel.append(nodeDefinitions.toString());
-        dotModel.append(graphDefinitions.toString());
+        dotModel.append(nodeDefinitions);
+        dotModel.append(graphDefinitions);
         dotModel.append("}");
 
         return dotModel.toString();
@@ -70,7 +70,7 @@ public class CombineService implements CombineUseCase {
 
         @Override
         public void visit(HttpConsumer consumer) {
-            String label = String.format("%s.%s\\n%s\\n%s", consumer.getClassName(), consumer.getMethodName(), consumer.getPath(), consumer.getType();
+            String label = String.format("%s.%s\\n%s\\n%s", consumer.getClassName(), consumer.getMethodName(), consumer.getPath(), consumer.getType());
             String id = String.format("%s#%s", modelId, consumer.getId());
 
             nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"ellipse\"]\n", id, label));
