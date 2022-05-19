@@ -4,7 +4,6 @@ import com.hlag.tools.commvis.adapter.in.CommunicationModelFromJsonFileAdapter;
 import com.hlag.tools.commvis.analyzer.model.*;
 import com.hlag.tools.commvis.application.port.in.CombineCommand;
 import com.hlag.tools.commvis.application.port.in.CombineUseCase;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +24,7 @@ public class CombineService implements CombineUseCase {
 
         // find all model files and read them
         modelReader.getModelFiles(command.getBaseDirectory()).forEach(p -> {
-             CommunicationModel model = modelReader.getModelFromFile(p);
+            CommunicationModel model = modelReader.getModelFromFile(p);
             models.put(model.getProjectId(), model);
         });
 
@@ -46,8 +45,8 @@ public class CombineService implements CombineUseCase {
             graphDefinitions.append(visitor.getGraphDefinitions().toString());
         });
 
-        dotModel.append(nodeDefinitions.toString());
-        dotModel.append(graphDefinitions.toString());
+        dotModel.append(nodeDefinitions);
+        dotModel.append(graphDefinitions);
         dotModel.append("}");
 
         return dotModel.toString();
@@ -71,7 +70,7 @@ public class CombineService implements CombineUseCase {
 
         @Override
         public void visit(HttpConsumer consumer) {
-            String label = consumer.getClassName() + "." + consumer.getMethodName() + "\\n" + consumer.getPath() + "\\n" + consumer.getType();
+            String label = String.format("%s.%s\\n%s\\n%s", consumer.getClassName(), consumer.getMethodName(), consumer.getPath(), consumer.getType());
             String id = String.format("%s#%s", modelId, consumer.getId());
 
             nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"ellipse\"]\n", id, label));
@@ -99,8 +98,17 @@ public class CombineService implements CombineUseCase {
 
         @Override
         public void visit(JmsReceiver endpoint) {
-            String label = endpoint.getClassName() + "\\n" + endpoint.getDestination() + "\\n" + endpoint.getDestinationType();
+            String label = String.format("%s\\n%s\\n%s", endpoint.getClassName(), endpoint.getDestination(), endpoint.getDestinationType());
             String id = String.format("%s#%s", modelId, endpoint.getId());
+
+            nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
+            graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, modelId));
+        }
+
+        @Override
+        public void visit(SqsConsumer sqsConsumer) {
+            String label = String.format("%s\\n%s\\n%s", sqsConsumer.getClassName(), sqsConsumer.getMethodName(), sqsConsumer.getQueueName());
+            String id = String.format("%s#%s", modelId, sqsConsumer.getId());
 
             nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
             graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, modelId));
@@ -137,6 +145,10 @@ public class CombineService implements CombineUseCase {
         @Override
         public void visit(JmsReceiver jmsReceiver) {
 
+        }
+
+        @Override
+        public void visit(SqsConsumer sqsConsumer) {
         }
     }
 }

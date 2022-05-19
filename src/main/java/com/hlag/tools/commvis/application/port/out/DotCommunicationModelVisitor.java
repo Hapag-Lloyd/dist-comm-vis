@@ -51,4 +51,14 @@ public class DotCommunicationModelVisitor extends AbstractCommunicationModelVisi
 
         ++nodes;
     }
+
+    @Override
+    public void visit(SqsConsumer sqsConsumer) {
+        String label = sqsConsumer.getClassName() + "\\n" + sqsConsumer.getMethodName() + "\\n" + sqsConsumer.getQueueName();
+        nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\" shape=\"diamond\"]\n", nodes, label));
+
+        graphDefinitions.append(String.format("  \"%d\" -> \"application\"\n", nodes));
+
+        ++nodes;
+    }
 }

@@ -3,7 +3,6 @@ package com.hlag.tools.commvis.domain.service;
 import com.hlag.tools.commvis.analyzer.model.EndpointFactory;
 import com.hlag.tools.commvis.analyzer.model.HttpProducer;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
-import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,10 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import javax.xml.stream.events.EndDocument;
 import java.util.Collection;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class HttpEndpointProducerScannerImplTest {
     @Mock
