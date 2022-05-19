@@ -9,7 +9,7 @@ import java.io.File;
 
 class CombineServiceTest {
     @Test
-    void x() {
+    void shouldCombineMultipleModelsReferencingEachOther_whenCombineModelAsDot() {
         CombineService combineService = new CombineService(new CommunicationModelFromJsonFileAdapter());
         CombineCommand command = new CombineCommand("src/test/resources/combine-models", "test");
         String actualDotModel = combineService.combineModelsAsDot(command);
