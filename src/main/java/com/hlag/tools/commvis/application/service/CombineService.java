@@ -105,6 +105,9 @@ public class CombineService implements CombineUseCase {
             nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
             graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, modelId));
         }
+
+        @Override
+        public void visit(SqsConsumer sqsConsumer) {}
     }
 
     @RequiredArgsConstructor
@@ -138,5 +141,8 @@ public class CombineService implements CombineUseCase {
         public void visit(JmsReceiver jmsReceiver) {
 
         }
+
+        @Override
+        public void visit(SqsConsumer sqsConsumer) {}
     }
 }

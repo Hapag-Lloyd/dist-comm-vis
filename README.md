@@ -36,6 +36,7 @@ scripts/scan.sh distributed-projects/microservice-b/target 2345 service-b
 - extract HTTP(S) consumers: JAX RS, Spring
 - extract JMS consumers
 - extract producers via special annotation: HTTP(S)
+- extract consumers via special annotation: SQS
 - write a `model.json` file
 - write a `model.dot` file for [GraphViz](https://gitlab.com/graphviz/graphviz)
 - support user defined scanners (see https://github.com/Hapag-Lloyd/dist-comm-vis-api)
@@ -45,4 +46,4 @@ scripts/scan.sh distributed-projects/microservice-b/target 2345 service-b
 - extract Kafka consumers and producers
 - extract JMS producers
 - extract SNS producers
-- extract SQS consumers and producers
+- extract SQS producers
