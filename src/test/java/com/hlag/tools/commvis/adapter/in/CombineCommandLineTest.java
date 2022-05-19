@@ -1,8 +1,11 @@
 package com.hlag.tools.commvis.adapter.in;
 
+import com.hlag.tools.commvis.application.port.in.CombineUseCase;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import picocli.CommandLine;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,9 +13,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CombineCommandLineTest {
     private CombineCommandLine commandLine;
 
+    @Mock
+    private CombineUseCase combineUseCase;
+
     @BeforeEach
     void init() {
-        commandLine = new CombineCommandLine();
+        MockitoAnnotations.openMocks(this);
+        commandLine = new CombineCommandLine(combineUseCase);
     }
 
     @Test

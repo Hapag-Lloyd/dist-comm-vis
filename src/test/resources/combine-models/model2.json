@@ -1,0 +1,15 @@
+{
+  "model_version": "###version###",
+  "project_id": "2",
+  "project_name": "Invoice",
+  "http_producers": [
+    {
+      "id": "2d9f08b8-c469-4ead-8d79-38e2e6070ffe",
+      "class_name": "integration.endpoint.CallHttpsEndpoints",
+      "method_name": "getCustomerInvoices",
+      "type": "GET",
+      "path": "/customers/{customerId}",
+      "destination_project_id": "1"
+    }
+  ]
+}

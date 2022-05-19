@@ -4,6 +4,7 @@ import com.hlag.tools.commvis.analyzer.model.EndpointFactory;
 import com.hlag.tools.commvis.analyzer.model.HttpConsumer;
 import com.hlag.tools.commvis.analyzer.model.ISenderReceiverCommunication;
 import com.hlag.tools.commvis.analyzer.service.IScannerService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -23,7 +24,10 @@ import static org.reflections.scanners.Scanners.MethodsAnnotated;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class JaxRsHttpEndpointConsumerScannerImpl implements IScannerService {
+    private final EndpointFactory endpointFactory;
+
     @Override
     public Collection<ISenderReceiverCommunication> scanSenderAndReceiver(String rootPackageName) {
         Set<ISenderReceiverCommunication> endpoints = new HashSet<>();
@@ -40,7 +44,7 @@ public class JaxRsHttpEndpointConsumerScannerImpl implements IScannerService {
 
                 String path = Stream.of(pathOnClass, pathOnMethod).filter(Objects::nonNull).map(Path::value).collect(Collectors.joining("/"));
 
-                endpoints.add(EndpointFactory.get().createHttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), httpMethod.getSimpleName(), path));
+                endpoints.add(endpointFactory.createHttpConsumer(m.getDeclaringClass().getCanonicalName(), m.getName(), httpMethod.getSimpleName(), path));
             });
         }
 
