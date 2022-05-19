@@ -20,7 +20,8 @@ class CommunicationModelFromJsonFileAdapterTest {
 
     @Test
     void shouldFindAllModelFilesInSubDirectories_when() {
-        Path p = Paths.get("src/test/resources/json-file-adapter/");
+        //Path p = Paths.get("src/test/resources/json-file-adapter/");
+        Path p = Paths.get("/home/runner/work/dist-comm-vis/dist-comm-vis/src/test/resources/json-file-adapter");
         String givenBaseDirectory = p.toFile().getAbsolutePath();
 
         Collection<Path> actualModelFiles = adapter.getModelFiles(givenBaseDirectory);
