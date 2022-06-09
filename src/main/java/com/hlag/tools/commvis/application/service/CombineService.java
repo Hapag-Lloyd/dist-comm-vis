@@ -15,6 +15,8 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 @Slf4j
+// output format should always contain \n as line break. It shouldn't be platform dependent
+@SuppressWarnings({"squid:S3457"})
 public class CombineService implements CombineUseCase {
     private final CommunicationModelFromJsonFileAdapter modelReader;
 
@@ -57,9 +59,9 @@ public class CombineService implements CombineUseCase {
         private final Map<String, CommunicationModel> modelsById;
 
         @Getter
-        private StringBuilder nodeDefinitions = new StringBuilder();
+        private final StringBuilder nodeDefinitions = new StringBuilder();
         @Getter
-        private StringBuilder graphDefinitions = new StringBuilder();
+        private final StringBuilder graphDefinitions = new StringBuilder();
 
         private String modelId;
 
@@ -87,7 +89,7 @@ public class CombineService implements CombineUseCase {
             graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", modelId, id));
         }
 
-        private String findConsumerIdFor(HttpProducer producer) {
+        private String findConsumerIdFor(IProducer producer) {
             CommunicationModel destinationModel = modelsById.get(producer.getDestinationProjectId());
 
             ConsumerFinderVisitor consumerFinderVisitor = new ConsumerFinderVisitor(producer);
@@ -107,31 +109,43 @@ public class CombineService implements CombineUseCase {
 
         @Override
         public void visit(SqsConsumer sqsConsumer) {
-            String label = String.format("%s\\n%s\\n%s", sqsConsumer.getClassName(), sqsConsumer.getMethodName(), sqsConsumer.getQueueName());
+            String label = String.format("%s.%s\\n%s", sqsConsumer.getClassName(), sqsConsumer.getMethodName(), sqsConsumer.getQueueName());
             String id = String.format("%s#%s", modelId, sqsConsumer.getId());
 
             nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
             graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, modelId));
         }
+
+        @Override
+        public void visit(SqsProducer sqsProducer) {
+            String label = String.format("%s.%s\\n%s", sqsProducer.getClassName(), sqsProducer.getMethodName(), sqsProducer.getQueueName());
+            String id = String.format("%s#%s", modelId, sqsProducer.getId());
+
+            nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
+            graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, findConsumerIdFor(sqsProducer)));
+            graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", modelId, id));
+
+        }
     }
 
     @RequiredArgsConstructor
     private static class ConsumerFinderVisitor extends AbstractCommunicationModelVisitor {
-        private final ISenderReceiverCommunication producer;
+        private final IProducer producer;
+
         @Getter
         private ISenderReceiverCommunication consumer;
 
         @Override
         public void visit(CommunicationModel communicationModel) {
-
+            // it's a ConsumerFinder and this is not a consumer
         }
 
         @Override
         public void visit(HttpConsumer httpConsumer) {
             if (producer instanceof HttpProducer) {
-                HttpProducer producer = (HttpProducer) this.producer;
+                HttpProducer httpProducer = (HttpProducer) this.producer;
 
-                if (httpConsumer.isProducedBy(producer)) {
+                if (httpConsumer.isProducedBy(httpProducer)) {
                     consumer = httpConsumer;
                 }
             }
@@ -139,16 +153,28 @@ public class CombineService implements CombineUseCase {
 
         @Override
         public void visit(HttpProducer httpProducer) {
-
+            // it's a ConsumerFinder and this is not a consumer
         }
 
         @Override
         public void visit(JmsReceiver jmsReceiver) {
-
+            // we have no producers so far
         }
 
         @Override
         public void visit(SqsConsumer sqsConsumer) {
+            if (producer instanceof SqsProducer) {
+                SqsProducer sqsProducer = (SqsProducer) this.producer;
+
+                if (sqsConsumer.isProducedBy(sqsProducer)) {
+                    consumer = sqsConsumer;
+                }
+            }
+        }
+
+        @Override
+        public void visit(SqsProducer sqsProducer) {
+            // it's a ConsumerFinder and this is not a consumer
         }
     }
 }

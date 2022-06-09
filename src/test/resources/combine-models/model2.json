@@ -11,5 +11,14 @@
       "path": "/customers/{customerId}",
       "destination_project_id": "1"
     }
+  ],
+  "sqs_producers": [
+    {
+      "id": "afef900b-313a-45ec-a507-6dd629714eed",
+      "class_name": "integration.endpoint.CallSqsEndpoints",
+      "method_name": "updateInvoice",
+      "queue_name": "invoice",
+      "destination_project_id": "1"
+    }
   ]
 }
