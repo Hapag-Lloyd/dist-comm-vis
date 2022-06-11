@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -85,17 +86,17 @@ public class CombineService implements CombineUseCase {
             String id = String.format("%s#%s", modelId, producer.getId());
 
             nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"ellipse\"]\n", id, label));
-            graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, findConsumerIdFor(producer)));
+            findConsumerIdFor(producer).ifPresent(consumerId -> graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, consumerId)));
             graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", modelId, id));
         }
 
-        private String findConsumerIdFor(IProducer producer) {
+        private Optional<String> findConsumerIdFor(IProducer producer) {
             CommunicationModel destinationModel = modelsById.get(producer.getDestinationProjectId());
 
             ConsumerFinderVisitor consumerFinderVisitor = new ConsumerFinderVisitor(producer);
             destinationModel.visit(consumerFinderVisitor);
 
-            return producer.getDestinationProjectId() + "#" + consumerFinderVisitor.getConsumer().getId();
+            return consumerFinderVisitor.getConsumer().map(consumer -> producer.getDestinationProjectId() + "#" + consumer.getId());
         }
 
         @Override
@@ -117,14 +118,32 @@ public class CombineService implements CombineUseCase {
         }
 
         @Override
+        public void visit(SqsViaSnsConsumer sqsViaSnsConsumer) {
+            String label = String.format("%s.%s\\n%s", sqsViaSnsConsumer.getClassName(), sqsViaSnsConsumer.getMethodName(), sqsViaSnsConsumer.getTopicName());
+            String id = String.format("%s#%s", modelId, sqsViaSnsConsumer.getId());
+
+            nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
+            graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, modelId));
+        }
+
+        @Override
         public void visit(SqsProducer sqsProducer) {
             String label = String.format("%s.%s\\n%s", sqsProducer.getClassName(), sqsProducer.getMethodName(), sqsProducer.getQueueName());
             String id = String.format("%s#%s", modelId, sqsProducer.getId());
 
             nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
-            graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, findConsumerIdFor(sqsProducer)));
+            findConsumerIdFor(sqsProducer).ifPresent(consumerId -> graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, consumerId)));
             graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", modelId, id));
+        }
 
+        @Override
+        public void visit(SnsProducer snsProducer) {
+            String label = String.format("%s.%s\\n%s", snsProducer.getClassName(), snsProducer.getMethodName(), snsProducer.getTopicName());
+            String id = String.format("%s#%s", modelId, snsProducer.getId());
+
+            nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
+            findConsumerIdFor(snsProducer).ifPresent(consumerId -> graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, consumerId)));
+            graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", modelId, id));
         }
     }
 
@@ -133,7 +152,7 @@ public class CombineService implements CombineUseCase {
         private final IProducer producer;
 
         @Getter
-        private ISenderReceiverCommunication consumer;
+        private Optional<ISenderReceiverCommunication> consumer = Optional.empty();
 
         @Override
         public void visit(CommunicationModel communicationModel) {
@@ -146,7 +165,7 @@ public class CombineService implements CombineUseCase {
                 HttpProducer httpProducer = (HttpProducer) this.producer;
 
                 if (httpConsumer.isProducedBy(httpProducer)) {
-                    consumer = httpConsumer;
+                    consumer = Optional.of(httpConsumer);
                 }
             }
         }
@@ -167,13 +186,29 @@ public class CombineService implements CombineUseCase {
                 SqsProducer sqsProducer = (SqsProducer) this.producer;
 
                 if (sqsConsumer.isProducedBy(sqsProducer)) {
-                    consumer = sqsConsumer;
+                    consumer = Optional.of(sqsConsumer);
+                }
+            }
+        }
+
+        @Override
+        public void visit(SqsViaSnsConsumer sqsViaSnsConsumer) {
+            if (producer instanceof SnsProducer) {
+                SnsProducer snsProducer = (SnsProducer) this.producer;
+
+                if (sqsViaSnsConsumer.isProducedBy(snsProducer)) {
+                    consumer = Optional.of(sqsViaSnsConsumer);
                 }
             }
         }
 
         @Override
         public void visit(SqsProducer sqsProducer) {
+            // it's a ConsumerFinder and this is not a consumer
+        }
+
+        @Override
+        public void visit(SnsProducer snsProducer) {
             // it's a ConsumerFinder and this is not a consumer
         }
     }

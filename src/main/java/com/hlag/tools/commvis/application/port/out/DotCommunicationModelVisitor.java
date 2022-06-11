@@ -63,8 +63,28 @@ public class DotCommunicationModelVisitor extends AbstractCommunicationModelVisi
     }
 
     @Override
+    public void visit(SqsViaSnsConsumer sqsViaSnsConsumer) {
+        String label = sqsViaSnsConsumer.getClassName() + "\\n" + sqsViaSnsConsumer.getMethodName() + "\\n" + sqsViaSnsConsumer.getTopicName();
+        nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\" shape=\"diamond\"]\n", nodes, label));
+
+        graphDefinitions.append(String.format("  \"%d\" -> \"application\"\n", nodes));
+
+        ++nodes;
+    }
+
+    @Override
     public void visit(SqsProducer sqsProducer) {
         String label = sqsProducer.getClassName() + "\\n" + sqsProducer.getMethodName() + "\\n" + sqsProducer.getQueueName();
+        nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\" shape=\"diamond\"]\n", nodes, label));
+
+        graphDefinitions.append(String.format("  \"application\" -> \"%d\"\n", nodes));
+
+        ++nodes;
+    }
+
+    @Override
+    public void visit(SnsProducer snsProducer) {
+        String label = snsProducer.getClassName() + "\\n" + snsProducer.getMethodName() + "\\n" + snsProducer.getTopicName();
         nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\" shape=\"diamond\"]\n", nodes, label));
 
         graphDefinitions.append(String.format("  \"application\" -> \"%d\"\n", nodes));

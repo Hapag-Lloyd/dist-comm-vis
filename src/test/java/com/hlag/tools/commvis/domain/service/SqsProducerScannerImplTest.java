@@ -29,7 +29,7 @@ class SqsProducerScannerImplTest {
     void shouldFindAllSqsProducers_whenScanClasspath() {
         Collection<ISenderReceiverCommunication> actualEndpoints = clazz.scanSenderAndReceiver("test.sqs.visualize");
 
-        Mockito.verify(endpointFactory, Mockito.times(3)).createSqsProducer(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any());
+        Mockito.verify(endpointFactory).createSqsProducer(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any());
     }
 
     @Test
