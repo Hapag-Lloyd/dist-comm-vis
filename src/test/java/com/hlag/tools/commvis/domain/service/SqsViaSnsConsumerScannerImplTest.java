@@ -24,6 +24,6 @@ class SqsViaSnsConsumerScannerImplTest {
     void shouldFindAllSqsConsumers_whenScanClasspath() {
         clazz.scanSenderAndReceiver("test.sqs.visualize");
 
-        Mockito.verify(endpointFactory, Mockito.times(3)).createSqsReceiver(Mockito.any(), Mockito.any(), Mockito.any());
+        Mockito.verify(endpointFactory, Mockito.times(3)).createSqsViaSnsConsumer(Mockito.any(), Mockito.any());
     }
 }
