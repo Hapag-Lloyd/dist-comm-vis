@@ -10,5 +10,21 @@
       "type": "GET",
       "path": "/customers/{customerId}"
     }
+  ],
+  "sqs_consumers": [
+    {
+      "id": "f3a6ead6-80b4-441e-9c2d-bf27b6301630",
+      "class_name": "integration.endpoint.CustomerEndpoint",
+      "method_name": "getInvoice",
+      "queue_name": "invoice"
+    }
+  ],
+  "sqs_via_sns_consumers": [
+    {
+      "id": "97a4fada-961d-4dc1-8608-eeb1619e085c",
+      "class_name": "integration.endpoint.CustomerEndpoint",
+      "method_name": "invoiceWasSettled",
+      "topic_name": "invoiceSettled"
+    }
   ]
 }

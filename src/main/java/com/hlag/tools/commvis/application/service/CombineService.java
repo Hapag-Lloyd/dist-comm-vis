@@ -11,10 +11,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
+// output format should always contain \n as line break. It shouldn't be platform dependent
+@SuppressWarnings({"squid:S3457"})
 public class CombineService implements CombineUseCase {
     private final CommunicationModelFromJsonFileAdapter modelReader;
 
@@ -57,9 +60,9 @@ public class CombineService implements CombineUseCase {
         private final Map<String, CommunicationModel> modelsById;
 
         @Getter
-        private StringBuilder nodeDefinitions = new StringBuilder();
+        private final StringBuilder nodeDefinitions = new StringBuilder();
         @Getter
-        private StringBuilder graphDefinitions = new StringBuilder();
+        private final StringBuilder graphDefinitions = new StringBuilder();
 
         private String modelId;
 
@@ -83,17 +86,17 @@ public class CombineService implements CombineUseCase {
             String id = String.format("%s#%s", modelId, producer.getId());
 
             nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"ellipse\"]\n", id, label));
-            graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, findConsumerIdFor(producer)));
+            findConsumerIdFor(producer).ifPresent(consumerId -> graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, consumerId)));
             graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", modelId, id));
         }
 
-        private String findConsumerIdFor(HttpProducer producer) {
+        private Optional<String> findConsumerIdFor(IProducer producer) {
             CommunicationModel destinationModel = modelsById.get(producer.getDestinationProjectId());
 
             ConsumerFinderVisitor consumerFinderVisitor = new ConsumerFinderVisitor(producer);
             destinationModel.visit(consumerFinderVisitor);
 
-            return producer.getDestinationProjectId() + "#" + consumerFinderVisitor.getConsumer().getId();
+            return consumerFinderVisitor.getConsumer().map(consumer -> producer.getDestinationProjectId() + "#" + consumer.getId());
         }
 
         @Override
@@ -107,48 +110,106 @@ public class CombineService implements CombineUseCase {
 
         @Override
         public void visit(SqsConsumer sqsConsumer) {
-            String label = String.format("%s\\n%s\\n%s", sqsConsumer.getClassName(), sqsConsumer.getMethodName(), sqsConsumer.getQueueName());
+            String label = String.format("%s.%s\\n%s", sqsConsumer.getClassName(), sqsConsumer.getMethodName(), sqsConsumer.getQueueName());
             String id = String.format("%s#%s", modelId, sqsConsumer.getId());
 
             nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
             graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, modelId));
         }
+
+        @Override
+        public void visit(SqsViaSnsConsumer sqsViaSnsConsumer) {
+            String label = String.format("%s.%s\\n%s", sqsViaSnsConsumer.getClassName(), sqsViaSnsConsumer.getMethodName(), sqsViaSnsConsumer.getTopicName());
+            String id = String.format("%s#%s", modelId, sqsViaSnsConsumer.getId());
+
+            nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
+            graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, modelId));
+        }
+
+        @Override
+        public void visit(SqsProducer sqsProducer) {
+            String label = String.format("%s.%s\\n%s", sqsProducer.getClassName(), sqsProducer.getMethodName(), sqsProducer.getQueueName());
+            String id = String.format("%s#%s", modelId, sqsProducer.getId());
+
+            nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
+            findConsumerIdFor(sqsProducer).ifPresent(consumerId -> graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, consumerId)));
+            graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", modelId, id));
+        }
+
+        @Override
+        public void visit(SnsProducer snsProducer) {
+            String label = String.format("%s.%s\\n%s", snsProducer.getClassName(), snsProducer.getMethodName(), snsProducer.getTopicName());
+            String id = String.format("%s#%s", modelId, snsProducer.getId());
+
+            nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
+            findConsumerIdFor(snsProducer).ifPresent(consumerId -> graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, consumerId)));
+            graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", modelId, id));
+        }
     }
 
     @RequiredArgsConstructor
     private static class ConsumerFinderVisitor extends AbstractCommunicationModelVisitor {
-        private final ISenderReceiverCommunication producer;
+        private final IProducer producer;
+
         @Getter
-        private ISenderReceiverCommunication consumer;
+        private Optional<ISenderReceiverCommunication> consumer = Optional.empty();
 
         @Override
         public void visit(CommunicationModel communicationModel) {
-
+            // it's a ConsumerFinder and this is not a consumer
         }
 
         @Override
         public void visit(HttpConsumer httpConsumer) {
             if (producer instanceof HttpProducer) {
-                HttpProducer producer = (HttpProducer) this.producer;
+                HttpProducer httpProducer = (HttpProducer) this.producer;
 
-                if (httpConsumer.isProducedBy(producer)) {
-                    consumer = httpConsumer;
+                if (httpConsumer.isProducedBy(httpProducer)) {
+                    consumer = Optional.of(httpConsumer);
                 }
             }
         }
 
         @Override
         public void visit(HttpProducer httpProducer) {
-
+            // it's a ConsumerFinder and this is not a consumer
         }
 
         @Override
         public void visit(JmsReceiver jmsReceiver) {
-
+            // we have no producers so far
         }
 
         @Override
         public void visit(SqsConsumer sqsConsumer) {
+            if (producer instanceof SqsProducer) {
+                SqsProducer sqsProducer = (SqsProducer) this.producer;
+
+                if (sqsConsumer.isProducedBy(sqsProducer)) {
+                    consumer = Optional.of(sqsConsumer);
+                }
+            }
+        }
+
+        @Override
+        public void visit(SqsViaSnsConsumer sqsViaSnsConsumer) {
+            if (producer instanceof SnsProducer) {
+                SnsProducer snsProducer = (SnsProducer) this.producer;
+
+                if (sqsViaSnsConsumer.isProducedBy(snsProducer)) {
+                    consumer = Optional.of(sqsViaSnsConsumer);
+                }
+            }
+        }
+
+        @Override
+        public void visit(SqsProducer sqsProducer) {
+            // it's a ConsumerFinder and this is not a consumer
+        }
+
+        @Override
+        public void visit(SnsProducer snsProducer) {
+            // it's a ConsumerFinder and this is not a consumer
         }
     }
 }

@@ -11,5 +11,23 @@
       "path": "/customers/{customerId}",
       "destination_project_id": "1"
     }
+  ],
+  "sqs_producers": [
+    {
+      "id": "afef900b-313a-45ec-a507-6dd629714eed",
+      "class_name": "integration.endpoint.CallSqsEndpoints",
+      "method_name": "updateInvoice",
+      "queue_name": "invoice",
+      "destination_project_id": "1"
+    }
+  ],
+  "sns_producers": [
+    {
+      "id": "eece73d3-d53d-43d5-aea1-dde19a81647a",
+      "class_name": "integration.endpoint.CallSnsEndpoints",
+      "method_name": "invoiceSettled",
+      "topic_name": "invoiceSettled",
+      "destination_project_id": "1"
+    }
   ]
 }
