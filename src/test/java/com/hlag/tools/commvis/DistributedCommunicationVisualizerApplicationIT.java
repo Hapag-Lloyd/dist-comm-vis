@@ -31,7 +31,6 @@ class DistributedCommunicationVisualizerApplicationIT {
     private String modelVersion;
 
     @Test
-    @Disabled("Does not work if called in pipeline. Guess there is some internal state somewhere.")
     void shouldMatchCurrentJsonModel_whenScan() throws Exception {
         String expectedJson = contentOf(new File("src/test/resources/model/integration-model.json"));
 
@@ -65,7 +64,6 @@ class DistributedCommunicationVisualizerApplicationIT {
     }
 
     @Test
-    @Disabled("Order within the endpoints depends on the order the services are executed which is always different.")
     void shouldMatchCurrentDotModel_whenScan() {
         String expectedDot = contentOf(new File("src/test/resources/model/integration-model.dot"));
 
