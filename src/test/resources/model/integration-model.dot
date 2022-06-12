@@ -6,6 +6,12 @@ digraph G {
   "3" [label="integration.endpoint.CustomerEndpoint.updateCustomer\nsales/customers/{customerId}\nPUT" shape="ellipse"]
   "4" [label="integration.endpoint.CallHttpsEndpoints.getCustomerInvoices\n/customers/{customerId}/invoices\nGET" shape="ellipse"]
   "5" [label="integration.endpoint.CustomerCancelledOrderReceiver\njms/customer/orderCancelled\njavax.jms.Queue" shape="diamond"]
+  "6" [label="integration.endpoint.MasterDataEndpoint\nrevokeCreditLine\nrevoke-credit-line" shape="diamond"]
+  "7" [label="integration.endpoint.CustomerService\nrevokeCreditLineFromCustomer\nrevoke-credit-line" shape="diamond"]
+  "8" [label="integration.endpoint.CustomerService\nstopCustomerBusiness\nstop-customer-business" shape="diamond"]
+  "9" [label="integration.endpoint.MasterDataEndpoint\ncountryAdded\nnew-country" shape="diamond"]
+  "10" [label="integration.endpoint.CustomerService\naddVipCustomer\nvip-customer-created" shape="diamond"]
+  "11" [label="integration.endpoint.MasterDataEndpoint\nlocationInvalidated\nlocation-invalidated" shape="diamond"]
 
   "0" -> "application"
   "1" -> "application"
@@ -13,4 +19,10 @@ digraph G {
   "3" -> "application"
   "application" -> "4"
   "5" -> "application"
+  "6" -> "application"
+  "application" -> "7"
+  "application" -> "8"
+  "9" -> "application"
+  "application" -> "10"
+  "11" -> "application"
 }

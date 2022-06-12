@@ -46,6 +46,12 @@ class DistributedCommunicationVisualizerApplicationIT {
         removeIdFromListObjects(actualJson.getJSONArray("http_consumers"));
         removeIdFromListObjects(actualJson.getJSONArray("http_producers"));
         removeIdFromListObjects(actualJson.getJSONArray("jms_consumers"));
+        removeIdFromListObjects(actualJson.getJSONArray("sqs_producers"));
+        removeIdFromListObjects(actualJson.getJSONArray("sqs_consumers"));
+        removeIdFromListObjects(actualJson.getJSONArray("sqs_via_sns_consumers"));
+        removeIdFromListObjects(actualJson.getJSONArray("kafka_producers"));
+        removeIdFromListObjects(actualJson.getJSONArray("kafka_consumers"));
+        removeIdFromListObjects(actualJson.getJSONArray("sns_producers"));
 
         JSONAssert.assertEquals(expectedJson.replace("###version###", modelVersion), actualJson.toString(), JSONCompareMode.STRICT);
     }
