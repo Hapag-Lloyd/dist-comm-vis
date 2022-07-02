@@ -26,5 +26,13 @@
       "method_name": "invoiceWasSettled",
       "topic_name": "invoiceSettled"
     }
+  ],
+  "kafka_consumers": [
+    {
+      "id": "ed141072-13ce-4d31-ab16-e32124aa1bf9",
+      "class_name": "integration.endpoint.CustomerEndpoint",
+      "method_name": "customerDeleted",
+      "topic_name": "customerDeleted"
+    }
   ]
 }

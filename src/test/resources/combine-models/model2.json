@@ -29,5 +29,14 @@
       "topic_name": "invoiceSettled",
       "destination_project_id": "1"
     }
+  ],
+  "kafka_producers": [
+    {
+      "id": "f2fc2e50-c651-4261-aab1-692d402f51b7",
+      "class_name": "integration.endpoint.CallKafkaEndpoints",
+      "method_name": "deleteCustomer",
+      "topic_name": "customerDeleted",
+      "destination_project_id": "1"
+    }
   ]
 }

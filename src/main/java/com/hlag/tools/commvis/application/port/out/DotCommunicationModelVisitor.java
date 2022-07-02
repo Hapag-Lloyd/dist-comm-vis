@@ -91,4 +91,24 @@ public class DotCommunicationModelVisitor extends AbstractCommunicationModelVisi
 
         ++nodes;
     }
+
+    @Override
+    public void visit(KafkaProducer kafkaProducer) {
+        String label = kafkaProducer.getClassName() + "\\n" + kafkaProducer.getMethodName() + "\\n" + kafkaProducer.getTopicName();
+        nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\" shape=\"diamond\"]\n", nodes, label));
+
+        graphDefinitions.append(String.format("  \"application\" -> \"%d\"\n", nodes));
+
+        ++nodes;
+    }
+
+    @Override
+    public void visit(KafkaConsumer kafkaConsumer) {
+        String label = kafkaConsumer.getClassName() + "\\n" + kafkaConsumer.getMethodName() + "\\n" + kafkaConsumer.getTopicName();
+        nodeDefinitions.append(String.format("  \"%d\" [label=\"%s\" shape=\"diamond\"]\n", nodes, label));
+
+        graphDefinitions.append(String.format("  \"%d\" -> \"application\"\n", nodes));
+
+        ++nodes;
+    }
 }

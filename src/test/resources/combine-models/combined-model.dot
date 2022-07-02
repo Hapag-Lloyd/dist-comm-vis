@@ -5,16 +5,21 @@ digraph G {
   "1#6e184a1a-b56b-4765-86db-f7ecc8173e78" [label="integration.endpoint.CustomerEndpoint.getCustomer\n/customers/{customerId}\nGET" shape="ellipse"]
   "1#f3a6ead6-80b4-441e-9c2d-bf27b6301630" [label="integration.endpoint.CustomerEndpoint.getInvoice\ninvoice" shape="diamond"]
   "1#97a4fada-961d-4dc1-8608-eeb1619e085c" [label="integration.endpoint.CustomerEndpoint.invoiceWasSettled\ninvoiceSettled" shape="diamond"]
+  "1#ed141072-13ce-4d31-ab16-e32124aa1bf9" [label="integration.endpoint.CustomerEndpoint.customerDeleted\ncustomerDeleted" shape="diamond"]
   "2#2d9f08b8-c469-4ead-8d79-38e2e6070ffe" [label="integration.endpoint.CallHttpsEndpoints.getCustomerInvoices" shape="ellipse"]
   "2#afef900b-313a-45ec-a507-6dd629714eed" [label="integration.endpoint.CallSqsEndpoints.updateInvoice\ninvoice" shape="diamond"]
   "2#eece73d3-d53d-43d5-aea1-dde19a81647a" [label="integration.endpoint.CallSnsEndpoints.invoiceSettled\ninvoiceSettled" shape="diamond"]
+  "2#f2fc2e50-c651-4261-aab1-692d402f51b7" [label="integration.endpoint.CallKafkaEndpoints.deleteCustomer\ncustomerDeleted" shape="diamond"]
   "1#6e184a1a-b56b-4765-86db-f7ecc8173e78" -> "1"
   "1#f3a6ead6-80b4-441e-9c2d-bf27b6301630" -> "1"
   "1#97a4fada-961d-4dc1-8608-eeb1619e085c" -> "1"
+  "1#ed141072-13ce-4d31-ab16-e32124aa1bf9" -> "1"
   "2#2d9f08b8-c469-4ead-8d79-38e2e6070ffe" -> "1#6e184a1a-b56b-4765-86db-f7ecc8173e78"
   "2" -> "2#2d9f08b8-c469-4ead-8d79-38e2e6070ffe"
   "2#afef900b-313a-45ec-a507-6dd629714eed" -> "1#f3a6ead6-80b4-441e-9c2d-bf27b6301630"
   "2" -> "2#afef900b-313a-45ec-a507-6dd629714eed"
   "2#eece73d3-d53d-43d5-aea1-dde19a81647a" -> "1#97a4fada-961d-4dc1-8608-eeb1619e085c"
   "2" -> "2#eece73d3-d53d-43d5-aea1-dde19a81647a"
+  "2#f2fc2e50-c651-4261-aab1-692d402f51b7" -> "1#ed141072-13ce-4d31-ab16-e32124aa1bf9"
+  "2" -> "2#f2fc2e50-c651-4261-aab1-692d402f51b7"
 }
