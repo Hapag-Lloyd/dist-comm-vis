@@ -145,6 +145,25 @@ public class CombineService implements CombineUseCase {
             findConsumerIdFor(snsProducer).ifPresent(consumerId -> graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, consumerId)));
             graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", modelId, id));
         }
+
+        @Override
+        public void visit(KafkaProducer kafkaProducer) {
+            String label = String.format("%s.%s\\n%s", kafkaProducer.getClassName(), kafkaProducer.getMethodName(), kafkaProducer.getTopicName());
+            String id = String.format("%s#%s", modelId, kafkaProducer.getId());
+
+            nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
+            findConsumerIdFor(kafkaProducer).ifPresent(consumerId -> graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, consumerId)));
+            graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", modelId, id));
+        }
+
+        @Override
+        public void visit(KafkaConsumer kafkaConsumer) {
+            String label = String.format("%s.%s\\n%s", kafkaConsumer.getClassName(), kafkaConsumer.getMethodName(), kafkaConsumer.getTopicName());
+            String id = String.format("%s#%s", modelId, kafkaConsumer.getId());
+
+            nodeDefinitions.append(String.format("  \"%s\" [label=\"%s\" shape=\"diamond\"]\n", id, label));
+            graphDefinitions.append(String.format("  \"%s\" -> \"%s\"\n", id, modelId));
+        }
     }
 
     @RequiredArgsConstructor
@@ -210,6 +229,22 @@ public class CombineService implements CombineUseCase {
         @Override
         public void visit(SnsProducer snsProducer) {
             // it's a ConsumerFinder and this is not a consumer
+        }
+
+        @Override
+        public void visit(KafkaProducer kafkaProducer) {
+            // it's a ConsumerFinder and this is not a consumer
+        }
+
+        @Override
+        public void visit(KafkaConsumer kafkaConsumer) {
+            if (producer instanceof KafkaProducer) {
+                KafkaProducer kafkaProducer = (KafkaProducer) this.producer;
+
+                if (kafkaConsumer.isProducedBy(kafkaProducer)) {
+                    consumer = Optional.of(kafkaConsumer);
+                }
+            }
         }
     }
 }
