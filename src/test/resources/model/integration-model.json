@@ -5,27 +5,9 @@
   "http_consumers": [
     {
       "class_name": "integration.endpoint.CustomerEndpoint",
-      "method_name": "deleteCustomer",
-      "type": "DELETE",
-      "path": "sales/customers/{customerId}"
-    },
-    {
-      "class_name": "integration.endpoint.CustomerEndpoint",
-      "method_name": "readCustomer",
-      "type": "GET",
-      "path": "sales/customers/{customerId}"
-    },
-    {
-      "class_name": "integration.endpoint.CustomerEndpoint",
       "method_name": "createCustomer",
       "type": "POST",
       "path": "sales/customers"
-    },
-    {
-      "class_name": "integration.endpoint.CustomerEndpoint",
-      "method_name": "updateCustomer",
-      "type": "PUT",
-      "path": "sales/customers/{customerId}"
     }
   ],
   "http_producers": [
@@ -42,6 +24,51 @@
       "class_name": "integration.endpoint.CustomerCancelledOrderReceiver",
       "destination": "jms/customer/orderCancelled",
       "destination_type": "javax.jms.Queue"
+    }
+  ],
+  "sns_producers": [
+    {
+      "class_name": "integration.endpoint.CustomerService",
+      "method_name": "stopCustomerBusiness",
+      "topic_name": "stop-customer-business",
+      "destination_project_id": "2"
+    }
+  ],
+  "sqs_producers": [
+    {
+      "class_name": "integration.endpoint.CustomerService",
+      "method_name": "revokeCreditLineFromCustomer",
+      "queue_name": "revoke-credit-line",
+      "destination_project_id": "2"
+    }
+  ],
+  "sqs_consumers": [
+    {
+      "class_name": "integration.endpoint.MasterDataEndpoint",
+      "method_name": "revokeCreditLine",
+      "queue_name": "revoke-credit-line"
+    }
+  ],
+  "sqs_via_sns_consumers": [
+    {
+      "class_name": "integration.endpoint.MasterDataEndpoint",
+      "method_name": "countryAdded",
+      "topic_name": "new-country"
+    }
+  ],
+  "kafka_producers": [
+    {
+      "class_name": "integration.endpoint.CustomerService",
+      "method_name": "addVipCustomer",
+      "topic_name": "vip-customer-created",
+      "destination_project_id": "2"
+    }
+  ],
+  "kafka_consumers": [
+    {
+      "class_name": "integration.endpoint.MasterDataEndpoint",
+      "method_name": "locationInvalidated",
+      "topic_name": "location-invalidated"
     }
   ]
 }

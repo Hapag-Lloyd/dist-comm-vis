@@ -31,7 +31,6 @@ class DistributedCommunicationVisualizerApplicationIT {
     private String modelVersion;
 
     @Test
-    @Disabled("Does not work if called in pipeline. Guess there is some internal state somewhere.")
     void shouldMatchCurrentJsonModel_whenScan() throws Exception {
         String expectedJson = contentOf(new File("src/test/resources/model/integration-model.json"));
 
@@ -46,6 +45,12 @@ class DistributedCommunicationVisualizerApplicationIT {
         removeIdFromListObjects(actualJson.getJSONArray("http_consumers"));
         removeIdFromListObjects(actualJson.getJSONArray("http_producers"));
         removeIdFromListObjects(actualJson.getJSONArray("jms_consumers"));
+        removeIdFromListObjects(actualJson.getJSONArray("sqs_producers"));
+        removeIdFromListObjects(actualJson.getJSONArray("sqs_consumers"));
+        removeIdFromListObjects(actualJson.getJSONArray("sqs_via_sns_consumers"));
+        removeIdFromListObjects(actualJson.getJSONArray("kafka_producers"));
+        removeIdFromListObjects(actualJson.getJSONArray("kafka_consumers"));
+        removeIdFromListObjects(actualJson.getJSONArray("sns_producers"));
 
         JSONAssert.assertEquals(expectedJson.replace("###version###", modelVersion), actualJson.toString(), JSONCompareMode.STRICT);
     }
@@ -59,7 +64,6 @@ class DistributedCommunicationVisualizerApplicationIT {
     }
 
     @Test
-    @Disabled("Order within the endpoints depends on the order the services are executed which is always different.")
     void shouldMatchCurrentDotModel_whenScan() {
         String expectedDot = contentOf(new File("src/test/resources/model/integration-model.dot"));
 

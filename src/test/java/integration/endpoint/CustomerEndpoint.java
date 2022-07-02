@@ -8,19 +8,4 @@ public class CustomerEndpoint {
     @Path("customers")
     public void createCustomer() {
     }
-
-    @DELETE
-    @Path("customers/{customerId}")
-    public void deleteCustomer() {
-    }
-
-    @GET
-    @Path("customers/{customerId}")
-    public void readCustomer() {
-    }
-
-    @PUT
-    @Path("customers/{customerId}")
-    public void updateCustomer() {
-    }
 }
