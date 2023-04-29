@@ -1,0 +1,6 @@
+{
+  "extends": ["github>Hapag-Lloyd/Renovate-Global-Configuration"],
+  "pip_requirements": {
+    "fileMatch": ["requirements.txt", "requirements-test.txt", "samples/[\\S/]*constraints.txt", "samples/[\\S/]*constraints-test.txt"]
+  }
+}

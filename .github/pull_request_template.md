@@ -10,6 +10,10 @@ Fixes #(issue number)
 yes: please describe the migration
 no: please delete the whole paragraph
 
+# Verification
+
+Please describe the test cases you used to verify your code. Did you check the change in your environment?
+
 # Checklist
 
 - [ ] My code follows the style guidelines of the project
