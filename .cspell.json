@@ -3,7 +3,7 @@
   "language": "en",
   "words": [
     "cpus",
-    "markdownlint"
+    "markdownlint",
     "pytest",
     "setuptools"
   ],

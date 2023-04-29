@@ -14,7 +14,8 @@ It also creates a high level diagram of multi project communication, e.g. servic
 Especially useful to visualize the communication between several services. This documentation is always
 up-to-date as it is generated automatically based on the current version of the software.
 
-# Example
+## Example
+
 ```shell
 # make sure that all dependencies are added to the classpath! 
 python --name=ServiceNameHere
@@ -27,6 +28,8 @@ dot -Tpng model.dot > model.png
 
 ## Features
 
+None so far.
+
 ## Planned Features
 
 - extract HTTP(S) consumers: JAX RS, Spring
@@ -35,7 +38,5 @@ dot -Tpng model.dot > model.png
 - extract consumers via special annotation: Kafka, SQS
 - write a `model.json` file
 - write a `model.dot` file for [GraphViz](https://gitlab.com/graphviz/graphviz)
-- support user defined scanners (see https://github.com/Hapag-Lloyd/dist-comm-vis-api)
-
 - extract endpoints from Swagger YAML
 - extract JMS producers
