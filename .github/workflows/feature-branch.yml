@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10"]
+        python-version: ["3.10", "3.11"]
     steps:
       - uses: actions/checkout@v3
 
@@ -25,13 +25,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e .
 
-      - name: Lint with ruff
-        run: |
-          pip install -e ".[pipeline]"
-
-          # default set of ruff rules with GitHub Annotations
-          ruff --format=github --target-version=py310 src/
-
       - name: Test with pytest
         run: |
           pip install -e ".[test]"
@@ -44,3 +37,39 @@ jobs:
           path: junit/test-results-${{ matrix.python-version }}.xml
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
+
+  flake8-lint:
+    runs-on: ubuntu-latest
+    name: Lint with Flake8
+    steps:
+      - name: Check out source repository
+        # yamllint disable-line rule:comments
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: Set up Python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2
+
+  ruff-lint:
+    runs-on: ubuntu-latest
+    name: Lint with Ruff
+    steps:
+      - name: Check out source repository
+        # yamllint disable-line rule:comments
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: Set up Python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Ruff Lint
+        run: |
+          pip install -e ".[pipeline]"
+
+          # default set of ruff rules with GitHub Annotations
+          ruff --format=github --target-version=py310 src/
