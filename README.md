@@ -17,7 +17,6 @@ up-to-date as it is generated automatically based on the current version of the 
 ## Example
 
 ```shell
-# make sure that all dependencies are added to the classpath! 
 python --name=ServiceNameHere
 
 yum install graphviz

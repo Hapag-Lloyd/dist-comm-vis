@@ -3,6 +3,7 @@
   "language": "en",
   "words": [
     "cpus",
+    "graphviz",
     "markdownlint",
     "pytest",
     "setuptools"
@@ -10,13 +11,17 @@
   "ignoreWords": [
     "amannn",
     "codeowners",
+    "doctest",
     "dorny",
     "hapag",
     "ibiqlik",
+    "junitxml",
     "kayman",
+    "renovaterc",
     "rhysd",
     "shuf",
     "shunsuke",
-    "signoff"
+    "signoff",
+    "tpng"
   ]
 }
