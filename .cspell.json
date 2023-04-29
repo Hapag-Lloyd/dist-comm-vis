@@ -1,13 +1,7 @@
 {
   "version": "0.2",
   "language": "en",
-  "words": [
-    "cpus",
-    "graphviz",
-    "markdownlint",
-    "pytest",
-    "setuptools"
-  ],
+  "words": ["cpus", "graphviz", "markdownlint", "pytest", "setuptools", "venv"],
   "ignoreWords": [
     "amannn",
     "codeowners",
