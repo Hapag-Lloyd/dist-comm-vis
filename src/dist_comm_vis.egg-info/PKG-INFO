@@ -1,0 +1,59 @@
+Metadata-Version: 2.1
+Name: dist-comm-vis
+Version: 1.0.0
+Summary: Analyzes source code for special comments to visualize dependencies between services
+Home-page: https://github.com/Hapag-Lloyd/dist-comm-vis
+Author: Hapag-Lloyd AG
+Author-email: info.de@hlag.com
+Project-URL: Bug Tracker, https://github.com/Hapag-Lloyd/dist-comm-vis/issues
+Project-URL: repository, https://github.com/Hapag-Lloyd/dist-comm-vis/
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Provides-Extra: pipeline
+Provides-Extra: test
+License-File: LICENSE
+
+<!-- place the badges at the very top, looks better -->
+<!-- markdownlint-disable-next-line MD041 -->
+[![Actions](https://github.com/Hapag-Lloyd/dist-comm-vis/workflows/Release/badge.svg)](https://github.com/Hapag-Lloyd/dist-comm-vis/actions)
+
+# Distributed Communication Visualization
+
+This tool analyzes Java source code and creates a diagram to show
+
+- incoming/outgoing HTTP(S) traffic
+- event receivers and senders
+
+It also creates a high level diagram of multi project communication, e.g. service 1 calls service 2.
+
+Especially useful to visualize the communication between several services. This documentation is always
+up-to-date as it is generated automatically based on the current version of the software.
+
+## Example
+
+```shell
+python --name=ServiceNameHere
+
+yum install graphviz
+dot -Tpng model.dot > model.png
+```
+
+![Communication](image/communication.png)
+
+## Features
+
+None so far.
+
+## Planned Features
+
+- extract HTTP(S) consumers: JAX RS, Spring
+- extract JMS consumers
+- extract producers via special annotation: Kafka, SQS, SNS, HTTP(S)
+- extract consumers via special annotation: Kafka, SQS
+- write a `model.json` file
+- write a `model.dot` file for [GraphViz](https://gitlab.com/graphviz/graphviz)
+- extract endpoints from Swagger YAML
+- extract JMS producers
