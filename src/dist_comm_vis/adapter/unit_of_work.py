@@ -1,11 +1,13 @@
+from __future__ import annotations
 import abc
+
+from dist_comm_vis.application.create_service_model import CreateServiceModelApplication
 
 
 class AbstractUnitOfWork(abc.ABC):
     """Abstract class to ease testing"""
 
     def __enter__(self) -> AbstractUnitOfWork:
-
         return self
 
     def __exit__(self, *args):
@@ -31,6 +33,7 @@ class DefaultUnitOfWork(AbstractUnitOfWork):
         pass
 
     def __enter__(self):
+        self.create_service_model_application = CreateServiceModelApplication(self)
         return super().__enter__()
 
     def __exit__(self, *args):
