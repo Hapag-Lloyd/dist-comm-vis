@@ -1,8 +1,11 @@
+<!-- place the badges at the very top, looks better -->
+<!-- markdownlint-disable-next-line MD041 -->
 [![Actions](https://github.com/Hapag-Lloyd/dist-comm-vis/workflows/Release/badge.svg)](https://github.com/Hapag-Lloyd/dist-comm-vis/actions)
 
 # Distributed Communication Visualization
 
-This tool analyzes JAR files and creates a diagram to show
+This tool analyzes Java source code and creates a diagram to show
+
 - incoming/outgoing HTTP(S) traffic
 - event receivers and senders
 
@@ -13,26 +16,19 @@ up-to-date as it is generated automatically based on the current version of the 
 
 # Example
 ```shell
-release="1.11.1"
-curl -o analyzer.jar https://github.com/Hapag-Lloyd/dist-comm-vis/releases/download/${RELEASE}/analyzer-${RELEASE}.jar
-
 # make sure that all dependencies are added to the classpath! 
-java -cp "analyzer.jar:distributed-projects/microservice-a/target/test-classes" org.springframework.boot.loader.JarLauncher scan com.hlag.tools.commvis.example 1 --name=Customer
+python --name=ServiceNameHere
 
 yum install graphviz
 dot -Tpng model.dot > model.png
 ```
 
-For a more sophisticated example check the [scan.sh](scripts/scan.sh)
-```shell
-scripts/scan.sh distributed-projects/microservice-a/target 1234 service-a
-scripts/scan.sh distributed-projects/microservice-b/target 2345 service-b
-```
-
 ![Communication](image/communication.png)
 
-
 ## Features
+
+## Planned Features
+
 - extract HTTP(S) consumers: JAX RS, Spring
 - extract JMS consumers
 - extract producers via special annotation: Kafka, SQS, SNS, HTTP(S)
@@ -41,6 +37,5 @@ scripts/scan.sh distributed-projects/microservice-b/target 2345 service-b
 - write a `model.dot` file for [GraphViz](https://gitlab.com/graphviz/graphviz)
 - support user defined scanners (see https://github.com/Hapag-Lloyd/dist-comm-vis-api)
 
-## Planned Features
 - extract endpoints from Swagger YAML
 - extract JMS producers

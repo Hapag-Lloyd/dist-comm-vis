@@ -19,7 +19,7 @@ jobs:
             markdown:
               - '**/*.md'
             renovate-config:
-              - 'renovate.json'
+              - '.renovaterc.json'
             workflow:
               - '.github/workflows/*.yml'
               - '.github/workflows/*.yaml'

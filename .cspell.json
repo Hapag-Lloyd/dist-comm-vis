@@ -2,7 +2,21 @@
   "version": "0.2",
   "language": "en",
   "words": [
+    "cpus",
+    "markdownlint"
+    "pytest",
+    "setuptools"
   ],
   "ignoreWords": [
+    "amannn",
+    "codeowners",
+    "dorny",
+    "hapag",
+    "ibiqlik",
+    "kayman",
+    "rhysd",
+    "shuf",
+    "shunsuke",
+    "signoff"
   ]
 }
