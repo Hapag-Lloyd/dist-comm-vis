@@ -2,10 +2,10 @@ from logging.config import fileConfig
 
 from dependency_injector import containers, providers
 
+from dist_comm_vis.adapter.service.LocalFileFinderService import LocalFileFinderService
 from dist_comm_vis.adapter.service.LocalFileReaderService import LocalFileReaderService
 from dist_comm_vis.application.service_model import ServiceModelApplication
 from dist_comm_vis.domain.service.FileAnalyzerService import FileAnalyzerServiceFactory
-from dist_comm_vis.domain.service.FileFinderService import LocalFileFinderService
 
 
 class Container(containers.DeclarativeContainer):

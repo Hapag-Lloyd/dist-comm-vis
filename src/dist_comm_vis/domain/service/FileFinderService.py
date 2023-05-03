@@ -1,4 +1,3 @@
-import os
 from abc import ABC, abstractmethod
 
 from dist_comm_vis.domain.model.File import File
