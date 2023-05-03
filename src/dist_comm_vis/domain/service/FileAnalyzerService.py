@@ -41,7 +41,8 @@ class JavaFileAnalyzerService(FileAnalyzerService):
 
     def __new__(cls, file_reader_service: FileReaderService):
         if cls._instance is None:
-            cls._instance = super(JavaFileAnalyzerService, cls).__new__(cls, file_reader_service)
+            cls._instance = super(JavaFileAnalyzerService, cls).__new__(cls)
+            cls._instance.__init__(file_reader_service)
 
         return cls._instance
 
