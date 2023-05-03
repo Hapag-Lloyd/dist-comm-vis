@@ -7,7 +7,7 @@ from dist_comm_vis.domain.model.File import File
 
 def test_returns_file_content():
     # given
-    given_full_qualified_name = ntpath.join(ROOT_DIR, "tests/data/local_file_reader_service/a.txt")
+    given_full_qualified_name = ntpath.abspath(ntpath.join(ROOT_DIR, "tests/data/local_file_reader_service/a.txt"))
     given_content = "my-content"
     given_file = File(given_full_qualified_name)
     given_file.content = given_content
