@@ -11,6 +11,6 @@ class ServiceModelApplication:
         self.file_finder = file_finder
         self.logger = logging.getLogger(__name__)
 
-    def create_for_project(self):
-        for file in self.file_finder.find_files("/hlag/Data/git/hapag-lloyd/dist-comm-vis/src"):
+    def create_for_project(self, path: str):
+        for file in self.file_finder.find_files(path):
             self.logger.info("Found file: %s", file.full_qualified_name)

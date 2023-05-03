@@ -1,5 +1,6 @@
 import argparse
-import logging
+import sys
+from typing import List
 
 from dependency_injector.wiring import inject, Provide
 
@@ -9,7 +10,7 @@ from dist_comm_vis.application.service_model import ServiceModelApplication
 
 def bootstrap():
     # injects the configuration values from the command line arguments into the container
-    arguments = parse_command_line_arguments()
+    arguments = parse_command_line_arguments(sys.argv[1:])
     configuration = create_configuration_values_from_command_line_arguments(arguments)
 
     container = Container()
@@ -21,23 +22,24 @@ def bootstrap():
 
 
 @inject
-def main(service_model_application: ServiceModelApplication = Provide[Container.service_model_application]):
-    service_model_application.create_for_project()
+def main(service_model_application: ServiceModelApplication = Provide[Container.service_model_application],
+         config: any = Provide[Container.config]):
+    service_model_application.create_for_project(config.get("path"))
 
 
-def parse_command_line_arguments() -> argparse.Namespace:
+def parse_command_line_arguments(args: List[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--log-config-file", help="config file for logging in ini style", default="../../../../logging.ini")
+    parser.add_argument("path")
+    parser.add_argument("--log-config-file", help="config file for logging in ini style",
+                        default="../../../../logging.ini")
 
-    return parser.parse_args()
+    return parser.parse_args(args)
 
 
 def create_configuration_values_from_command_line_arguments(args) -> dict[str, str]:
     return {
+        "path": args.path,
+
         "log_config_file": args.log_config_file
     }
-
-
-if __name__ == "__main__":
-    bootstrap()
