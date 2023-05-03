@@ -7,11 +7,13 @@ from dist_comm_vis.adapter.dependency_injection.container import Container
 
 def test_cli_calls_application():
     container = Container()
-    container.config.from_dict({"LOG_LEVEL": "DEBUG", "LOG_FORMAT": "PLAIN"})
+    container.config.from_dict({"log_config_file": "../logging.ini"})
+    container.init_resources()
+
     test_main()
     assert True is True
 
 
 @inject
-def test_main(logger: logging.Logger = Provide[Container.plain_logger]):
-    logger.info("Hello World!")
+def test_main():
+    logging.getLogger(__name__).info("Hello World!")

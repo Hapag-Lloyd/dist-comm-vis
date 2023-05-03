@@ -1,4 +1,5 @@
 import argparse
+import logging
 
 from dependency_injector.wiring import inject, Provide
 
@@ -12,7 +13,9 @@ def bootstrap():
     configuration = create_configuration_values_from_command_line_arguments(arguments)
 
     container = Container()
-    container.config_from_dict(configuration)
+    container.config.from_dict(configuration)
+    container.init_resources()
+    container.wire(modules=[__name__])
 
     main()
 
@@ -25,14 +28,16 @@ def main(service_model_application: ServiceModelApplication = Provide[Container.
 def parse_command_line_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--log-level", help="debug, info, warning, error, critical")
-    parser.add_argument("--log-format", help="plain, json")
+    parser.add_argument("--log-config-file", help="config file for logging in ini style", default="../../../../logging.ini")
 
     return parser.parse_args()
 
 
 def create_configuration_values_from_command_line_arguments(args) -> dict[str, str]:
     return {
-        "LOG_LEVEL": args.log_level,
-        "LOG_FORMAT": args.log_format
+        "log_config_file": args.log_config_file
     }
+
+
+if __name__ == "__main__":
+    bootstrap()
