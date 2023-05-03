@@ -11,6 +11,8 @@ def test_detects_model_string_in_double_slash_comment():
     given_local_path = ntpath.abspath(ntpath.join(ROOT_DIR, "tests/data/source/java"))
     given_file = File(ntpath.join(given_local_path, "Class1.java"))
 
+    print(__file__)
+
     # when
     actual_model = JavaFileAnalyzerService(LocalFileReaderService()).detect_model_relations(given_file)
 
