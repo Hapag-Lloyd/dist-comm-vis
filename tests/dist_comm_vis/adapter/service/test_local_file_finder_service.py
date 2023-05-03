@@ -1,18 +1,22 @@
 import ntpath
 
+import pytest
+
+from dist_comm_vis.adapter.service.LocalFileFinderService import LocalFileFinderService
 from dist_comm_vis.definitions import ROOT_DIR
-from dist_comm_vis.domain.model.File import File
-from dist_comm_vis.domain.service.FileFinderService import LocalFileFinderService
-
-finder_service = LocalFileFinderService()
 
 
-def test_find_files_recursively():
+@pytest.fixture
+def service():
+    return LocalFileFinderService()
+
+
+def test_find_files_recursively(service: LocalFileFinderService):
     # given
     given_local_path = ntpath.abspath(ntpath.join(ROOT_DIR, "tests/data/local_file_finder_service"))
 
     # when
-    actual_files = list(finder_service.find_files(given_local_path))
+    actual_files = list(service.find_files(given_local_path))
 
     # then
     assert len(actual_files) == 3

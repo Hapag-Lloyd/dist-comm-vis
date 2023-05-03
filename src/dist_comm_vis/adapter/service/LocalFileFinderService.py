@@ -1,4 +1,5 @@
 import os
+from typing import Iterable
 
 from dist_comm_vis.domain.model.File import File
 from dist_comm_vis.domain.service.FileFinderService import FileFinderService
@@ -10,7 +11,7 @@ class LocalFileFinderService(FileFinderService):
     def __init__(self):
         super().__init__()
 
-    def find_files(self, directory: str) -> File:
+    def find_files(self, directory: str) -> Iterable[File]:
         """Generator that yields all files in a directory recursively."""
 
         for root, d_names, f_names in os.walk(directory):
