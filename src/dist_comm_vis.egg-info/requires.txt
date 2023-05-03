@@ -1,9 +1,0 @@
-dependency-injector==4.41.0
-python-json-logger==2.0.7
-
-[pipeline]
-ruff==0.0.263
-
-[test]
-pytest==7.3.1
-pytest-cov==4.0.0

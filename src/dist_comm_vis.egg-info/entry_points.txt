@@ -1,2 +1,0 @@
-[console_scripts]
-dist-comm-vis = dist_comm_vis.adapter.endpoint.cli:main
