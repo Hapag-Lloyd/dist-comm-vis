@@ -1,4 +1,4 @@
-import ntpath
+import os
 
 
 class File:
@@ -8,4 +8,4 @@ class File:
     def __init__(self, full_qualified_name: str):
         self.full_qualified_name = full_qualified_name
         # removes the leading "." from the extension
-        self.extension = ntpath.splitext(full_qualified_name)[1][1:]
+        self.extension = os.path.splitext(full_qualified_name)[1][1:]
