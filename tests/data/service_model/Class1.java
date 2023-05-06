@@ -1,4 +1,4 @@
-package data.source.java;
+package data.service_model;
 
 public class Class1 {
     // dist-comm-vis type=rest direction=in
