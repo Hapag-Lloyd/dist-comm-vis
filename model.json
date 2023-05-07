@@ -1,0 +1,10 @@
+{
+  "relations": [
+    {},
+    {
+      "type": "rest",
+      "direction": "out",
+      "target_project_id": null
+    }
+  ]
+}

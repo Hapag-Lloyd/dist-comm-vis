@@ -1,13 +1,12 @@
-import os
-from collections.abc import Iterable
 from logging.config import fileConfig
 
 from dependency_injector import containers, providers
 
+from dist_comm_vis.adapter.service.ModelWriterService import JsonModelWriterService
 from dist_comm_vis.adapter.service.LocalFileFinderService import LocalFileFinderService
 from dist_comm_vis.adapter.service.LocalFileReaderService import LocalFileReaderService
-from dist_comm_vis.application.service_model import ServiceModelApplication
-from dist_comm_vis.definitions import ROOT_DIR
+from dist_comm_vis.adapter.service.LocalFileWriterService import LocalFileWriterService
+from dist_comm_vis.application.ServiceModel import ServiceModelApplication
 from dist_comm_vis.domain.service.FileAnalyzerService import FileAnalyzerServiceFactory
 
 
@@ -24,6 +23,14 @@ class Container(containers.DeclarativeContainer):
         LocalFileReaderService
     )
 
+    file_writer_service = providers.Singleton(
+        LocalFileWriterService
+    )
+
+    model_writer_service = providers.Singleton(
+        JsonModelWriterService
+    )
+
     # factories
     file_analyzer_service_factory = providers.Singleton(
         FileAnalyzerServiceFactory,
@@ -34,7 +41,9 @@ class Container(containers.DeclarativeContainer):
     service_model_application = providers.Singleton(
         ServiceModelApplication,
         file_finder_service,
-        file_analyzer_service_factory
+        file_analyzer_service_factory,
+        file_writer_service,
+        model_writer_service
     )
 
     # utilities

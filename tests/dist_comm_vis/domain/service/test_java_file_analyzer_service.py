@@ -15,6 +15,4 @@ def test_detects_model_string_in_double_slash_comment():
     actual_model = JavaFileAnalyzerService(LocalFileReaderService()).detect_model_relations(given_file)
 
     # then
-
-    # not sure what can be asserted here
-    assert True is True
+    assert len(actual_model) == 2

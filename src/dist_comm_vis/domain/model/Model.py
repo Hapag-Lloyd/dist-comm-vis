@@ -1,9 +1,15 @@
 from abc import ABC
+from typing import List
 
 
 class ModelRelation(ABC):
     def __init__(self):
         pass
+
+
+class Model:
+    def __init__(self, relations: List[ModelRelation]):
+        self.relations = relations
 
 
 class ModelRelationFactory:
@@ -24,15 +30,19 @@ class RestApiEndpoint(ModelRelation):
     def __init__(self):
         super().__init__()
 
+        self.type = "rest"
+        self.direction = "out"
+
     def __str__(self):
         return "RestApiEndpoint"
 
 
 class RestApiCall(ModelRelation):
-    target_project_id: str
-
     def __init__(self, target_project_id: str):
         super().__init__()
+
+        self.type = "rest"
+        self.direction = "out"
         self.target_project_id = target_project_id
 
     def __str__(self):

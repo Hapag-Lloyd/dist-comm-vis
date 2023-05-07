@@ -7,7 +7,8 @@ from dist_comm_vis.definitions import ROOT_DIR
 
 
 def test_cli_calls_application():
-    testargs = ["prog-name", "path", "--log-config-file", os.path.abspath(os.path.join(ROOT_DIR, "logging.ini"))]
+    testargs = ["prog-name", "path", "--log-config-file", os.path.abspath(os.path.join(ROOT_DIR, "logging.ini")),
+                "--output-path", os.path.abspath(os.path.join(ROOT_DIR, "target/"))]
 
     with patch.object(sys, 'argv', testargs):
         bootstrap()

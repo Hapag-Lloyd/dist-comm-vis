@@ -2,6 +2,7 @@ import os
 
 
 class File:
+    """Represents an ordinary file, e.g. on a local file system."""
     full_qualified_name: str
     extension: str
 
