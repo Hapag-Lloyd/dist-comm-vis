@@ -1,0 +1,105 @@
+---
+name: Lint files
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+
+jobs:
+  find-changes:
+    runs-on: ubuntu-latest
+    steps:
+      # yamllint disable-line rule:comments
+      - uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
+        id: changes
+        with:
+          filters: |
+            json:
+              - '**/*.json'
+            markdown:
+              - '**/*.md'
+            renovate-config:
+              - '.renovaterc.json'
+            workflow:
+              - '.github/workflows/*.yml'
+              - '.github/workflows/*.yaml'
+            yaml:
+              - '**/*.yaml'
+              - '**/*.yml'
+    outputs:
+      json: ${{ steps.changes.outputs.json }}
+      markdown: ${{ steps.changes.outputs.markdown }}
+      renovate-config: ${{ steps.changes.outputs.renovate-config }}
+      workflow: ${{ steps.changes.outputs.workflow }}
+      yaml: ${{ steps.changes.outputs.yaml }}
+
+  lint-json:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    if: needs.find-changes.outputs.json == 'true'
+    needs: find-changes
+    steps:
+      # yamllint disable-line rule:comments
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: Run JSON Lint
+        run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/json-lint/master/pipeline.sh)
+
+  lint-markdown:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    if: needs.find-changes.outputs.markdown == 'true'
+    needs: find-changes
+    steps:
+      # yamllint disable-line rule:comments
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: Validate Markdown file
+        run: |
+          npm install -g markdownlint-cli
+          markdownlint -c .markdownlint.yml -i CHANGELOG.md "**/*.md"
+
+  lint-renovate:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    if: needs.find-changes.outputs.renovate-config == 'true'
+    needs: find-changes
+    steps:
+      # yamllint disable-line rule:comments
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      # yamllint disable-line rule:comments
+      - uses: suzuki-shunsuke/github-action-renovate-config-validator@7ab3d8f19305664925f3e626580f075f14e40386 # v0.1.2
+
+  lint-workflow:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    needs: find-changes
+    if: needs.find-changes.outputs.workflow == 'true'
+    container:
+      image: rhysd/actionlint:1.6.23@sha256:02ccb6d91e4cb4a7b21eb99d5274d257e81ae667688d730e89d7ea0d6d35db91
+      options: --cpus 1 --user root
+    steps:
+      # yamllint disable-line rule:comments
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: Validate Github workflows
+        run: |
+          mkdir .git
+          actionlint -color
+
+  lint-yaml:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    needs: find-changes
+    if: needs.find-changes.outputs.yaml == 'true'
+    steps:
+      # yamllint disable-line rule:comments
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: yaml-lint
+        # yamllint disable-line rule:comments
+        uses: ibiqlik/action-yamllint@2576378a8e339169678f9939646ee3ee325e845c # v3.1.1
+        with:
+          config_file: .yamllint.yml
+          strict: true

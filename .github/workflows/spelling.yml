@@ -1,0 +1,18 @@
+---
+name: 'Check spelling'
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+
+jobs:
+  cspell:
+    runs-on: ubuntu-latest
+    steps:
+      # yamllint disable-line rule:comments
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      # yamllint disable-line rule:comments
+      - uses: streetsidesoftware/cspell-action@cdaa4625255f2e8d5cc9d06c60ed9b4b0fe4bf03 # v2.20.0
+        with:
+          config: .cspell.json

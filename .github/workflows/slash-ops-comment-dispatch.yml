@@ -1,0 +1,22 @@
+---
+name: PR commented
+
+# yamllint disable-line rule:truthy
+on:
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  slash-command-dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slash Command Dispatch
+        # yamllint disable-line rule:comments
+        uses: peter-evans/slash-command-dispatch@a28ee6cd74d5200f99e247ebc7b365c03ae0ef3c # v3.0.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-type: pull-request
+          reactions: true
+          commands: |
+            help

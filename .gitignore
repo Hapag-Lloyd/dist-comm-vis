@@ -1,10 +1,11 @@
+# IntelliJ
 .idea/
-target/
-node_modules/
-release/
 
-*.iml
-model*.json
-model*.dot
-my-file.dot
-my-file.json
+# Python
+**/__pycache__
+**/*.egg-info/
+.pytest_cache/
+venv/
+
+# test output
+target/
