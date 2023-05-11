@@ -23,12 +23,7 @@ class ModelGeneratorApplication:
         self.model_writer_service = model_writer_service
         self.logger = logging.getLogger(__name__)
 
-    def create_for_project(self, path_to_analyze: str, output_path: str):
-        # find all files
-        # create an analyzer per file
-        # extract all connection strings
-        # build the resulting model
-
+    def create_for_project(self, id: str, name: str, path_to_analyze: str, output_path: str):
         json_file = File(os.path.abspath(os.path.join(output_path, "model.json")))
 
         for file in self.file_finder_service.find_files(path_to_analyze):
@@ -37,5 +32,5 @@ class ModelGeneratorApplication:
             analyzer = self.file_analyzer_service_factory.create(file)
             model_relations = analyzer.detect_model_relations(file)
 
-            model = Model(model_relations)
+            model = Model(id, name, model_relations)
             self.file_writer_service.write(json_file, JsonModelWriterService().write(model))
