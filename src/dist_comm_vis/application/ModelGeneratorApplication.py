@@ -9,7 +9,7 @@ from dist_comm_vis.domain.service.FileAnalyzerService import FileAnalyzerService
 from dist_comm_vis.domain.service.FileWriterService import FileWriterService
 
 
-class ServiceModelApplication:
+class ModelGeneratorApplication:
     file_finder_service: FileFinderService
     file_analyzer_service_factory: FileAnalyzerServiceFactory
     file_writer_service: FileWriterService
