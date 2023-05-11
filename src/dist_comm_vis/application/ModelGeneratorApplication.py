@@ -1,7 +1,7 @@
 import logging
 import os
 
-from dist_comm_vis.adapter.service.ModelWriterService import JsonModelWriterService
+from dist_comm_vis.adapter.service.JsonModelWriterService import JsonModelWriterService
 from dist_comm_vis.domain.model.File import File
 from dist_comm_vis.domain.model.Model import Model
 from dist_comm_vis.domain.service import FileFinderService, ModelWriterService
