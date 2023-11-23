@@ -77,7 +77,7 @@ jobs:
     needs: find-changes
     if: needs.find-changes.outputs.workflow == 'true'
     container:
-      image: rhysd/actionlint:1.6.23@sha256:02ccb6d91e4cb4a7b21eb99d5274d257e81ae667688d730e89d7ea0d6d35db91
+      image: rhysd/actionlint:1.6.23@sha256:93834930f56ca380be3e9a3377670d7aa5921be251b9c774891a39b3629b83b8
       options: --cpus 1 --user root
     steps:
       # yamllint disable-line rule:comments
