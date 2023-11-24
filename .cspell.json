@@ -1,17 +1,27 @@
 {
   "version": "0.2",
   "language": "en",
-  "words": ["cpus", "graphviz", "markdownlint", "pytest", "setuptools", "venv"],
+  "words": [
+    "cpus",
+    "graphviz",
+    "hlag",
+    "markdownlint",
+    "pytest",
+    "setuptools",
+    "venv"
+  ],
   "ignoreWords": [
     "amannn",
     "asctime",
     "codeowners",
+    "commvis",
     "doctest",
     "dorny",
     "getcwd",
     "hapag",
     "ibiqlik",
     "Intelli",
+    "javax",
     "jsonlogger",
     "junitxml",
     "kayman",
@@ -25,6 +35,7 @@
     "shuf",
     "shunsuke",
     "signoff",
+    "springframework",
     "tpng"
   ]
 }
