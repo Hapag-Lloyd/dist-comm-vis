@@ -75,4 +75,4 @@ jobs:
           pip install -e ".[pipeline]"
 
           # default set of ruff rules with GitHub Annotations
-          ruff --format=github --target-version=py310 src/
+          ruff --output-format=github --target-version=py310 src/
