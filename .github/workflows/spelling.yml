@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # yamllint disable-line rule:comments
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
       # yamllint disable-line rule:comments
       - uses: streetsidesoftware/cspell-action@e6f09063780e6ace11d87ce10d818d4e2bad9b66 # v5.4.0

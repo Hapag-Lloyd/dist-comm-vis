@@ -40,7 +40,7 @@ jobs:
     needs: find-changes
     steps:
       # yamllint disable-line rule:comments
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
       - name: Run JSON Lint
         run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/json-lint/master/pipeline.sh)
@@ -52,7 +52,7 @@ jobs:
     needs: find-changes
     steps:
       # yamllint disable-line rule:comments
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
       - name: Validate Markdown file
         run: |
@@ -66,7 +66,7 @@ jobs:
     needs: find-changes
     steps:
       # yamllint disable-line rule:comments
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
       # yamllint disable-line rule:comments
       - uses: suzuki-shunsuke/github-action-renovate-config-validator@b54483862375f51910a60c4f498e927d4f3df466 # v1.0.1
@@ -81,7 +81,7 @@ jobs:
       options: --cpus 1 --user root
     steps:
       # yamllint disable-line rule:comments
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
       - name: Validate Github workflows
         run: |
@@ -95,7 +95,7 @@ jobs:
     if: needs.find-changes.outputs.yaml == 'true'
     steps:
       # yamllint disable-line rule:comments
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
       - name: yaml-lint
         # yamllint disable-line rule:comments
