@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from dist_comm_vis.adapter.service.ModelWriterService import JsonModelWriterService
+from dist_comm_vis.adapter.service.JsonModelWriterService import JsonModelWriterService
 from dist_comm_vis.adapter.service.LocalFileFinderService import LocalFileFinderService
 from dist_comm_vis.adapter.service.LocalFileReaderService import LocalFileReaderService
 from dist_comm_vis.adapter.service.LocalFileWriterService import LocalFileWriterService
